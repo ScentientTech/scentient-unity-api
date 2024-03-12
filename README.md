@@ -1,1 +1,9 @@
-"# scentient-unity-api" 
+# Scentient Peripheral Unity Android API
+
+# Requirements
+
+# Installation
+
+# Usage
+
+
