@@ -1,9 +1,9 @@
 # Scentient Peripheral Unity Android API
 
-# Requirements
+## Requirements
 
-# Installation
+## Installation
 
-# Usage
+## Usage
 
 
