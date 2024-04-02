@@ -12,11 +12,8 @@ using System.Text;
 using Android.BLE;
 using Android.BLE.Commands;
 
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
 using System.IO.Ports;
 using System.IO;
-
-#endif
 
 
 public class ScentientDevice : MonoBehaviour
