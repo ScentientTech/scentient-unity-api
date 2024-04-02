@@ -24,9 +24,9 @@ public class ScentientDevice : MonoBehaviour
 
     public bool verbose;
     string DeviceName = "Scentient Escents";
-    string ServiceUUID = "180A";
-    string ScentMessageUUID = "2A57";
-    string ButtonUUID = "19B10012-E8F2-537E-4F6C-D104768A1214";
+    string ServiceUUID = "EDDD4E1F-16FA-4C7C-AD7F-171EDBD7EFF7";
+    string ScentMessageUUID = "45335526-67BA-4D9D-8CFB-C3D97E8D8208";
+    string ButtonUUID = "04C3";
 
     const string LastAddressKey = "last_address";
 
