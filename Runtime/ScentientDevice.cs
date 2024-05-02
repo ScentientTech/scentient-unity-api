@@ -23,10 +23,10 @@ public class ScentientDevice : MonoBehaviour
     public event Action<bool> OnButtonChangedEvent;
 
     public bool verbose;
-    string DeviceName = "Scentient Escents";
-    string ServiceUUID = "EDDD4E1F-16FA-4C7C-AD7F-171EDBD7EFF7";
-    string ScentMessageUUID = "45335526-67BA-4D9D-8CFB-C3D97E8D8208";
-    string ButtonUUID = "04C3";
+    const string DeviceName = "Scentient Escents";
+    const string ServiceUUID = "EDDD4E1F-16FA-4C7C-AD7F-171EDBD7EFF7";
+    const string ScentMessageUUID = "45335526-67BA-4D9D-8CFB-C3D97E8D8208";
+    const string ButtonUUID = "04C3";
 
     const string LastAddressKey = "last_address";
 
@@ -108,7 +108,6 @@ public class ScentientDevice : MonoBehaviour
     private bool _foundLedUUID = false;
     private bool _rssiOnly = false;
     private int _rssi = 0;
-
     private string _status;
     public string StatusMessage
     {
@@ -211,7 +210,7 @@ public class ScentientDevice : MonoBehaviour
         BleManager.Instance.Initialize(); 
         
         if( PlayerPrefs.HasKey(LastAddressKey) ){
-            _deviceAddress = PlayerPrefs.GetString(LastAddressKey);                
+            _deviceAddress = PlayerPrefs.GetString(LastAddressKey);
             SetState(States.Connect,0.5f);
         }
         else {
@@ -222,7 +221,22 @@ public class ScentientDevice : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        if(verbose){
+            var adapter = GetComponentInChildren<BleAdapter>();
+            adapter.OnMessageReceived += OnBLEMessageRecieved;
+            adapter.OnErrorReceived += OnBLEMessageErrorReceived;
+        }
         Connect();   
+    }
+
+    private void OnBLEMessageRecieved(BleObject obj)
+    {
+        Debug.Log($"BLE Message command={obj.Command}");
+    }
+
+    private void OnBLEMessageErrorReceived(string errorMessage)
+    {
+        Debug.Log($"BLE Error {errorMessage}");
     }
 
     void OnDestroy()
@@ -265,9 +279,7 @@ public class ScentientDevice : MonoBehaviour
                     StatusMessage = "Connecting...";
                     if(m_serialPort.IsOpen){
                         _connected = true;
-                        SetState( States.Ready, 1f );
-                        // var thread = new Thread(ReadSerialRoutine);
-                        // thread.Start();
+                        SetState( States.Ready, 1f );                        
                         ReadSerialRoutine();
                     }
                     else {
@@ -279,7 +291,7 @@ public class ScentientDevice : MonoBehaviour
                     PlayerPrefs.SetString(LastAddressKey,_deviceAddress);                    
                 break;
                 case States.Unsubscribe:
-                    SetState(States.Disconnect,Time.deltaTime);
+                    SetState( States.Disconnect,Time.deltaTime );
                 break;
                 case States.Disconnect:                    
                     if(m_serialPort.IsOpen){
@@ -350,7 +362,7 @@ public class ScentientDevice : MonoBehaviour
 
                 case States.Scan:
                     StatusMessage = "Scanning...";
-                    BleManager.Instance.QueueCommand(new DiscoverDevices(OnDeviceFound, 10000));
+                    BleManager.Instance.QueueCommand(new DiscoverDevicesWithService(OnDeviceFound, ServiceUUID, 10000));
 /*                     LEGACY_BLE_LIBRARY.ScanForPeripheralsWithServices( new string[]{"180A"}, (address, name) =>
                     {
                         // if your device does not advertise the rssi and manufacturer specific data
@@ -417,11 +429,6 @@ public class ScentientDevice : MonoBehaviour
                     _foundButtonUUID = false;
                     _foundLedUUID = false;
 
-                    // note that the first parameter is the address, not the name. I have not fixed this because
-                    // of backwards compatiblity.
-                    // also note that I am note using the first 2 callbacks. If you are not looking for specific characteristics you can use one of
-                    // the first 2, but keep in mind that the device will enumerate everything and so you will want to have a timeout
-                    // large enough that it will be finished enumerating before you try to subscribe or do any other operations.
                     BleManager.Instance.QueueCommand( new ConnectToDevice(_deviceAddress,OnConnected,OnDisconnected,OnServiceDiscovered,OnCharacteristicDiscovered) );
 
                     // LEGACY_BLE_LIBRARY.ConnectToPeripheral(_deviceAddress, null, null, (address, serviceUUID, characteristicUUID) =>
@@ -467,6 +474,11 @@ public class ScentientDevice : MonoBehaviour
 
                 case States.Subscribe:
                     StatusMessage = "Subscribing...";
+                    BleManager.Instance.QueueCommand(new SubscribeToCharacteristic(_deviceAddress,ServiceUUID,ButtonUUID,(byte[] data)=>{
+                        StatusMessage = "Device Ready";
+                        ProcessButton(data);
+                        SetState(States.Ready, 1f);
+                    }));
 
                     // LEGACY_BLE_LIBRARY.SubscribeCharacteristicWithDeviceAddress(_deviceAddress, ServiceUUID, ButtonUUID, (notifyAddress, notifyCharacteristic) =>
                     // {
@@ -535,25 +547,27 @@ public class ScentientDevice : MonoBehaviour
 
     private void OnCharacteristicDiscovered(string deviceAddress, string serviceAddress, string characteristicAddress)
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
 
     private void OnServiceDiscovered(string deviceAddress, string serviceAddress)
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
 
     private void OnDisconnected(string deviceAddress)
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
+        Debug.Log($"OnDisconnected");
     }
 
 
     private void OnConnected(string deviceAddress)
     {
-        throw new NotImplementedException();
+        Debug.Log($"OnConnected");
+        SetState(States.Subscribe, 0.1f);
     }
 
 
