@@ -27,6 +27,8 @@ namespace Scentient
         public UnityEvent OnConnectedEvent;
     
 
+        public ScentTable scentTable = new ScentTable();
+
         public bool verbose;
         public bool autoConnectToLastDevice;
 
@@ -640,12 +642,15 @@ namespace Scentient
 
         public void Connect()
         {
+            scentTable.Load();
+
             if(isWindows){
                 StartProcessWin();
             }
             else {
                 StartProcess();
             }
+            
         }
 
         public void Disconnect()
@@ -671,6 +676,30 @@ namespace Scentient
             };
             SendScentMessage(scentMessage);
 
+        }
+
+        /// <summary>
+        /// Trigger a scent to be emitted on the sending device. 
+        /// </summary>
+        /// <param name="scentName">The unique scent name</param>
+        /// <param name="intensity">value between 0-255, 0 being off</param>
+        /// <param name="duration">in milliseconds</param>
+        /// <returns>If the scent can not be found, or the scent is not availible on the device, returns false, otherwise true</returns>
+        public bool SendScentMessage(string scentName, byte intensity, UInt16 duration)
+        {
+            if(!scentTable.ScentTableLoadedSuccessfully){
+                Debug.LogWarning("Unable to look up channel by scent name, ScentTable has not been loaded");
+                return false;
+            }
+
+            //get scent id from name
+
+            //get channel from scent id on device
+
+            //if no channel has matching scent id, log warning and return false
+
+            //send scent message
+            return true;
         }
 
         public void SendScentMessage(ScentMessage scentMessage){
