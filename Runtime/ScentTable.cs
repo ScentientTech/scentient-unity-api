@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -8,6 +9,8 @@ using UnityEngine;
 
 public class ScentTable : AbstractCsvData
 {
+    public event Action loadSucessfulEvent;
+    public event Action loadFailedEvent;
     public readonly string name = "scent_table";
 
 
@@ -46,6 +49,7 @@ public class ScentTable : AbstractCsvData
             LoadCache();
             return;
         }
+        loadSucessfulEvent?.Invoke();
     }
 
     public int GetScentIdByName(string scentName)
@@ -68,10 +72,11 @@ public class ScentTable : AbstractCsvData
             
             Parse(reader);
             ScentTableLoadedSuccessfully = true;
-            
+            loadSucessfulEvent?.Invoke();   
         } 
         else {
             Debug.LogError($"Unable to load CSV file {file}");
+            loadFailedEvent?.Invoke();
         }
     }
 
@@ -88,7 +93,7 @@ public class ScentTable : AbstractCsvData
         string path = string.Empty;
         path = Path.Combine( dir, string.Format("{0}.csv",this.name.ToLower().Replace(' ','-')));
         
-        return path;        
+        return path;
     }
     
 }

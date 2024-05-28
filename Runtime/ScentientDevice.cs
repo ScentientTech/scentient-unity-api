@@ -26,8 +26,7 @@ namespace Scentient
 
         public UnityEvent OnConnectedEvent;
     
-
-        public ScentTable scentTable = new ScentTable();
+        public readonly ScentTable scentTable = new ScentTable();
 
         public bool verbose;
         public bool autoConnectToLastDevice;
@@ -39,6 +38,17 @@ namespace Scentient
         // long version of short code "04C3";
         const string ButtonUUID = "000004C3-0000-1000-8000-00805f9b34fb"; 
 
+        /// <summary>
+        /// Each channel has a characteristic to store which scent is currently loaded into the device
+        /// </summary>
+        readonly string[] ChannelScentIdCharacterisiticUUIDs = new string[]{
+            "527bac61-60dc-4a73-aa99-d37ac6242931",
+            "88a45d22-9a11-48de-8789-ae339f714132",
+            "3f83c8bc-e98b-4959-aaa9-526297a1a5be",
+            "0c4bd73e-7111-4a03-a900-aabad7c3e34c"
+        };
+
+        Int16[] channelScentIds; 
 
         const string LastAddressKey = "last_address";
 
@@ -302,7 +312,7 @@ namespace Scentient
             }
             else {
                 ProcessState();
-            }    
+            }
         }
 
         void ProcessStateWindows()
@@ -330,7 +340,8 @@ namespace Scentient
                     break;
                     case States.Ready:
                         StatusMessage = "Connected";
-                        PlayerPrefs.SetString(LastAddressKey,_deviceAddress);                    
+                        PlayerPrefs.SetString(LastAddressKey,_deviceAddress); 
+                        UpdateChannelScentIds();                   
                     break;
                     case States.Unsubscribe:
                         SetState( States.Disconnect,Time.deltaTime );
@@ -345,6 +356,12 @@ namespace Scentient
                 }
             }
         }
+
+        private void UpdateChannelScentIds()
+        {
+            
+        }
+
 
         async void ReadSerialRoutine()
         {
@@ -365,8 +382,7 @@ namespace Scentient
                         SetState(States.Disconnect,0.5f);
                         break;
                     }
-                    if(readBytes==0 && currentIndex!=0){
-                        
+                    if(readBytes==0 && currentIndex!=0){                        
                         string recieved = System.Text.Encoding.Default.GetString(buffer,0,currentIndex);
                         Debug.Log($"Message received from device: {recieved}");
                         currentIndex = 0;
@@ -505,6 +521,15 @@ namespace Scentient
                             ProcessButton(data);
                         },customGatt:true));
 
+                        for(int i=0;i<ChannelScentIdCharacterisiticUUIDs.Length;i++){
+                            var index=i;
+                            BleManager.Instance.QueueCommand(new SubscribeToCharacteristic(_deviceAddress,ServiceUUID,ChannelScentIdCharacterisiticUUIDs[i],(byte[] data)=>{
+                            //button state changed
+                            
+                            UpdateChannelScentIds( index, BitConverter.ToInt16(data,0) );
+                        },customGatt:true));
+                        }
+
                         StatusMessage = "Device Ready";
                         SetState(States.Ready, 0.1f);
 
@@ -597,6 +622,7 @@ namespace Scentient
 
         private void OnConnected(string deviceAddress)
         {
+            _connected = true;
             Debug.Log($"OnConnected");
             SetState(States.Subscribe, 0.1f);
         }
@@ -642,7 +668,9 @@ namespace Scentient
 
         public void Connect()
         {
+                        
             scentTable.Load();
+            scentTable.loadSucessfulEvent += OnScentTableLoaded;
 
             if(isWindows){
                 StartProcessWin();
@@ -652,6 +680,12 @@ namespace Scentient
             }
             
         }
+
+        private void OnScentTableLoaded()
+        {
+            
+        }
+
 
         public void Disconnect()
         {
@@ -679,6 +713,7 @@ namespace Scentient
         }
 
         /// <summary>
+        /// Work in Progress
         /// Trigger a scent to be emitted on the sending device. 
         /// </summary>
         /// <param name="scentName">The unique scent name</param>
