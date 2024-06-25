@@ -41,19 +41,14 @@ public abstract class AbstractCsvData
         }
         values = lines.ToArray();
     }
-    public int GetInt(int col, int row)
+    public bool TryGetInt(int col, int row, out int result)
     {
-        return int.Parse(values[row][col]); 
+        return int.TryParse(values[row][col],out result);
     }
 
-    public float GetFloat(int col, int row)
+    public bool TryGetFloat(int col, int row, out float result)
     {
-        float result=0;
-        if(!float.TryParse(values[row][col],out result)){
-            Debug.LogWarning($"Unable to parse line {row}, column {col} as float");
-        }
-        return result; 
-
+        return float.TryParse(values[row][col],out result); 
     }
 
     public string GetString(int col, int row)
@@ -68,11 +63,38 @@ public abstract class AbstractCsvData
         return values[row][col].Trim('"');
     }
 
+    public bool TryGetString(int col, int row, out string value)
+    {
+        
+        if(values.Length<=row){
+            value = string.Empty;
+            return false;
+        }
+        if(values[row].Length<=col){
+            value = string.Empty;
+            return false;
+        }
+
+        value = values[row][col].Trim('"');
+        return true;
+    }
+
     public int FindRow(int searchCol,string value)
     {
         for( int i=0;i<values.Length;i++){
             var cols = values[i];
             if(cols[searchCol]==value){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public int FindRow(int searchCol,int value)
+    {
+        for( int i=0;i<values.Length;i++){
+            var cols = values[i];
+            if(int.TryParse(cols[searchCol],out int colVal) && colVal==value){
                 return i;
             }
         }

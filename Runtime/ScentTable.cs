@@ -13,7 +13,10 @@ public class ScentTable : AbstractCsvData
     public event Action loadFailedEvent;
     public readonly string name = "scent_table";
 
-
+    public bool Loaded {
+        private set;
+        get;
+    }
     public bool ScentTableLoadedSuccessfully {
         private set;
         get;
@@ -21,7 +24,8 @@ public class ScentTable : AbstractCsvData
 
     public async void Load()
     {
-        const string url = "https://docs.google.com/spreadsheets/u/0/d/147rxjsbxxywS3lDJS17ZBHqmWqVh5phx6toxvDXsCz4/export?format=csv&id=147rxjsbxxywS3lDJS17ZBHqmWqVh5phx6toxvDXsCz4&gid=0";
+        //UnityEngine.Android.Permission.;
+        const string url = "https://api.scentient.tech/scent-table_en.csv";
         HttpClient req = new HttpClient();
         try{ 
 
@@ -49,6 +53,7 @@ public class ScentTable : AbstractCsvData
             LoadCache();
             return;
         }
+        Loaded = true;
         loadSucessfulEvent?.Invoke();
     }
 
@@ -59,13 +64,30 @@ public class ScentTable : AbstractCsvData
             Debug.LogWarning($"Scent {scentName} not found in table");
             return 0;
         }
-        return GetInt(0,row);
-    
+        if( !TryGetInt(0,row,out int result) ){
+            Debug.LogWarning($"Scent {scentName} has bad id");
+            return -1;
+        }
+        return result;
+    }
+
+    public string GetScentNameById(short scentId)
+    {
+        int row = FindRow(0,scentId);
+        if(row == -1){
+            Debug.LogWarning($"Scent {scentId} not found in table");
+            return $"{scentId} unknown";
+        }
+        if( !TryGetString(1,row,out string result) ){
+            Debug.LogWarning($"Scent {scentId} has bad id");
+            return $"{scentId} unknown";
+        }
+        return result;
     }
 
     private void LoadCache()
     {
-        var file = getFilepath();
+        var file = GetFilepath();
         if(File.Exists(file)){
             var dataStream = new StreamReader(file);
             var reader = new CsvReader(dataStream,",");
@@ -82,12 +104,13 @@ public class ScentTable : AbstractCsvData
 
     private void SaveCache(Stream stream)
     {
-        using( var writeStream = File.OpenWrite(getFilepath()) ){
+        using( var writeStream = File.OpenWrite(GetFilepath()) ){
             stream.CopyTo( writeStream );
         }
     }
 
-    string getFilepath(){
+    string GetFilepath()
+    {
         string dir = Application.persistentDataPath;
         string fallbackDir = dir;
         string path = string.Empty;
