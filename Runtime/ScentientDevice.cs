@@ -38,8 +38,8 @@ namespace Scentient
         public bool autoConnectToLastDevice;
 
         const string DeviceName = "Scentient Escents";
-        const string ServiceUUID = "EDDD4E1F-16FA-4C7C-AD7F-171EDBD7EFF7";
-        const string ScentMessageUUID = "45335526-67BA-4D9D-8CFB-C3D97E8D8208";
+        const string ServiceUUID = "eddd4e1f-16fa-4c7c-ad7f-171edbd7eff7";
+        const string ScentMessageUUID = "45335526-67ba-4d9d-8cfb-c3d97e8d8208";
 
         // long version of short code "04C3";
         const string ButtonUUID = "000004C3-0000-1000-8000-00805f9b34fb"; 
@@ -373,14 +373,13 @@ namespace Scentient
             }
         }
 
-        private void UpdateChannelScentIds(int index, Int16 scentId)
+        private void UpdateChannelScentIds(int channel, Int16 scentId)
         {
-            _channelScentIds[index] = scentId;
-            
-            _channelScentNames[index] = scentTable.GetScentNameById(scentId);
-
+            _channelScentIds[channel] = scentId;            
+            var scentName = _channelScentNames[channel] = scentTable.GetScentNameById(scentId);
+            Debug.Log($"UpdateChannelScentIds channel={channel} scentId={scentId} scentName={_channelScentNames[channel]}");
+            OnRecievedScentNamesEvent.Invoke(channel,scentName);
         }
-
 
         async void ReadSerialRoutine()
         {
@@ -534,12 +533,12 @@ namespace Scentient
                         break;
 
                     case States.Subscribe:
-                        StatusMessage = "Subscribing...";
-                        Debug.Log($"Subscribing to button");
-                        BleManager.Instance.QueueCommand(new SubscribeToCharacteristic(_deviceAddress,ServiceUUID,ButtonUUID,(byte[] data)=>{
-                            //button state changed
-                            ProcessButton(data);
-                        },customGatt:true));
+                        // StatusMessage = "Subscribing...";
+                        // Debug.Log($"Subscribing to button");
+                        // BleManager.Instance.QueueCommand(new SubscribeToCharacteristic(_deviceAddress,ServiceUUID,ButtonUUID,(byte[] data)=>{
+                        //     //button state changed
+                        //     ProcessButton(data);
+                        // },customGatt:true));
 
                         for(int i=0;i<ChannelScentIdCharacterisiticUUIDs.Length;i++){
                             var index=i;
@@ -549,6 +548,7 @@ namespace Scentient
                             // },customGatt:true));
                             //Getting scent ids
                             BleManager.Instance.QueueCommand( new ReadFromCharacteristic(_deviceAddress,ServiceUUID,ChannelScentIdCharacterisiticUUIDs[i],(byte[] data)=>{
+                                Debug.Log($"Valued Received {data}");
                                 UpdateChannelScentIds( index, BitConverter.ToInt16(data,0) );
                             },customGatt:true));
                         }

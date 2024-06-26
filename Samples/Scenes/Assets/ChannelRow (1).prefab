@@ -92,7 +92,6 @@ GameObject:
   - component: {fileID: 1793727193}
   - component: {fileID: 1793727192}
   - component: {fileID: 1793727191}
-  - component: {fileID: 1793727190}
   m_Layer: 5
   m_Name: ChangeScentButton
   m_TagString: Untagged
@@ -203,9 +202,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1793727190}
-        m_TargetAssemblyTypeName: Scentient.EmitScentButton, Assembly-CSharp
-        m_MethodName: Emit
+      - m_Target: {fileID: 2559532227980182873}
+        m_TargetAssemblyTypeName: ChannelScentView, scentient.samples
+        m_MethodName: OpenChangeScent
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -215,21 +214,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &1793727190
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1793727188}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f92708e063e7384983cec381b46a973, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  channel: 1
-  duration: 1000
-  _scentientDevice: {fileID: 0}
 --- !u!1 &2559532227774779027
 GameObject:
   m_ObjectHideFlags: 0
@@ -515,3 +499,4 @@ MonoBehaviour:
   m_scentButton: {fileID: 2559532227774779021}
   m_changeScentButton: {fileID: 1793727191}
   m_scentList: {fileID: 0}
+  m_scentDevice: {fileID: 0}

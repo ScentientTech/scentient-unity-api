@@ -36,6 +36,7 @@ public class ChannelScentView : MonoBehaviour
     public void OpenChangeScent()
     {
         ScentListView.channelToSet = channel;
+        m_scentList.Show();        
     }
 
     void OnRecievedScentNames(int channelIndex, string name)
@@ -47,5 +48,6 @@ public class ChannelScentView : MonoBehaviour
         var textField = m_scentButton.GetComponentInChildren<Text>();
         textField.text = name;
         m_scentButton.interactable = true;
+        m_changeScentButton.interactable = true;
     }
 }
