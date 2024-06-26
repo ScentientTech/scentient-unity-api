@@ -28,7 +28,7 @@ namespace Scentient
         public event Action<States> OnStateChangedEvent;
         public event Action<bool> OnButtonChangedEvent;
 
-        public event Action<int, string> OnRecievedScentNamesEvent;
+        public event Action<int, string> OnChannelScentsUpdatedEvent;
 
         public UnityEvent OnConnectedEvent;
     
@@ -378,7 +378,7 @@ namespace Scentient
             _channelScentIds[channel] = scentId;            
             var scentName = _channelScentNames[channel] = scentTable.GetScentNameById(scentId);
             Debug.Log($"UpdateChannelScentIds channel={channel} scentId={scentId} scentName={_channelScentNames[channel]}");
-            OnRecievedScentNamesEvent.Invoke(channel,scentName);
+            OnChannelScentsUpdatedEvent.Invoke(channel,scentName);
         }
 
         async void ReadSerialRoutine()
@@ -438,7 +438,7 @@ namespace Scentient
 
                     case States.Scan:
                         StatusMessage = "Scanning...";
-                        BleManager.Instance.QueueCommand(new DiscoverDevices(OnDeviceFound, 10000));
+                        BleManager.Instance.QueueCommand(new DiscoverDevices(OnDeviceFound,OnScanFinished, 10000));
     /*                     LEGACY_BLE_LIBRARY.ScanForPeripheralsWithServices( new string[]{"180A"}, (address, name) =>
                         {
                             // if your device does not advertise the rssi and manufacturer specific data
@@ -659,6 +659,14 @@ namespace Scentient
             }
         }
 
+        private void OnScanFinished()
+        {
+            Debug.Log($"OnScanFinished: state={State}");
+            if(State==States.Scan){
+                SetState(States.None,0.1f);
+            }
+        }
+
 
         private static string ToHexString(byte[] bytes)
         {
@@ -845,10 +853,11 @@ namespace Scentient
         public void SetChannelScent(int channelToSet, short scentId)
         {
             _channelScentIds[channelToSet]=scentId;
-            _channelScentNames[channelToSet] = scentTable.GetScentNameById(scentId);
+            var scentName = _channelScentNames[channelToSet] = scentTable.GetScentNameById(scentId);
             if(_connected){
                 var messageBytes = BitConverter.GetBytes(scentId);
                 BleManager.Instance.QueueCommand(new WriteToCharacteristic(_deviceAddress,ServiceUUID,ChannelScentIdCharacterisiticUUIDs[channelToSet],messageBytes,customGatt:true));
+                OnChannelScentsUpdatedEvent.Invoke(channelToSet,scentName);
             }
             else {
                 Debug.LogWarning($"Cannot set channel scent, not connected to device");

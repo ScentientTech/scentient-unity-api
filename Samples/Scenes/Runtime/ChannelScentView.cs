@@ -25,7 +25,7 @@ public class ChannelScentView : MonoBehaviour
     void Awake()
     {
         Interactable = false;
-        m_scentDevice.OnRecievedScentNamesEvent += OnRecievedScentNames;
+        m_scentDevice.OnChannelScentsUpdatedEvent += OnChannelScentsUpdated;
     }
 
     public void RefreshScentNames()
@@ -39,7 +39,7 @@ public class ChannelScentView : MonoBehaviour
         m_scentList.Show();        
     }
 
-    void OnRecievedScentNames(int channelIndex, string name)
+    void OnChannelScentsUpdated(int channelIndex, string name)
     {
         if(channelIndex!=channel){
             return;
