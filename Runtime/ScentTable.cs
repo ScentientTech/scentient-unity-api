@@ -57,18 +57,20 @@ public class ScentTable : AbstractCsvData
         loadSucessfulEvent?.Invoke();
     }
 
-    public int GetScentIdByName(string scentName)
+    public bool GetScentIdByName(string scentName, out int id)
     {
+        id = 0;
         int row = FindRow(1,scentName.ToLower());
         if(row == -1){
             Debug.LogWarning($"Scent {scentName} not found in table");
-            return 0;
+            return false;
         }
         if( !TryGetInt(0,row,out int result) ){
             Debug.LogWarning($"Scent {scentName} has bad id");
-            return -1;
+            return false;
         }
-        return result;
+        id = result;
+        return true;
     }
 
     public string GetScentNameById(short scentId)

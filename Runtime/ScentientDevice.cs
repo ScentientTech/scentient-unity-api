@@ -35,7 +35,9 @@ namespace Scentient
         public readonly ScentTable scentTable = new ScentTable();
 
         public bool verbose;
-        public bool autoConnectToLastDevice;
+        public bool reconnectToLastDevice = true;
+
+        public bool autoConnectOnStart;
 
         const string DeviceName = "Scentient Escents";
         const string ServiceUUID = "eddd4e1f-16fa-4c7c-ad7f-171edbd7eff7";
@@ -277,7 +279,7 @@ namespace Scentient
             Reset();
             BleManager.Instance.Initialize(); 
             
-            if( autoConnectToLastDevice && PlayerPrefs.HasKey(LastAddressKey) ){
+            if( reconnectToLastDevice && PlayerPrefs.HasKey(LastAddressKey) ){
                 _deviceAddress = PlayerPrefs.GetString(LastAddressKey);
                 SetState(States.Connect,0.5f);
             }
@@ -292,9 +294,11 @@ namespace Scentient
             if(verbose){
                 var adapter = BleManager.Instance.GetComponentInChildren<BleAdapter>();
                 adapter.OnMessageReceived += OnBLEMessageRecieved;
-                adapter.OnErrorReceived += OnBLEMessageErrorReceived;
+                adapter.OnErrorReceived += OnBLEMessageErrorReceived;                
             }
-        
+            if(autoConnectOnStart){
+                Connect();
+            }
         }
 
         private void OnBLEMessageRecieved(BleObject obj)
@@ -783,28 +787,54 @@ namespace Scentient
 
         }
 
+
         /// <summary>
-        /// Work in Progress
-        /// Trigger a scent to be emitted on the sending device. 
+        /// Emits a scent for a fixed period of time.
+        /// Any scent being emitted can be stopped by calling this method with a duration of 0
         /// </summary>
-        /// <param name="scentName">The unique scent name</param>
-        /// <param name="intensity">value between 0-255, 0 being off</param>
-        /// <param name="duration">in milliseconds</param>
-        /// <returns>If the scent can not be found, or the scent is not availible on the device, returns false, otherwise true</returns>
-        public bool SendScentMessage(string scentName, byte intensity, UInt16 duration)
+        /// <param name="scentName">The name of the scent, can include spaces, should be one of the names in the following table https://api.scentient.tech/scent-table_en.csv</param>
+        /// <param name="duration">duration in seconds</param>
+        /// <returns></returns>
+        public bool EmitScent(string scentName, float duration)
         {
             if(!scentTable.ScentTableLoadedSuccessfully){
                 Debug.LogWarning("Unable to look up channel by scent name, ScentTable has not been loaded");
                 return false;
             }
 
-            //get scent id from name
+            if(duration>=0){
+                Debug.LogWarning("Duration must be a positive ");
+                return  false;
+            }
+
+            //sanitising the input
+            scentName = scentName.Trim().Substring(0,64).ToLower();
+
+            if(!scentTable.GetScentIdByName(scentName, out int id)){
+                Debug.LogWarning($"Scent \"{scentName}\" not found in scent table.");
+                return false;
+            }
 
             //get channel from scent id on device
-
+            var channel = System.Array.IndexOf( _channelScentNames, scentName );
             //if no channel has matching scent id, log warning and return false
+            if(channel==-1){
+                Debug.LogWarning($"Scent {scentName} not found on device");
+                return false;
+            }
+
+            var durationMillis = Mathf.FloorToInt(duration*1000);
+            if( ushort.MaxValue < durationMillis ){
+                durationMillis = ushort.MaxValue;
+            }
 
             //send scent message
+            ScentMessage scentMessage = new ScentMessage(){
+                channel = (byte)channel,
+                intensity = 255,
+                duration = (ushort) durationMillis
+            };
+            SendScentMessage(scentMessage);
             return true;
         }
 
