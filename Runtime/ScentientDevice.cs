@@ -193,6 +193,11 @@ namespace Scentient
         public States State { get  { return _state; } }
 
 
+        void Awake()
+        {
+            scentTable.loadSucessfulEvent += OnScentTableLoaded;
+        }
+
 
         void Reset()
         {
@@ -703,9 +708,9 @@ namespace Scentient
 
         public void Connect()
         {
-                        
-            scentTable.Load();
-            scentTable.loadSucessfulEvent += OnScentTableLoaded;
+            if(!scentTable.Loaded){
+                scentTable.Load();
+            }
 
             if(isWindows){
                 StartProcessWin();
@@ -802,7 +807,7 @@ namespace Scentient
                 return false;
             }
 
-            if(duration>=0){
+            if(duration<0){
                 Debug.LogWarning("Duration must be a positive ");
                 return  false;
             }
