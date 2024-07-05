@@ -813,7 +813,7 @@ namespace Scentient
             }
 
             //sanitising the input
-            scentName = scentName.Trim().Substring(0,64).ToLower();
+            scentName = scentName.Substring(0,Mathf.Min(64,scentName.Length)).Trim().ToLower();
 
             if(!scentTable.GetScentIdByName(scentName, out int id)){
                 Debug.LogWarning($"Scent \"{scentName}\" not found in scent table.");
