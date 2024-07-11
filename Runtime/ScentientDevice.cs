@@ -39,6 +39,8 @@ namespace Scentient
 
         public bool autoConnectOnStart;
 
+        public bool autoRequestPermissionsOnConnect = true;
+
         const string DeviceName = "Scentient Escents";
         const string ServiceUUID = "eddd4e1f-16fa-4c7c-ad7f-171edbd7eff7";
         const string ScentMessageUUID = "45335526-67ba-4d9d-8cfb-c3d97e8d8208";
@@ -97,9 +99,18 @@ namespace Scentient
         }
 
         [System.Serializable]
+        
         public class ScentMessage 
         {
+            /// <summary>
+            /// channel value from 1-4 for Escents device
+            /// </summary>
             public byte channel;
+
+            /// <summary>
+            /// 0, no intensity
+            /// 255, some intensity
+            /// </summary>
             public byte intensity;
             public ushort duration;
 
@@ -282,6 +293,25 @@ namespace Scentient
                 return;
             }
             Reset();
+            
+            if(autoRequestPermissionsOnConnect){
+                var appPerm = GameObject.FindAnyObjectByType<AppPermissions>();
+                
+                if(appPerm==null){
+                    appPerm = gameObject.AddComponent<AppPermissions>();
+                }
+                else {
+                    appPerm.allPermissionsGrantedEvent.RemoveListener(Connect);
+                }
+                if(!appPerm.AllPermissionsGranted){
+                    // If we need to request permissions, abort connecting until permissions are granted                    
+                    appPerm.allPermissionsGrantedEvent.AddListener( Connect );
+                    appPerm.RequestPermissions();
+                    return;
+                }
+
+            }
+
             BleManager.Instance.Initialize(); 
             
             if( reconnectToLastDevice && PlayerPrefs.HasKey(LastAddressKey) ){
@@ -723,12 +753,18 @@ namespace Scentient
 
         private void OnScentTableLoaded()
         {
-            Debug.Log("Scent table loaded");
-            for(int i=0;i<scentTable.RowCount();i++){
-                if(scentTable.TryGetInt(0,i,out int id)){
-                    Debug.Log($"{id}={scentTable.GetString(1,i)}");
+            if(verbose){
+                Debug.Log("Scent table loaded");
+                StringBuilder sb = new StringBuilder();
+                for(int i=0;i<scentTable.RowCount();i++){
+                    if(scentTable.TryGetInt(0,i,out int id)){
+                        
+                        sb.Append($"{id}={scentTable.GetString(1,i)}");
+                    }
                 }
+                Debug.Log(sb.ToString());
             }
+
         }
 
         public async Task<string[]> GetChannelScentNamesAsync()
@@ -819,13 +855,19 @@ namespace Scentient
                 Debug.LogWarning($"Scent \"{scentName}\" not found in scent table.");
                 return false;
             }
+            else if(verbose){
+                Debug.Log($"Scent found in scent table {scentName}=={id}");
+            }
 
             //get channel from scent id on device
-            var channel = System.Array.IndexOf( _channelScentNames, scentName );
+            var channel = System.Array.IndexOf( _channelScentNames, scentName )+1;
             //if no channel has matching scent id, log warning and return false
-            if(channel==-1){
+            if(channel==0){
                 Debug.LogWarning($"Scent {scentName} not found on device");
                 return false;
+            }
+            else {
+                Debug.Log($"Scent channel found with scent id {scentName}=={channel}");
             }
 
             var durationMillis = Mathf.FloorToInt(duration*1000);
