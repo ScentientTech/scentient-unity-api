@@ -836,7 +836,19 @@ namespace Scentient
         /// <param name="scentName">The name of the scent, can include spaces, should be one of the names in the following table https://api.scentient.tech/scent-table_en.csv</param>
         /// <param name="duration">duration in seconds</param>
         /// <returns></returns>
-        public bool EmitScent(string scentName, float duration)
+        public bool EmitScent(string scentName, float duration){
+            return EmitScent(scentName,1f,duration);
+        }
+
+                
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="scentName">The name of the scent, can include spaces, should be one of the names in the following table https://api.scentient.tech/scent-table_en.csv</param>
+        /// <param name="intensity">Value from 0 to 1</param>
+        /// <param name="duration">duration in seconds</param>
+        /// <returns></returns>
+        public bool EmitScent(string scentName, float intensity, float duration)
         {
             if(!scentTable.ScentTableLoadedSuccessfully){
                 Debug.LogWarning("Unable to look up channel by scent name, ScentTable has not been loaded");
@@ -875,10 +887,12 @@ namespace Scentient
                 durationMillis = ushort.MaxValue;
             }
 
+            byte intensityByte = (byte)Mathf.RoundToInt( 0xff * Mathf.Clamp01(intensity) );
+
             //send scent message
             ScentMessage scentMessage = new ScentMessage(){
                 channel = (byte)channel,
-                intensity = 255,
+                intensity = intensityByte,
                 duration = (ushort) durationMillis
             };
             SendScentMessage(scentMessage);

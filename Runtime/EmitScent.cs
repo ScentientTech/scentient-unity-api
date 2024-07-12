@@ -11,11 +11,40 @@ namespace Scentient
         /// <summary>
         /// The name of the scent, can include spaces, should be one of the names in the following table https://api.scentient.tech/scent-table_en.csv
         /// </summary>
-        [SerializeField][Tooltip("see https://api.scentient.tech/scent-table_en.csv")] string m_scentName;
+        [Tooltip("see https://api.scentient.tech/scent-table_en.csv")] [SerializeField] string m_scentName;
         /// <summary>
         /// Duration to emit for in seconds
         /// </summary>
-        [SerializeField][Tooltip("Time in seconds")] float m_duration;
+        [Tooltip("Time in seconds")] [SerializeField] float m_duration;
+
+        [Range(0,1)] [SerializeField] float m_intensity;
+
+        public string ScentName {
+            set {
+                m_scentName = value;
+            }
+            get {
+                return m_scentName;
+            }
+        }
+
+        public float Intensity {
+            set {
+                this.m_intensity = value;
+            }
+            get {
+                return m_intensity;
+            }
+        }
+
+        public float Duration {
+            set {
+                this.m_intensity = value;
+            }
+            get {
+                return m_intensity;
+            }
+        }
 
         [SerializeField] Scentient.ScentientDevice m_scentientDevice;
 
@@ -28,11 +57,9 @@ namespace Scentient
         {
             if (CheckDevice())
             {
-                m_scentientDevice.EmitScent(m_scentName, m_duration);
+                m_scentientDevice.EmitScent(m_scentName, m_intensity, m_duration);
             }
         }
-
-
 
         public void Stop()
         {
