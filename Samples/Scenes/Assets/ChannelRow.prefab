@@ -455,7 +455,7 @@ GameObject:
   - component: {fileID: 2559532227980182878}
   - component: {fileID: 2559532227980182873}
   m_Layer: 5
-  m_Name: ChannelRow (1)
+  m_Name: ChannelRow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
