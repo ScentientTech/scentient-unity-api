@@ -1,5 +1,13 @@
 {
   "name": "tech.scentient.android-api",
-  "version": "0.0.0",
-  "displayName": "Scentient Android API"
+  "version": "0.1.0",
+  "description": "API for connecting to and controlling the Scentient Escents peripheral",
+  "displayName": "Scentient Android API",
+  "samples": [
+        {
+            "displayName": "VR Demo Scene",
+            "description": "Contains XR Interaction Demos for emitting scents",
+            "path": "Samples~/VRDemo"
+        }
+    ]
 }
