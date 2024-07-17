@@ -15,9 +15,9 @@ namespace Scentient
         /// <summary>
         /// Duration to emit for in seconds
         /// </summary>
-        [Tooltip("Time in seconds")] [SerializeField] float m_duration;
+        [Tooltip("Time in seconds")] [SerializeField] float m_duration = 0.25f;
 
-        [Range(0,1)] [SerializeField] float m_intensity;
+        [Range(0,1)] [SerializeField] float m_intensity = 1f;
 
         public string ScentName {
             set {
