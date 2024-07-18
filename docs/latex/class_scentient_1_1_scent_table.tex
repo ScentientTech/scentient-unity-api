@@ -1,0 +1,79 @@
+\doxysection{Scentient.\+Scent\+Table Class Reference}
+\hypertarget{class_scentient_1_1_scent_table}{}\label{class_scentient_1_1_scent_table}\index{Scentient.ScentTable@{Scentient.ScentTable}}
+Inheritance diagram for Scentient.\+Scent\+Table\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_scentient_1_1_scent_table}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_scentient_1_1_scent_table_abb5704d8c6013e0680cf6c1c0ff733bd}\label{class_scentient_1_1_scent_table_abb5704d8c6013e0680cf6c1c0ff733bd} 
+async void {\bfseries Load} ()
+\item 
+\Hypertarget{class_scentient_1_1_scent_table_aebc003ef02ac9fb3092990405e295c2c}\label{class_scentient_1_1_scent_table_aebc003ef02ac9fb3092990405e295c2c} 
+bool {\bfseries Get\+Scent\+Id\+By\+Name} (string scent\+Name, out int id)
+\item 
+\Hypertarget{class_scentient_1_1_scent_table_a7f07423a84cc3df84d154e945b56a884}\label{class_scentient_1_1_scent_table_a7f07423a84cc3df84d154e945b56a884} 
+string {\bfseries Get\+Scent\+Name\+By\+Id} (short scent\+Id)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_abstract_csv_data}{Abstract\+Csv\+Data}}}
+\begin{DoxyCompactItemize}
+\item 
+bool {\bfseries Try\+Get\+Int} (int col, int row, out int result)
+\item 
+bool {\bfseries Try\+Get\+Float} (int col, int row, out float result)
+\item 
+string {\bfseries Get\+String} (int col, int row)
+\item 
+bool {\bfseries Try\+Get\+String} (int col, int row, out string value)
+\item 
+int {\bfseries Find\+Row} (int search\+Col, string value)
+\item 
+int {\bfseries Find\+Row} (int search\+Col, int value)
+\item 
+int {\bfseries Find\+Rows} (int search\+Col, string value, int\mbox{[}$\,$\mbox{]} matches)
+\item 
+int {\bfseries Row\+Count} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_scentient_1_1_scent_table_a40f8b27194b8f96662dc8407768b94d8}\label{class_scentient_1_1_scent_table_a40f8b27194b8f96662dc8407768b94d8} 
+readonly string {\bfseries name} = "{}scent\+\_\+table"{}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_scentient_1_1_scent_table_a04a6056692af62b658bbb5d0ec990ca3}\label{class_scentient_1_1_scent_table_a04a6056692af62b658bbb5d0ec990ca3} 
+bool {\bfseries Loaded}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+\Hypertarget{class_scentient_1_1_scent_table_afa8e0f4d33db29551fba24f108068359}\label{class_scentient_1_1_scent_table_afa8e0f4d33db29551fba24f108068359} 
+bool {\bfseries Scent\+Table\+Loaded\+Successfully}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Events}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_scentient_1_1_scent_table_ad068b1601d9f815a6d31745cebaf24d7}\label{class_scentient_1_1_scent_table_ad068b1601d9f815a6d31745cebaf24d7} 
+Action {\bfseries load\+Sucessful\+Event}
+\item 
+\Hypertarget{class_scentient_1_1_scent_table_ab42e89dad6899f6b260a08231b14b6e8}\label{class_scentient_1_1_scent_table_ab42e89dad6899f6b260a08231b14b6e8} 
+Action {\bfseries load\+Failed\+Event}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{class_abstract_csv_data}{Abstract\+Csv\+Data}}}
+\begin{DoxyCompactItemize}
+\item 
+void {\bfseries Parse} (Csv\+Reader reader)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_abstract_csv_data}{Abstract\+Csv\+Data}}}
+\begin{DoxyCompactItemize}
+\item 
+string\mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} {\bfseries values}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Runtime/Scent\+Table.\+cs\end{DoxyCompactItemize}

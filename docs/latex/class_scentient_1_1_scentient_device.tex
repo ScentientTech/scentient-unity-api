@@ -1,0 +1,177 @@
+\doxysection{Scentient.\+Scentient\+Device Class Reference}
+\hypertarget{class_scentient_1_1_scentient_device}{}\label{class_scentient_1_1_scentient_device}\index{Scentient.ScentientDevice@{Scentient.ScentientDevice}}
+Inheritance diagram for Scentient.\+Scentient\+Device\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_scentient_1_1_scentient_device}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_scentient_1_1_scentient_device_1_1_scent_message}{Scent\+Message}}
+\item 
+struct \mbox{\hyperlink{struct_scentient_1_1_scentient_device_1_1_scent_message_struct}{Scent\+Message\+Struct}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_scentient_1_1_scentient_device_a1e0611ddb2046ac82a3fc89a7a1df78f}\label{class_scentient_1_1_scentient_device_a1e0611ddb2046ac82a3fc89a7a1df78f} 
+enum {\bfseries States} \{ \newline
+{\bfseries None}
+, {\bfseries Scan}
+, {\bfseries Scan\+RSSI}
+, {\bfseries Read\+RSSI}
+, \newline
+{\bfseries Connect}
+, {\bfseries Request\+MTU}
+, {\bfseries Subscribe}
+, {\bfseries Unsubscribe}
+, \newline
+{\bfseries Disconnect}
+, {\bfseries Ready}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_scentient_1_1_scentient_device_a7cc0c5791fae38b1c9bad350a425bf94}\label{class_scentient_1_1_scentient_device_a7cc0c5791fae38b1c9bad350a425bf94} 
+void {\bfseries Connect} ()
+\item 
+\Hypertarget{class_scentient_1_1_scentient_device_a60663fbc9f42cee2065e8ec192af7c89}\label{class_scentient_1_1_scentient_device_a60663fbc9f42cee2065e8ec192af7c89} 
+async Task$<$ string\mbox{[}$\,$\mbox{]}$>$ {\bfseries Get\+Channel\+Scent\+Names\+Async} ()
+\item 
+\Hypertarget{class_scentient_1_1_scentient_device_a33951540639a963a5a62b325e45280cb}\label{class_scentient_1_1_scentient_device_a33951540639a963a5a62b325e45280cb} 
+string\mbox{[}$\,$\mbox{]} {\bfseries Get\+Channel\+Scent\+Names} ()
+\item 
+\Hypertarget{class_scentient_1_1_scentient_device_a345d13d9ab33b7d9e2d644a8ed07d46b}\label{class_scentient_1_1_scentient_device_a345d13d9ab33b7d9e2d644a8ed07d46b} 
+void {\bfseries Disconnect} ()
+\item 
+void \mbox{\hyperlink{class_scentient_1_1_scentient_device_a2cfdfb1318da8258f7ab48a4e2800461}{Send\+Scent\+Message}} (byte channel, byte intensity, UInt16 duration)
+\begin{DoxyCompactList}\small\item\em Emits a scent from one of the 4 scent emitters, with the provided intensity and duration. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_scentient_1_1_scentient_device_a16fab80f60ceaa2e848c2bd8b075d092}{Emit\+Scent}} (string scent\+Name, float duration)
+\begin{DoxyCompactList}\small\item\em Emits a scent for a fixed period of time. Any scent being emitted can be stopped by calling this method with a duration of 0. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_scentient_1_1_scentient_device_a275c0fbc93dbd89babc11266ee4ab4a0}{Emit\+Scent}} (string scent\+Name, float intensity, float duration)
+\item 
+\Hypertarget{class_scentient_1_1_scentient_device_a47b440806712902a71e30f943a923d22}\label{class_scentient_1_1_scentient_device_a47b440806712902a71e30f943a923d22} 
+void {\bfseries Send\+Scent\+Message} (\mbox{\hyperlink{class_scentient_1_1_scentient_device_1_1_scent_message}{Scent\+Message}} scent\+Message)
+\item 
+\Hypertarget{class_scentient_1_1_scentient_device_a4e1a973151153c2830e3919299661b55}\label{class_scentient_1_1_scentient_device_a4e1a973151153c2830e3919299661b55} 
+Dictionary$<$ short, string $>$ {\bfseries Get\+Scent\+Dict} ()
+\item 
+\Hypertarget{class_scentient_1_1_scentient_device_af448a8d23775e644a2beda750e7d9372}\label{class_scentient_1_1_scentient_device_af448a8d23775e644a2beda750e7d9372} 
+void {\bfseries Set\+Channel\+Scent} (int channel\+To\+Set, short scent\+Id)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_scentient_1_1_scentient_device_a74db30672cbb83cc8c004ff15ba1056b}\label{class_scentient_1_1_scentient_device_a74db30672cbb83cc8c004ff15ba1056b} 
+Unity\+Event {\bfseries On\+Connected\+Event}
+\item 
+\Hypertarget{class_scentient_1_1_scentient_device_a1880b4af3aee8ba1217ad633ac5f46ea}\label{class_scentient_1_1_scentient_device_a1880b4af3aee8ba1217ad633ac5f46ea} 
+readonly \mbox{\hyperlink{class_scentient_1_1_scent_table}{Scent\+Table}} {\bfseries scent\+Table} = new \mbox{\hyperlink{class_scentient_1_1_scent_table}{Scent\+Table}}()
+\item 
+\Hypertarget{class_scentient_1_1_scentient_device_a9fb640795a79b24357feda5b9c504a9a}\label{class_scentient_1_1_scentient_device_a9fb640795a79b24357feda5b9c504a9a} 
+bool {\bfseries verbose}
+\item 
+\Hypertarget{class_scentient_1_1_scentient_device_a95bf7ee7f34c262bb0364b117e1cbcf4}\label{class_scentient_1_1_scentient_device_a95bf7ee7f34c262bb0364b117e1cbcf4} 
+bool {\bfseries reconnect\+To\+Last\+Device} = true
+\item 
+\Hypertarget{class_scentient_1_1_scentient_device_aa30582df7869d2496f085cd2779d06ce}\label{class_scentient_1_1_scentient_device_aa30582df7869d2496f085cd2779d06ce} 
+bool {\bfseries auto\+Connect\+On\+Start}
+\item 
+\Hypertarget{class_scentient_1_1_scentient_device_ae9bb285bbee3a30b97dc10742f95d9f3}\label{class_scentient_1_1_scentient_device_ae9bb285bbee3a30b97dc10742f95d9f3} 
+bool {\bfseries auto\+Request\+Permissions\+On\+Connect} = true
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_scentient_1_1_scentient_device_ac52a847b057ee4185703c72cbda07fe4}\label{class_scentient_1_1_scentient_device_ac52a847b057ee4185703c72cbda07fe4} 
+string {\bfseries Status\+Message}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+\Hypertarget{class_scentient_1_1_scentient_device_aa9913f6de149531e839b7780a50d7249}\label{class_scentient_1_1_scentient_device_aa9913f6de149531e839b7780a50d7249} 
+string\mbox{[}$\,$\mbox{]} {\bfseries Channel\+Scent\+Names}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+\Hypertarget{class_scentient_1_1_scentient_device_ade61b0c6d5481102a4ea50fb3dffdbc5}\label{class_scentient_1_1_scentient_device_ade61b0c6d5481102a4ea50fb3dffdbc5} 
+States {\bfseries State}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Events}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_scentient_1_1_scentient_device_aafa82cf754ce5334688344630eed56ab}\label{class_scentient_1_1_scentient_device_aafa82cf754ce5334688344630eed56ab} 
+Action$<$ string $>$ {\bfseries On\+Status\+Changed\+Event}
+\item 
+\Hypertarget{class_scentient_1_1_scentient_device_ac1cd3d72995809d6a5c500f2cc7f7d6f}\label{class_scentient_1_1_scentient_device_ac1cd3d72995809d6a5c500f2cc7f7d6f} 
+Action$<$ States $>$ {\bfseries On\+State\+Changed\+Event}
+\item 
+\Hypertarget{class_scentient_1_1_scentient_device_aaae707c60f541c388012cdd5f371b725}\label{class_scentient_1_1_scentient_device_aaae707c60f541c388012cdd5f371b725} 
+Action$<$ bool $>$ {\bfseries On\+Button\+Changed\+Event}
+\item 
+\Hypertarget{class_scentient_1_1_scentient_device_a75e69bd1b8d6b59d82783d65922b6a77}\label{class_scentient_1_1_scentient_device_a75e69bd1b8d6b59d82783d65922b6a77} 
+Action$<$ int, string $>$ {\bfseries On\+Channel\+Scents\+Updated\+Event}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_scentient_1_1_scentient_device_a16fab80f60ceaa2e848c2bd8b075d092}\index{Scentient.ScentientDevice@{Scentient.ScentientDevice}!EmitScent@{EmitScent}}
+\index{EmitScent@{EmitScent}!Scentient.ScentientDevice@{Scentient.ScentientDevice}}
+\doxysubsubsection{\texorpdfstring{EmitScent()}{EmitScent()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_scentient_1_1_scentient_device_a16fab80f60ceaa2e848c2bd8b075d092} 
+bool Scentient.\+Scentient\+Device.\+Emit\+Scent (\begin{DoxyParamCaption}\item[{string}]{scent\+Name}{, }\item[{float}]{duration}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Emits a scent for a fixed period of time. Any scent being emitted can be stopped by calling this method with a duration of 0. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em scent\+Name} & The name of the scent, can include spaces, should be one of the names in the following table \href{https://api.scentient.tech/scent-table_en.csv}{\texttt{ https\+://api.\+scentient.\+tech/scent-\/table\+\_\+en.\+csv}}\\
+\hline
+{\em duration} & duration in seconds\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\Hypertarget{class_scentient_1_1_scentient_device_a275c0fbc93dbd89babc11266ee4ab4a0}\index{Scentient.ScentientDevice@{Scentient.ScentientDevice}!EmitScent@{EmitScent}}
+\index{EmitScent@{EmitScent}!Scentient.ScentientDevice@{Scentient.ScentientDevice}}
+\doxysubsubsection{\texorpdfstring{EmitScent()}{EmitScent()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_scentient_1_1_scentient_device_a275c0fbc93dbd89babc11266ee4ab4a0} 
+bool Scentient.\+Scentient\+Device.\+Emit\+Scent (\begin{DoxyParamCaption}\item[{string}]{scent\+Name}{, }\item[{float}]{intensity}{, }\item[{float}]{duration}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyParams}{Parameters}
+{\em scent\+Name} & The name of the scent, can include spaces, should be one of the names in the following table \href{https://api.scentient.tech/scent-table_en.csv}{\texttt{ https\+://api.\+scentient.\+tech/scent-\/table\+\_\+en.\+csv}}\\
+\hline
+{\em intensity} & Value from 0 to 1\\
+\hline
+{\em duration} & duration in seconds\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\Hypertarget{class_scentient_1_1_scentient_device_a2cfdfb1318da8258f7ab48a4e2800461}\index{Scentient.ScentientDevice@{Scentient.ScentientDevice}!SendScentMessage@{SendScentMessage}}
+\index{SendScentMessage@{SendScentMessage}!Scentient.ScentientDevice@{Scentient.ScentientDevice}}
+\doxysubsubsection{\texorpdfstring{SendScentMessage()}{SendScentMessage()}}
+{\footnotesize\ttfamily \label{class_scentient_1_1_scentient_device_a2cfdfb1318da8258f7ab48a4e2800461} 
+void Scentient.\+Scentient\+Device.\+Send\+Scent\+Message (\begin{DoxyParamCaption}\item[{byte}]{channel}{, }\item[{byte}]{intensity}{, }\item[{UInt16}]{duration}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Emits a scent from one of the 4 scent emitters, with the provided intensity and duration. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em channel} & channel value 1-\/4\\
+\hline
+{\em intensity} & value between 0-\/255, 0 being off\\
+\hline
+{\em duration} & in milliseconds\\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Runtime/Scentient\+Device.\+cs\end{DoxyCompactItemize}

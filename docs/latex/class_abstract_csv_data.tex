@@ -1,0 +1,52 @@
+\doxysection{Abstract\+Csv\+Data Class Reference}
+\hypertarget{class_abstract_csv_data}{}\label{class_abstract_csv_data}\index{AbstractCsvData@{AbstractCsvData}}
+Inheritance diagram for Abstract\+Csv\+Data\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_abstract_csv_data}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_abstract_csv_data_a9b2c15cc5f12ff0b0e611671390c0a0e}\label{class_abstract_csv_data_a9b2c15cc5f12ff0b0e611671390c0a0e} 
+bool {\bfseries Try\+Get\+Int} (int col, int row, out int result)
+\item 
+\Hypertarget{class_abstract_csv_data_abd91e07a0204d5890c8d4ade22fa0762}\label{class_abstract_csv_data_abd91e07a0204d5890c8d4ade22fa0762} 
+bool {\bfseries Try\+Get\+Float} (int col, int row, out float result)
+\item 
+\Hypertarget{class_abstract_csv_data_a4b2180c6689229236b426c14973285b9}\label{class_abstract_csv_data_a4b2180c6689229236b426c14973285b9} 
+string {\bfseries Get\+String} (int col, int row)
+\item 
+\Hypertarget{class_abstract_csv_data_a5198e37534f1d19f22e3e23c3dd7261b}\label{class_abstract_csv_data_a5198e37534f1d19f22e3e23c3dd7261b} 
+bool {\bfseries Try\+Get\+String} (int col, int row, out string value)
+\item 
+\Hypertarget{class_abstract_csv_data_ac594cc50b5111a83d4ef4582b23d97fd}\label{class_abstract_csv_data_ac594cc50b5111a83d4ef4582b23d97fd} 
+int {\bfseries Find\+Row} (int search\+Col, string value)
+\item 
+\Hypertarget{class_abstract_csv_data_a5761288fc9c785ff6416014b5a52506c}\label{class_abstract_csv_data_a5761288fc9c785ff6416014b5a52506c} 
+int {\bfseries Find\+Row} (int search\+Col, int value)
+\item 
+\Hypertarget{class_abstract_csv_data_ac45ae56f7c45b93f53c1ee9a6cede8fe}\label{class_abstract_csv_data_ac45ae56f7c45b93f53c1ee9a6cede8fe} 
+int {\bfseries Find\+Rows} (int search\+Col, string value, int\mbox{[}$\,$\mbox{]} matches)
+\item 
+\Hypertarget{class_abstract_csv_data_a331e5a7289dd934ddd958255e0238485}\label{class_abstract_csv_data_a331e5a7289dd934ddd958255e0238485} 
+int {\bfseries Row\+Count} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_abstract_csv_data_ae5d6cb8ee9c8e2ed6e4d68530374aaf4}\label{class_abstract_csv_data_ae5d6cb8ee9c8e2ed6e4d68530374aaf4} 
+void {\bfseries Parse} (Csv\+Reader reader)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_abstract_csv_data_af783d8605812c406116588ddf0fb4bd8}\label{class_abstract_csv_data_af783d8605812c406116588ddf0fb4bd8} 
+string\mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} {\bfseries values}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Runtime/Abstract\+Csv\+Data.\+cs\end{DoxyCompactItemize}

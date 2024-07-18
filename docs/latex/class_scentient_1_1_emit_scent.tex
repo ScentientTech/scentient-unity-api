@@ -1,0 +1,45 @@
+\doxysection{Scentient.\+Emit\+Scent Class Reference}
+\hypertarget{class_scentient_1_1_emit_scent}{}\label{class_scentient_1_1_emit_scent}\index{Scentient.EmitScent@{Scentient.EmitScent}}
+
+
+Simple class for emitting scents. Designed to be called by game scripts, and Unity\+Event actions.  
+
+
+Inheritance diagram for Scentient.\+Emit\+Scent\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_scentient_1_1_emit_scent}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_scentient_1_1_emit_scent_a85f36cc52e98f7d216931482b499fc52}\label{class_scentient_1_1_emit_scent_a85f36cc52e98f7d216931482b499fc52} 
+void {\bfseries Reset} ()
+\item 
+\Hypertarget{class_scentient_1_1_emit_scent_aea70fd582db16f40fdde4602c8c0190b}\label{class_scentient_1_1_emit_scent_aea70fd582db16f40fdde4602c8c0190b} 
+void {\bfseries Emit} ()
+\item 
+\Hypertarget{class_scentient_1_1_emit_scent_a20aca0fa91727653fced9ee88d2edc31}\label{class_scentient_1_1_emit_scent_a20aca0fa91727653fced9ee88d2edc31} 
+void {\bfseries Stop} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_scentient_1_1_emit_scent_a4cd7794b394586b2a6705d717bb26d5f}\label{class_scentient_1_1_emit_scent_a4cd7794b394586b2a6705d717bb26d5f} 
+string {\bfseries Scent\+Name}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The name of the scent, can include spaces, should be one of the names in the following table \href{https://api.scentient.tech/scent-table_en.csv}{\texttt{ https\+://api.\+scentient.\+tech/scent-\/table\+\_\+en.\+csv}}. \end{DoxyCompactList}\item 
+\Hypertarget{class_scentient_1_1_emit_scent_a110db1797f13e2f4149b4587df447079}\label{class_scentient_1_1_emit_scent_a110db1797f13e2f4149b4587df447079} 
+float {\bfseries Intensity}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Controls the intensity of the scent emitted by the device. valid range is 0 to 1. \end{DoxyCompactList}\item 
+\Hypertarget{class_scentient_1_1_emit_scent_ae03f3b8d3df425c344db808d51a519ef}\label{class_scentient_1_1_emit_scent_ae03f3b8d3df425c344db808d51a519ef} 
+float {\bfseries Duration}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Controls duration that the scent is emitted by the device. Calling Emit with duration 0 is equivilent to calling Stop. Value is in seconds, valid range is 0 to 60. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Simple class for emitting scents. Designed to be called by game scripts, and Unity\+Event actions. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Runtime/Emit\+Scent.\+cs\end{DoxyCompactItemize}
