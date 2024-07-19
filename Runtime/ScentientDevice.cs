@@ -41,6 +41,8 @@ namespace Scentient
 
         public bool autoRequestPermissionsOnConnect = true;
 
+        public bool persistenAcrossScenes = false;
+
         const string DeviceName = "Scentient Escents";
         const string ServiceUUID = "eddd4e1f-16fa-4c7c-ad7f-171edbd7eff7";
         const string ScentMessageUUID = "45335526-67ba-4d9d-8cfb-c3d97e8d8208";
@@ -201,10 +203,13 @@ namespace Scentient
 
         public States State { get  { return _state; } }
 
-
         void Awake()
         {
             scentTable.loadSucessfulEvent += OnScentTableLoaded;
+            
+            if(persistenAcrossScenes){
+                GameObject.DontDestroyOnLoad(this.gameObject);
+            }
         }
 
 

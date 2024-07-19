@@ -362,7 +362,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   channel: 1
-  duration: 1000
+  m_duration: 1
+  m_intensity: 1
   _scentientDevice: {fileID: 0}
 --- !u!1 &2559532227857263830
 GameObject:

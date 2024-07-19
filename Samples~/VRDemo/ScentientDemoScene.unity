@@ -1059,7 +1059,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Text: {fileID: 810021791}
-  m_Count: 0
 --- !u!114 &650025391
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7620,14 +7619,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07b3638c2f5db5b479ff24c2859713d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PokeFollowTransform: {fileID: 674460194}
-  m_SmoothingSpeed: 16
-  m_ReturnToInitialPosition: 1
-  m_ApplyIfChildIsTarget: 1
-  m_ClampToMaxDistance: 1
-  m_MaxDistance: 20
-  m_InitialPosition: {x: 0, y: 0, z: 0}
-  m_IsFirstFrame: 0
 --- !u!114 &1800784742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8942,14 +8933,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07b3638c2f5db5b479ff24c2859713d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PokeFollowTransform: {fileID: 1811122273572069604}
-  m_SmoothingSpeed: 16
-  m_ReturnToInitialPosition: 1
-  m_ApplyIfChildIsTarget: 1
-  m_ClampToMaxDistance: 1
-  m_MaxDistance: 0.045
-  m_InitialPosition: {x: 0, y: 0, z: 0}
-  m_IsFirstFrame: 0
 --- !u!114 &377291014680039719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8962,14 +8945,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07b3638c2f5db5b479ff24c2859713d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PokeFollowTransform: {fileID: 1811122274090759439}
-  m_SmoothingSpeed: 16
-  m_ReturnToInitialPosition: 1
-  m_ApplyIfChildIsTarget: 1
-  m_ClampToMaxDistance: 1
-  m_MaxDistance: 0.045
-  m_InitialPosition: {x: 0, y: 0, z: 0}
-  m_IsFirstFrame: 0
 --- !u!114 &377291014724084440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8982,14 +8957,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07b3638c2f5db5b479ff24c2859713d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PokeFollowTransform: {fileID: 1811122273967015664}
-  m_SmoothingSpeed: 16
-  m_ReturnToInitialPosition: 1
-  m_ApplyIfChildIsTarget: 1
-  m_ClampToMaxDistance: 1
-  m_MaxDistance: 0.045
-  m_InitialPosition: {x: 0, y: 0, z: 0}
-  m_IsFirstFrame: 0
 --- !u!1 &397143195242640255
 GameObject:
   m_ObjectHideFlags: 0
@@ -13841,26 +13808,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9ac216f0eb04754b1d938aac6380b31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ManipulationInteractionGroup: {fileID: 2429146837569857640}
-  m_DirectInteractor: {fileID: 3385890771267992067}
-  m_RayInteractor: {fileID: 9032954040238779739}
-  m_TeleportInteractor: {fileID: 6694496368962475718}
-  m_TeleportModeActivate: {fileID: -8061240218431744966, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  m_TeleportModeCancel: {fileID: 2307464322626738743, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  m_Turn: {fileID: -6493913391331992944, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  m_SnapTurn: {fileID: -8525429354371678379, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  m_Move: {fileID: -8198699208435500284, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  m_UIScroll: {fileID: -6756787485274679044, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  m_SmoothMotionEnabled: 0
-  m_SmoothTurnEnabled: 0
-  m_UIScrollingEnabled: 1
-  m_RayInteractorChanged:
-    m_PersistentCalls:
-      m_Calls:
-      - {m_Target: {fileID: 7212809981820340312}, m_TargetAssemblyTypeName: UnityEngine.XR.Interaction.Toolkit.Inputs.XRTransformStabilizer, Unity.XR.Interaction.Toolkit, m_MethodName: set_aimTarget, m_Mode: 0, m_Arguments: {m_ObjectArgument: {fileID: 0}, m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, m_IntArgument: 0, m_FloatArgument: 0, m_StringArgument: , m_BoolArgument: 0}, m_CallState: 2}
-    m_CallsDirty: 1
-  m_PostponedDeactivateTeleport: 0
-  m_UIScrollModeActive: 0
 --- !u!4 &3725602586617221823
 Transform:
   m_ObjectHideFlags: 0
@@ -16599,26 +16546,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9ac216f0eb04754b1d938aac6380b31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ManipulationInteractionGroup: {fileID: 8074195217660923242}
-  m_DirectInteractor: {fileID: 6688015754394127350}
-  m_RayInteractor: {fileID: 9146015505177620944}
-  m_TeleportInteractor: {fileID: 9014170784879080159}
-  m_TeleportModeActivate: {fileID: 1263111715868034790, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  m_TeleportModeCancel: {fileID: 737890489006591557, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  m_Turn: {fileID: 1010738217276881514, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  m_SnapTurn: {fileID: -7374733323251553461, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  m_Move: {fileID: 6972639530819350904, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  m_UIScroll: {fileID: 2464016903823916871, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  m_SmoothMotionEnabled: 1
-  m_SmoothTurnEnabled: 0
-  m_UIScrollingEnabled: 1
-  m_RayInteractorChanged:
-    m_PersistentCalls:
-      m_Calls:
-      - {m_Target: {fileID: 5263222901400028798}, m_TargetAssemblyTypeName: UnityEngine.XR.Interaction.Toolkit.Inputs.XRTransformStabilizer, Unity.XR.Interaction.Toolkit, m_MethodName: set_aimTarget, m_Mode: 0, m_Arguments: {m_ObjectArgument: {fileID: 0}, m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, m_IntArgument: 0, m_FloatArgument: 0, m_StringArgument: , m_BoolArgument: 0}, m_CallState: 2}
-    m_CallsDirty: 1
-  m_PostponedDeactivateTeleport: 0
-  m_UIScrollModeActive: 0
 --- !u!1 &4581292472285887089
 GameObject:
   m_ObjectHideFlags: 0
@@ -18752,14 +18679,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07b3638c2f5db5b479ff24c2859713d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PokeFollowTransform: {fileID: 1021177907498444701}
-  m_SmoothingSpeed: 16
-  m_ReturnToInitialPosition: 1
-  m_ApplyIfChildIsTarget: 1
-  m_ClampToMaxDistance: 1
-  m_MaxDistance: 20
-  m_InitialPosition: {x: 0, y: 0, z: 0}
-  m_IsFirstFrame: 0
 --- !u!4 &5243682147006866511
 Transform:
   m_ObjectHideFlags: 0
@@ -19535,7 +19454,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Text Toggle
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3218775891302470945, guid: 6a448845c7017044e8a9f3d711cfe825, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6a448845c7017044e8a9f3d711cfe825, type: 3}
 --- !u!224 &5501025065546941762 stripped
 RectTransform:
@@ -20419,14 +20339,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07b3638c2f5db5b479ff24c2859713d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PokeFollowTransform: {fileID: 8371743670286985377}
-  m_SmoothingSpeed: 16
-  m_ReturnToInitialPosition: 1
-  m_ApplyIfChildIsTarget: 1
-  m_ClampToMaxDistance: 1
-  m_MaxDistance: 20
-  m_InitialPosition: {x: 0, y: 0, z: 0}
-  m_IsFirstFrame: 0
 --- !u!224 &5801400299006431054
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20461,8 +20373,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ef0e4723b64c884699a375196c13ac0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FallbackIfEyeTrackingUnavailable: 1
-  m_EyeTrackingDeviceFound: 0
 --- !u!222 &5861118059375809943
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -21959,7 +21869,6 @@ GameObject:
   - component: {fileID: 6625592551082595682}
   - component: {fileID: 6625592551082595708}
   - component: {fileID: 6625592551082595711}
-  - component: {fileID: 8497380364112674004}
   m_Layer: 5
   m_Name: Text Toggle
   m_TagString: Untagged
@@ -23027,14 +22936,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07b3638c2f5db5b479ff24c2859713d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PokeFollowTransform: {fileID: 5749267851678817365}
-  m_SmoothingSpeed: 16
-  m_ReturnToInitialPosition: 1
-  m_ApplyIfChildIsTarget: 1
-  m_ClampToMaxDistance: 1
-  m_MaxDistance: 20
-  m_InitialPosition: {x: 0, y: 0, z: 0}
-  m_IsFirstFrame: 0
 --- !u!114 &6857404998100109596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25859,14 +25760,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07b3638c2f5db5b479ff24c2859713d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PokeFollowTransform: {fileID: 5801400299006431054}
-  m_SmoothingSpeed: 16
-  m_ReturnToInitialPosition: 1
-  m_ApplyIfChildIsTarget: 1
-  m_ClampToMaxDistance: 1
-  m_MaxDistance: 20
-  m_InitialPosition: {x: 0, y: 0, z: 0}
-  m_IsFirstFrame: 0
 --- !u!114 &8423774557358534081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25925,26 +25818,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &8497380364112674004
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6625592551082595706}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07b3638c2f5db5b479ff24c2859713d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PokeFollowTransform: {fileID: 6625592551816818257}
-  m_SmoothingSpeed: 16
-  m_ReturnToInitialPosition: 1
-  m_ApplyIfChildIsTarget: 1
-  m_ClampToMaxDistance: 1
-  m_MaxDistance: 20
-  m_InitialPosition: {x: 0, y: 0, z: 0}
-  m_IsFirstFrame: 0
 --- !u!4 &8572527392800876526
 Transform:
   m_ObjectHideFlags: 0
@@ -28211,51 +28084,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b1e8c997df241c1a67045eeac79b41b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_System: {fileID: 7712547943903841384}
-  <locomotionPhase>k__BackingField: 0
-  m_MoveSpeed: 1
-  m_EnableStrafe: 1
-  m_EnableFly: 0
-  m_UseGravity: 1
-  m_GravityApplicationMode: 0
-  m_ForwardSource: {fileID: 9014170785502690981}
-  m_CharacterController: {fileID: 0}
-  m_AttemptedGetCharacterController: 0
-  m_IsMovingXROrigin: 0
-  m_VerticalVelocity: {x: 0, y: 0, z: 0}
-  m_LeftHandMoveAction:
-    m_UseReference: 1
-    m_Action:
-      m_Name: Left Hand Move
-      m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: fa65baa9-ca16-4d92-8425-3195462c2aea
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: 6972639530819350904, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  m_RightHandMoveAction:
-    m_UseReference: 1
-    m_Action:
-      m_Name: Right Hand Move
-      m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: 7c956f1d-8187-437c-8dc4-afdbf8424b34
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: -8198699208435500284, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  m_HeadTransform: {fileID: 9014170785502690981}
-  m_LeftControllerTransform: {fileID: 9014170783845293767}
-  m_RightControllerTransform: {fileID: 9014170785329995302}
-  m_LeftHandMovementDirection: 0
-  m_RightHandMovementDirection: 0
-  m_CombinedTransform: {fileID: 0}
-  m_LeftMovementPose:
-    position: {x: 0, y: 0, z: 0}
-    rotation: {x: 0, y: 0, z: 0, w: 1}
-  m_RightMovementPose:
-    position: {x: 0, y: 0, z: 0}
-    rotation: {x: 0, y: 0, z: 0, w: 1}
