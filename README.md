@@ -10,8 +10,8 @@
 
 For the main menu in Unity, select Window -> "Package Manager" -> "+" Button in Top Left -> "Add Package From Git Url"
 
-Add the following url, for the Unity Android Bluetooth Low Energy library: git@github.com:paulhayes/Unity-Android-Bluetooth-Low-Energy-Package.git
-And then repeat for this library: git@github.com:ScentientTech/scentient-unity-api.git
+Add the following url, for the Unity Android Bluetooth Low Energy library: ```git@github.com:paulhayes/Unity-Android-Bluetooth-Low-Energy-Package.git```
+And then repeat for this library: ```git@github.com:ScentientTech/scentient-unity-api.git```
 
 ## Android Runtime Permissions
 
