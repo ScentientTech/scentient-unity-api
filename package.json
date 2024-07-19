@@ -2,10 +2,7 @@
   "name": "tech.scentient.android-api",
   "version": "0.1.0",
   "description": "API for connecting to and controlling the Scentient Escents peripheral",
-  "displayName": "Scentient Android API",
-  "dependencies": {
-    "com.velorexe.androidbluetoothlowenergy":"https://github.com/paulhayes/Unity-Android-Bluetooth-Low-Energy-Package.git"
-  },
+  "displayName": "Scentient Android API",  
   "samples": [
         {
             "displayName": "VR Demo Scene",
