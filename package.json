@@ -8,6 +8,11 @@
             "displayName": "VR Demo Scene",
             "description": "Contains XR Interaction Demos for emitting scents",
             "path": "Samples~/VRDemo"
+        },
+        {
+            "displayName":"Scentient Connect And Control Example",
+            "description":"Intended for phone control of Escents peripheral device, including configuring which scent is in each channel",
+            "path":"Samples~/ScentientConnectAndControlExample"
         }
     ]
 }
