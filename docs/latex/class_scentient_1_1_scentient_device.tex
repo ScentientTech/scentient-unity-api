@@ -1,5 +1,10 @@
 \doxysection{Scentient.\+Scentient\+Device Class Reference}
 \hypertarget{class_scentient_1_1_scentient_device}{}\label{class_scentient_1_1_scentient_device}\index{Scentient.ScentientDevice@{Scentient.ScentientDevice}}
+
+
+Use this component to connect to the \doxylink{namespace_scentient}{Scentient} e\+Scents peripheral. Add to your scene, and configure to your needs.  
+
+
 Inheritance diagram for Scentient.\+Scentient\+Device\+:\begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -73,16 +78,19 @@ readonly \mbox{\hyperlink{class_scentient_1_1_scent_table}{Scent\+Table}} {\bfse
 \item 
 \Hypertarget{class_scentient_1_1_scentient_device_a9fb640795a79b24357feda5b9c504a9a}\label{class_scentient_1_1_scentient_device_a9fb640795a79b24357feda5b9c504a9a} 
 bool {\bfseries verbose}
-\item 
+\begin{DoxyCompactList}\small\item\em Set this property to true to get additional information in the console about communicaiton to the scentient peripheral. \end{DoxyCompactList}\item 
 \Hypertarget{class_scentient_1_1_scentient_device_a95bf7ee7f34c262bb0364b117e1cbcf4}\label{class_scentient_1_1_scentient_device_a95bf7ee7f34c262bb0364b117e1cbcf4} 
 bool {\bfseries reconnect\+To\+Last\+Device} = true
 \item 
 \Hypertarget{class_scentient_1_1_scentient_device_aa30582df7869d2496f085cd2779d06ce}\label{class_scentient_1_1_scentient_device_aa30582df7869d2496f085cd2779d06ce} 
 bool {\bfseries auto\+Connect\+On\+Start}
-\item 
+\begin{DoxyCompactList}\small\item\em Automatically calls Connect as soon as possible after starting. This should also trigger runtime permission requests first, if {\ttfamily auto\+Request\+Permissions\+On\+Connect} is enabled. \end{DoxyCompactList}\item 
 \Hypertarget{class_scentient_1_1_scentient_device_ae9bb285bbee3a30b97dc10742f95d9f3}\label{class_scentient_1_1_scentient_device_ae9bb285bbee3a30b97dc10742f95d9f3} 
 bool {\bfseries auto\+Request\+Permissions\+On\+Connect} = true
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em When Connect is called, the attempt to connect is defered, and the runtime permissions dialog presented to the user is neccessary. \end{DoxyCompactList}\item 
+\Hypertarget{class_scentient_1_1_scentient_device_a0f80c6ff5ce6deef06c29db147af05e7}\label{class_scentient_1_1_scentient_device_a0f80c6ff5ce6deef06c29db147af05e7} 
+bool {\bfseries persisten\+Across\+Scenes} = false
+\begin{DoxyCompactList}\small\item\em If communication with the \doxylink{namespace_scentient}{Scentient} peripheral is required across scenes, enable this property. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Properties}
 \begin{DoxyCompactItemize}
 \item 
@@ -111,6 +119,9 @@ Action$<$ bool $>$ {\bfseries On\+Button\+Changed\+Event}
 Action$<$ int, string $>$ {\bfseries On\+Channel\+Scents\+Updated\+Event}
 \end{DoxyCompactItemize}
 
+
+\doxysubsection{Detailed Description}
+Use this component to connect to the \doxylink{namespace_scentient}{Scentient} e\+Scents peripheral. Add to your scene, and configure to your needs. 
 
 \doxysubsection{Member Function Documentation}
 \Hypertarget{class_scentient_1_1_scentient_device_a16fab80f60ceaa2e848c2bd8b075d092}\index{Scentient.ScentientDevice@{Scentient.ScentientDevice}!EmitScent@{EmitScent}}
