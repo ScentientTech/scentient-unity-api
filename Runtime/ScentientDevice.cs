@@ -21,7 +21,10 @@ using System.Threading.Tasks;
 
 namespace Scentient 
 {
-
+    /// <summary>
+    /// Use this component to connect to the Scentient eScents peripheral.
+    /// Add to your scene, and configure to your needs.
+    /// </summary>
     public class ScentientDevice : MonoBehaviour
     {
         public event Action<string> OnStatusChangedEvent;
@@ -34,13 +37,28 @@ namespace Scentient
     
         public readonly ScentTable scentTable = new ScentTable();
 
+        /// <summary>
+        /// Set this property to true to get additional information in the console about communicaiton to the scentient peripheral
+        /// </summary>
         public bool verbose;
         public bool reconnectToLastDevice = true;
 
+        /// <summary>
+        /// Automatically calls Connect as soon as possible after starting. 
+        /// This should also trigger runtime permission requests first, if ```autoRequestPermissionsOnConnect``` is enabled.
+        /// </summary>
         public bool autoConnectOnStart;
 
+        /// <summary>
+        /// When Connect is called, the attempt to connect is defered, 
+        /// and the runtime permissions dialog presented to the user is neccessary
+        /// </summary>
         public bool autoRequestPermissionsOnConnect = true;
 
+        /// <summary>
+        /// If communication with the Scentient peripheral is required across scenes, enable this property.
+        /// 
+        /// </summary>
         public bool persistenAcrossScenes = false;
 
         const string DeviceName = "Scentient Escents";
@@ -226,7 +244,7 @@ namespace Scentient
         void SetState(States newState, float timeout)
         {
             if(_state!=newState){
-                Debug.Log($"Changing state to {newState}");
+                if(verbose) Debug.Log($"Changing state to {newState}");
                 _state = newState;                      
                 OnStateChangedEvent?.Invoke(_state);
             }
@@ -340,12 +358,12 @@ namespace Scentient
 
         private void OnBLEMessageRecieved(BleObject obj)
         {
-            Debug.Log($"BLE Message command={obj.Command}");
+            if(verbose) Debug.Log($"BLE Message command={obj.Command}");
         }
 
         private void OnBLEMessageErrorReceived(string errorMessage)
         {
-            Debug.Log($"BLE Error {errorMessage}");
+            if(verbose) Debug.LogWarning($"BLE Error {errorMessage}");
         }
 
         void OnDestroy()
@@ -414,12 +432,12 @@ namespace Scentient
             }
         }
 
-        private void UpdateChannelScentIds(int channel, Int16 scentId)
+        private void UpdateChannelScentIds(int channelIndex, Int16 scentId)
         {
-            _channelScentIds[channel] = scentId;            
-            var scentName = _channelScentNames[channel] = scentTable.GetScentNameById(scentId);
-            Debug.Log($"UpdateChannelScentIds channel={channel} scentId={scentId} scentName={_channelScentNames[channel]}");
-            OnChannelScentsUpdatedEvent.Invoke(channel,scentName);
+            _channelScentIds[channelIndex] = scentId;            
+            var scentName = _channelScentNames[channelIndex] = scentTable.GetScentNameById(scentId);
+            if(verbose) Debug.Log($"UpdateChannelScentIds channel={channelIndex} scentId={scentId} scentName={_channelScentNames[channelIndex]}");
+            OnChannelScentsUpdatedEvent.Invoke(channelIndex+1,scentName);
         }
 
         async void ReadSerialRoutine()
@@ -443,7 +461,7 @@ namespace Scentient
                     }
                     if(readBytes==0 && currentIndex!=0){                        
                         string recieved = System.Text.Encoding.Default.GetString(buffer,0,currentIndex);
-                        Debug.Log($"Message received from device: {recieved}");
+                        if(verbose) Debug.Log($"Message received from device: {recieved}");
                         currentIndex = 0;
                     }
                 }
@@ -475,6 +493,7 @@ namespace Scentient
                 switch (_state)
                 {
                     case States.None:
+                        StatusMessage = "";
                         break;
 
                     case States.Scan:
@@ -506,7 +525,7 @@ namespace Scentient
 
                             //Getting scent ids
                             BleManager.Instance.QueueCommand( new ReadFromCharacteristic(_deviceAddress,ServiceUUID,ChannelScentIdCharacterisiticUUIDs[i],(byte[] data)=>{
-                                Debug.Log($"Valued Received {data}");
+                                if(verbose) Debug.Log($"Valued Received {data}");
                                 UpdateChannelScentIds( index, BitConverter.ToInt16(data,0) );
                             },customGatt:true));
                         }
@@ -750,7 +769,7 @@ namespace Scentient
                 Debug.LogWarning($"Scent {scentName} not found on device");
                 return false;
             }
-            else {
+            else if(verbose){
                 Debug.Log($"Scent channel found with scent id {scentName}=={channel}");
             }
 
