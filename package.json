@@ -1,6 +1,6 @@
 {
   "name": "tech.scentient.android-api",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "API for connecting to and controlling the Scentient Escents peripheral",
   "displayName": "Scentient Android API",  
   "samples": [

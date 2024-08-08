@@ -26533,7 +26533,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4858235876878777623}
         m_TargetAssemblyTypeName: Scentient.EmitScent, tech.scentient.api
-        m_MethodName: set_Intensity
+        m_MethodName: set_Duration
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

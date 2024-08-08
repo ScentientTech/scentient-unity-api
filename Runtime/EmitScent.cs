@@ -50,10 +50,10 @@ namespace Scentient
         /// </summary>
         public float Duration {
             set {
-                this.m_intensity = value;
+                this.m_duration = value;
             }
             get {
-                return m_intensity;
+                return m_duration;
             }
         }
 
