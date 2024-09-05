@@ -830,11 +830,16 @@ namespace Scentient
 
         public void SetChannelScent(int channelToSet, short scentId)
         {
-            _channelScentIds[channelToSet]=scentId;
-            var scentName = _channelScentNames[channelToSet] = scentTable.GetScentNameById(scentId);
+            int channelIndex = channelToSet-1;
+            if(channelIndex<0 || channelIndex>_numChannels){
+                Debug.LogError($"SetChannelScent: Scent Channel out of range {channelToSet}");
+                return;
+            }
+            _channelScentIds[channelIndex]=scentId;
+            var scentName = _channelScentNames[channelIndex] = scentTable.GetScentNameById(scentId);
             if(_connected){
                 var messageBytes = BitConverter.GetBytes(scentId);
-                BleManager.Instance.QueueCommand(new WriteToCharacteristic(_deviceAddress,ServiceUUID,ChannelScentIdCharacterisiticUUIDs[channelToSet],messageBytes,customGatt:true));
+                BleManager.Instance.QueueCommand(new WriteToCharacteristic(_deviceAddress,ServiceUUID,ChannelScentIdCharacterisiticUUIDs[channelIndex],messageBytes,customGatt:true));
                 OnChannelScentsUpdatedEvent.Invoke(channelToSet,scentName);
             }
             else {
