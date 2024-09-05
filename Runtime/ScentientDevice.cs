@@ -831,7 +831,7 @@ namespace Scentient
         public void SetChannelScent(int channelToSet, short scentId)
         {
             int channelIndex = channelToSet-1;
-            if(channelIndex<0 || channelIndex>_numChannels){
+            if(channelIndex<0 || channelIndex>=_numChannels){
                 Debug.LogError($"SetChannelScent: Scent Channel out of range {channelToSet}");
                 return;
             }
