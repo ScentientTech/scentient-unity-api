@@ -285,10 +285,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 96299897}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38f5a49c00fa5e14dbeeafc17a165fb8, type: 3}
+  m_Script: {fileID: 11500000, guid: ce16b5710bbbf5c4db6868c7f4da7cfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_scentName: lavander
+  m_scentName: 1
   m_duration: 1
   m_intensity: 1
   m_scentientDevice: {fileID: 1004363703}
@@ -515,10 +515,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 292098225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38f5a49c00fa5e14dbeeafc17a165fb8, type: 3}
+  m_Script: {fileID: 11500000, guid: ce16b5710bbbf5c4db6868c7f4da7cfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_scentName: peppermint
+  m_scentName: 3
   m_duration: 1
   m_intensity: 1
   m_scentientDevice: {fileID: 1004363703}
@@ -1864,7 +1864,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Peppermint
+  m_Text: Scent 3
 --- !u!114 &1021619526
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2481,7 +2481,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Smoke
+  m_Text: Scent 2
 --- !u!114 &1522956429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8333,10 +8333,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2136792876}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38f5a49c00fa5e14dbeeafc17a165fb8, type: 3}
+  m_Script: {fileID: 11500000, guid: ce16b5710bbbf5c4db6868c7f4da7cfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_scentName: smoke
+  m_scentName: 2
   m_duration: 1
   m_intensity: 1
   m_scentientDevice: {fileID: 1004363703}
@@ -10230,7 +10230,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 292098227}
-        m_TargetAssemblyTypeName: Scentient.EmitScent, tech.scentient.api
+        m_TargetAssemblyTypeName: Scentient.EmitScentChannel, tech.scentient.api
         m_MethodName: Emit
         m_Mode: 1
         m_Arguments:
@@ -14306,9 +14306,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Emit Scent
+  m_Text: 'Scent 4
 
-    Smoke, 1 second'
+'
 --- !u!114 &3807310296080488665
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18550,7 +18550,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Lavander
+  m_Text: Scent 1
 --- !u!114 &5022186744827005190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18704,7 +18704,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2136792878}
-        m_TargetAssemblyTypeName: Scentient.EmitScent, tech.scentient.api
+        m_TargetAssemblyTypeName: Scentient.EmitScentChannel, tech.scentient.api
         m_MethodName: Emit
         m_Mode: 1
         m_Arguments:
@@ -21471,7 +21471,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 96299899}
-        m_TargetAssemblyTypeName: Scentient.EmitScent, tech.scentient.api
+        m_TargetAssemblyTypeName: Scentient.EmitScentChannel, tech.scentient.api
         m_MethodName: Emit
         m_Mode: 1
         m_Arguments:
