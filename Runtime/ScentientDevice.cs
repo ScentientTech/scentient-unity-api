@@ -12,12 +12,16 @@ using System.Text;
 using Android.BLE;
 using Android.BLE.Commands;
 
-using System.IO.Ports;
-using System.IO;
 using UnityEngine.Events;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
+#if ( UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN ) && NET40_OR_GREATER
+    #define SCENTIENT_SERIAL_COMMS
+#endif
+
+
 
 namespace Scentient 
 {
@@ -86,37 +90,11 @@ namespace Scentient
 
         const string ComPortFilename = "port.txt";
 
-        SerialPort m_serialPort;
-    #if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
-        const bool isWindows = true;
 
-    #else 
-        const bool isWindows = false;
-    #endif
+#if SCENTIENT_SERIAL_COMMS
+        System.IO.Ports.SerialPort m_serialPort;
+#endif
 
-
-        // public enum SignalStrength {
-        //     None = 0,
-        //     Weak = 1,
-        //     Medium = 2,
-        //     Strong = 3,
-        // }
-
-        // public SignalStrength SignalStrengthLevel
-        // {
-        //     get
-        //     {
-        //         if(_rssi<-80){
-        //             return SignalStrength.Weak;
-        //         }else if(_rssi<-60){
-        //             return SignalStrength.Medium;
-        //         }else if(_rssi<-40){
-        //             return SignalStrength.Strong;
-        //         }else{
-        //             return SignalStrength.None;
-        //         }
-        //     }
-        // }
 
         [System.Serializable]
         
@@ -251,6 +229,7 @@ namespace Scentient
             _timeout = timeout;
         }
 
+#if SCENTIENT_SERIAL_COMMS
         void StartProcessWin()
         {
             if(_connected){
@@ -306,6 +285,7 @@ namespace Scentient
                 SetState(States.Disconnect,0.5f);
             }
         }
+#endif
 
         void StartProcess()
         {        
@@ -366,13 +346,25 @@ namespace Scentient
             if(verbose) Debug.LogWarning($"BLE Error {errorMessage}");
         }
 
+        private void UpdateChannelScentIds(int channelIndex, Int16 scentId)
+        {
+            _channelScentIds[channelIndex] = scentId;            
+            var scentName = _channelScentNames[channelIndex] = scentTable.GetScentNameById(scentId);
+            if(verbose) Debug.Log($"UpdateChannelScentIds channel={channelIndex} scentId={scentId} scentName={_channelScentNames[channelIndex]}");
+            OnChannelScentsUpdatedEvent.Invoke(channelIndex+1,scentName);
+        }
+
+
+#if SCENTIENT_SERIAL_COMMS
         void OnDestroy()
         {
-            if(isWindows && m_serialPort!=null && m_serialPort.IsOpen){
+
+            if(m_serialPort!=null && m_serialPort.IsOpen){
                 m_serialPort.Close();
             }
 
         }
+#endif
 
         private void ProcessButton(byte[] bytes)
         {
@@ -381,15 +373,15 @@ namespace Scentient
 
         // Update is called once per frame
         void Update()
-        {
-            if(isWindows){
+        {      
+            #if SCENTIENT_SERIAL_COMMS
                 ProcessStateWindows();
-            }
-            else {
+            #else
                 ProcessState();
-            }
+            #endif
         }
 
+#if SCENTIENT_SERIAL_COMMS
         void ProcessStateWindows()
         {
             if (_timeout > 0f)
@@ -432,14 +424,6 @@ namespace Scentient
             }
         }
 
-        private void UpdateChannelScentIds(int channelIndex, Int16 scentId)
-        {
-            _channelScentIds[channelIndex] = scentId;            
-            var scentName = _channelScentNames[channelIndex] = scentTable.GetScentNameById(scentId);
-            if(verbose) Debug.Log($"UpdateChannelScentIds channel={channelIndex} scentId={scentId} scentName={_channelScentNames[channelIndex]}");
-            OnChannelScentsUpdatedEvent.Invoke(channelIndex+1,scentName);
-        }
-
         async void ReadSerialRoutine()
         {
             var buffer = new byte[4096];
@@ -477,6 +461,7 @@ namespace Scentient
                 
             
         }
+        #endif
 
         void ProcessState()
         {
@@ -633,12 +618,11 @@ namespace Scentient
                 scentTable.Load();
             }
 
-            if(isWindows){
+            #if SCENTIENT_SERIAL_COMMS
                 StartProcessWin();
-            }
-            else {
+            #else
                 StartProcess();
-            }
+            #endif
             
         }
 
@@ -714,6 +698,29 @@ namespace Scentient
                 channel = channel,
                 intensity = intensity,
                 duration = duration
+            };
+            SendScentMessage(scentMessage);
+
+        }
+
+            /// <summary>
+        /// Emits a scent from one of the 4 scent emitters, with the provided intensity and duration 
+        /// </summary>
+        /// <param name="channel">channel value 1-4</param>
+        /// <param name="intensity">value between 0-255, 0 being off</param>
+        /// <param name="duration">in milliseconds</param>
+        public void SendScentMessage(int channel, float intensity, float duration)
+        {
+            byte intensityByte = (byte)Mathf.RoundToInt( 0xff * Mathf.Clamp01(intensity) );
+            int durationMillis = Mathf.FloorToInt(duration*1000);
+            if( ushort.MaxValue < durationMillis ){
+                durationMillis = ushort.MaxValue;
+            }
+
+            ScentMessage scentMessage = new ScentMessage(){
+                channel = (byte)channel,
+                intensity = intensityByte,
+                duration = (ushort)durationMillis
             };
             SendScentMessage(scentMessage);
 
@@ -797,7 +804,7 @@ namespace Scentient
                 Debug.Log($"ScentMessage {ToHexString(messageBytes)}");                    
             }
 
-            if(isWindows){
+            #if SCENTIENT_SERIAL_COMMS
                 UInt16 messageId = Convert.ToUInt16(ScentMessageUUID,16); 
                 if(!m_serialPort.IsOpen){
                     return;
@@ -806,12 +813,11 @@ namespace Scentient
                 BitConverter.TryWriteBytes(new Span<byte>(messageBuf),messageId);
                 Array.Copy(messageBytes,0,messageBuf,2,messageBytes.Length);
                 m_serialPort.BaseStream.Write(messageBuf,0,messageBuf.Length);
-                m_serialPort.BaseStream.Flush();                            
-            }
-            else {
+                m_serialPort.BaseStream.Flush();         
+            #else 
                 BleManager.Instance.QueueCommand(new WriteToCharacteristic(_deviceAddress,ServiceUUID,ScentMessageUUID,messageBytes,customGatt:true));
+            #endif                   
 
-            }
         }
 
         public Dictionary<short, string> GetScentDict()
