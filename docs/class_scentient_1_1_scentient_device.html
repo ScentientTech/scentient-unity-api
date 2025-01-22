@@ -111,6 +111,8 @@ Inheritance diagram for Scentient.ScentientDevice:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_scentient_1_1_scentient_device_1_1_pod_info_struct.html">PodInfoStruct</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scentient_1_1_scentient_device_1_1_scent_message.html">ScentMessage</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_scentient_1_1_scentient_device_1_1_scent_message_struct.html">ScentMessageStruct</a></td></tr>
@@ -152,6 +154,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Disconnect</b> ()</td
 <tr class="memitem:a2cfdfb1318da8258f7ab48a4e2800461" id="r_a2cfdfb1318da8258f7ab48a4e2800461"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2cfdfb1318da8258f7ab48a4e2800461">SendScentMessage</a> (byte channel, byte intensity, UInt16 duration)</td></tr>
 <tr class="memdesc:a2cfdfb1318da8258f7ab48a4e2800461"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emits a scent from one of the 4 scent emitters, with the provided intensity and duration.  <br /></td></tr>
 <tr class="separator:a2cfdfb1318da8258f7ab48a4e2800461"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d8d182e49ddee537348ba1dd315de00" id="r_a9d8d182e49ddee537348ba1dd315de00"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9d8d182e49ddee537348ba1dd315de00">SendScentMessage</a> (int channel, float intensity, float duration)</td></tr>
+<tr class="separator:a9d8d182e49ddee537348ba1dd315de00"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a16fab80f60ceaa2e848c2bd8b075d092" id="r_a16fab80f60ceaa2e848c2bd8b075d092"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a16fab80f60ceaa2e848c2bd8b075d092">EmitScent</a> (string scentName, float duration)</td></tr>
 <tr class="memdesc:a16fab80f60ceaa2e848c2bd8b075d092"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emits a scent for a fixed period of time. Any scent being emitted can be stopped by calling this method with a duration of 0.  <br /></td></tr>
 <tr class="separator:a16fab80f60ceaa2e848c2bd8b075d092"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -308,7 +312,7 @@ Action&lt; int, string &gt;&#160;</td><td class="memItemRight" valign="bottom"><
 </div>
 </div>
 <a id="a2cfdfb1318da8258f7ab48a4e2800461" name="a2cfdfb1318da8258f7ab48a4e2800461"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2cfdfb1318da8258f7ab48a4e2800461">&#9670;&#160;</a></span>SendScentMessage()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a2cfdfb1318da8258f7ab48a4e2800461">&#9670;&#160;</a></span>SendScentMessage() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -342,7 +346,50 @@ Action&lt; int, string &gt;&#160;</td><td class="memItemRight" valign="bottom"><
 <p>Emits a scent from one of the 4 scent emitters, with the provided intensity and duration. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">channel</td><td>channel value 1-4</td></tr>
+    <tr><td class="paramname">channel</td><td>channel value 1-6</td></tr>
+    <tr><td class="paramname">intensity</td><td>value between 0-255, 0 being off</td></tr>
+    <tr><td class="paramname">duration</td><td>in milliseconds</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a9d8d182e49ddee537348ba1dd315de00" name="a9d8d182e49ddee537348ba1dd315de00"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d8d182e49ddee537348ba1dd315de00">&#9670;&#160;</a></span>SendScentMessage() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Scentient.ScentientDevice.SendScentMessage </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>channel</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>intensity</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>duration</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Emits a scent from one of the 6 scent emitters, with the provided intensity and duration</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">channel</td><td>channel value 1-6</td></tr>
     <tr><td class="paramname">intensity</td><td>value between 0-255, 0 being off</td></tr>
     <tr><td class="paramname">duration</td><td>in milliseconds</td></tr>
   </table>

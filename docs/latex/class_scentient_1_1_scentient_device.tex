@@ -14,6 +14,8 @@ Inheritance diagram for Scentient.\+Scentient\+Device\+:\begin{figure}[H]
 \doxysubsubsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
+struct \mbox{\hyperlink{struct_scentient_1_1_scentient_device_1_1_pod_info_struct}{Pod\+Info\+Struct}}
+\item 
 class \mbox{\hyperlink{class_scentient_1_1_scentient_device_1_1_scent_message}{Scent\+Message}}
 \item 
 struct \mbox{\hyperlink{struct_scentient_1_1_scentient_device_1_1_scent_message_struct}{Scent\+Message\+Struct}}
@@ -54,6 +56,8 @@ void {\bfseries Disconnect} ()
 \item 
 void \mbox{\hyperlink{class_scentient_1_1_scentient_device_a2cfdfb1318da8258f7ab48a4e2800461}{Send\+Scent\+Message}} (byte channel, byte intensity, UInt16 duration)
 \begin{DoxyCompactList}\small\item\em Emits a scent from one of the 4 scent emitters, with the provided intensity and duration. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_scentient_1_1_scentient_device_a9d8d182e49ddee537348ba1dd315de00}{Send\+Scent\+Message}} (int channel, float intensity, float duration)
+\item 
 bool \mbox{\hyperlink{class_scentient_1_1_scentient_device_a16fab80f60ceaa2e848c2bd8b075d092}{Emit\+Scent}} (string scent\+Name, float duration)
 \begin{DoxyCompactList}\small\item\em Emits a scent for a fixed period of time. Any scent being emitted can be stopped by calling this method with a duration of 0. \end{DoxyCompactList}\item 
 bool \mbox{\hyperlink{class_scentient_1_1_scentient_device_a275c0fbc93dbd89babc11266ee4ab4a0}{Emit\+Scent}} (string scent\+Name, float intensity, float duration)
@@ -164,7 +168,7 @@ bool Scentient.\+Scentient\+Device.\+Emit\+Scent (\begin{DoxyParamCaption}\item[
 \end{DoxyReturn}
 \Hypertarget{class_scentient_1_1_scentient_device_a2cfdfb1318da8258f7ab48a4e2800461}\index{Scentient.ScentientDevice@{Scentient.ScentientDevice}!SendScentMessage@{SendScentMessage}}
 \index{SendScentMessage@{SendScentMessage}!Scentient.ScentientDevice@{Scentient.ScentientDevice}}
-\doxysubsubsection{\texorpdfstring{SendScentMessage()}{SendScentMessage()}}
+\doxysubsubsection{\texorpdfstring{SendScentMessage()}{SendScentMessage()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
 {\footnotesize\ttfamily \label{class_scentient_1_1_scentient_device_a2cfdfb1318da8258f7ab48a4e2800461} 
 void Scentient.\+Scentient\+Device.\+Send\+Scent\+Message (\begin{DoxyParamCaption}\item[{byte}]{channel}{, }\item[{byte}]{intensity}{, }\item[{UInt16}]{duration}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
@@ -174,7 +178,24 @@ Emits a scent from one of the 4 scent emitters, with the provided intensity and 
 
 
 \begin{DoxyParams}{Parameters}
-{\em channel} & channel value 1-\/4\\
+{\em channel} & channel value 1-\/6\\
+\hline
+{\em intensity} & value between 0-\/255, 0 being off\\
+\hline
+{\em duration} & in milliseconds\\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_scentient_1_1_scentient_device_a9d8d182e49ddee537348ba1dd315de00}\index{Scentient.ScentientDevice@{Scentient.ScentientDevice}!SendScentMessage@{SendScentMessage}}
+\index{SendScentMessage@{SendScentMessage}!Scentient.ScentientDevice@{Scentient.ScentientDevice}}
+\doxysubsubsection{\texorpdfstring{SendScentMessage()}{SendScentMessage()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_scentient_1_1_scentient_device_a9d8d182e49ddee537348ba1dd315de00} 
+void Scentient.\+Scentient\+Device.\+Send\+Scent\+Message (\begin{DoxyParamCaption}\item[{int}]{channel}{, }\item[{float}]{intensity}{, }\item[{float}]{duration}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Emits a scent from one of the 6 scent emitters, with the provided intensity and duration
+
+
+\begin{DoxyParams}{Parameters}
+{\em channel} & channel value 1-\/6\\
 \hline
 {\em intensity} & value between 0-\/255, 0 being off\\
 \hline
