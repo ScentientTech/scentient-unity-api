@@ -79,10 +79,12 @@ namespace Scentient
             "527bac61-60dc-4a73-aa99-d37ac6242931",
             "88a45d22-9a11-48de-8789-ae339f714132",
             "3f83c8bc-e98b-4959-aaa9-526297a1a5be",
-            "0c4bd73e-7111-4a03-a900-aabad7c3e34c"
+            "0c4bd73e-7111-4a03-a900-aabad7c3e34c",
+            "8eb288f4-ba80-4554-a828-434ee5246f55",
+            "c5ea8885-17db-4f55-afe0-c028a31f3a59"
         };
 
-        const int _numChannels = 4;
+        const int _numChannels = 6;
         Int16[] _channelScentIds = new Int16[_numChannels]; 
         string[] _channelScentNames = new string[_numChannels];
 
@@ -101,7 +103,7 @@ namespace Scentient
         public class ScentMessage 
         {
             /// <summary>
-            /// channel value from 1-4 for Escents device
+            /// channel value from 1-6 for Escents device
             /// </summary>
             public byte channel;
 
@@ -131,6 +133,20 @@ namespace Scentient
             public static int SizeInBytes()
             {
                 return 4;
+            }
+        }
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct PodInfoStruct
+        {
+            public ushort scentID;
+            public ushort podID;
+
+            public Byte level;  
+
+            public static int SizeInBytes()
+            {
+                return 5;
             }
         }
 
@@ -689,7 +705,7 @@ namespace Scentient
     /// <summary>
     /// Emits a scent from one of the 4 scent emitters, with the provided intensity and duration 
     /// </summary>
-    /// <param name="channel">channel value 1-4</param>
+    /// <param name="channel">channel value 1-6</param>
     /// <param name="intensity">value between 0-255, 0 being off</param>
     /// <param name="duration">in milliseconds</param>
         public void SendScentMessage(byte channel, byte intensity, UInt16 duration)
@@ -704,9 +720,9 @@ namespace Scentient
         }
 
             /// <summary>
-        /// Emits a scent from one of the 4 scent emitters, with the provided intensity and duration 
+        /// Emits a scent from one of the 6 scent emitters, with the provided intensity and duration 
         /// </summary>
-        /// <param name="channel">channel value 1-4</param>
+        /// <param name="channel">channel value 1-6</param>
         /// <param name="intensity">value between 0-255, 0 being off</param>
         /// <param name="duration">in milliseconds</param>
         public void SendScentMessage(int channel, float intensity, float duration)
@@ -822,7 +838,7 @@ namespace Scentient
 
         public Dictionary<short, string> GetScentDict()
         {
-            Dictionary<short,string> result = new Dictionary<short, string>(4);
+            Dictionary<short,string> result = new Dictionary<short, string>(_numChannels);
             for(int i=0;i<scentTable.RowCount();i++){
                 string val=string.Empty;
                 var success = scentTable.TryGetInt(0,i, out int key) && scentTable.TryGetString(1,i, out val);
