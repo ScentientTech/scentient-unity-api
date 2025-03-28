@@ -310,6 +310,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 670084953}
+        m_TargetAssemblyTypeName: Scentient.EmitScentChannel, scentient.samples
+        m_MethodName: set_Duration
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 235663621}
+        m_TargetAssemblyTypeName: Scentient.EmitScentChannel, scentient.samples
+        m_MethodName: set_Duration
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &87616024
 GameObject:
   m_ObjectHideFlags: 0
@@ -785,6 +809,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2559532227980182878, guid: 229a3e02d708cc9459e3a3c0fc3e564f, type: 3}
   m_PrefabInstance: {fileID: 235663619}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &235663621 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2559532227774779022, guid: 229a3e02d708cc9459e3a3c0fc3e564f, type: 3}
+  m_PrefabInstance: {fileID: 235663619}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f92708e063e7384983cec381b46a973, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &313134279
 GameObject:
   m_ObjectHideFlags: 0
@@ -1433,6 +1468,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2559532227980182878, guid: 229a3e02d708cc9459e3a3c0fc3e564f, type: 3}
   m_PrefabInstance: {fileID: 670084951}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &670084953 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2559532227774779022, guid: 229a3e02d708cc9459e3a3c0fc3e564f, type: 3}
+  m_PrefabInstance: {fileID: 670084951}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f92708e063e7384983cec381b46a973, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &683226097
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4186,6 +4232,30 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 683226099}
         m_TargetAssemblyTypeName: Scentient.EmitScentChannelButton, scentient.samples
+        m_MethodName: set_Intensity
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 670084953}
+        m_TargetAssemblyTypeName: Scentient.EmitScentChannel, scentient.samples
+        m_MethodName: set_Intensity
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 235663621}
+        m_TargetAssemblyTypeName: Scentient.EmitScentChannel, scentient.samples
         m_MethodName: set_Intensity
         m_Mode: 0
         m_Arguments:
