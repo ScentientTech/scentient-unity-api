@@ -367,7 +367,7 @@ namespace Scentient
             _channelScentIds[channelIndex] = scentId;            
             var scentName = _channelScentNames[channelIndex] = scentTable.GetScentNameById(scentId);
             if(verbose) Debug.Log($"UpdateChannelScentIds channel={channelIndex} scentId={scentId} scentName={_channelScentNames[channelIndex]}");
-            OnChannelScentsUpdatedEvent.Invoke(channelIndex+1,scentName);
+            OnChannelScentsUpdatedEvent?.Invoke(channelIndex+1,scentName);
         }
 
 
