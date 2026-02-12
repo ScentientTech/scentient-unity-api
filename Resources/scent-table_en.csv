@@ -1,31 +1,29 @@
 id,scentName
 0,nothing
-1,smoke
-2,natural gas
-3,racing car
-4,milk chocolate
-5,lavander
-6,orange
-7,rainforest
-8,stir fry
-9,vanilla
-10,waterfall
-11,ocean waves
-12,peppermint
-13,coffee
-14,bakery
-15,laundry
-16,green fig
-17,floral blend
-18,ozone
-19,mediterranean
-20,antiseptic
-21,rubber
-22,blood
-23,fire
-24,vomit
-25,sweat
-26,burning plastic
+1,ocean waves
+2,lavender
+3,floral
+4,rainforest
+5,waterfall
+6,red berries
+7,pine
+8,chocolate
+9,citrus
+10,cut grass
+11,burning wood
+12,natural gas
+13,petrol
+14,burning plastic
+15,body odour
+16,blood
+17,vomit
+18,cleaning agent
+19,mildew tunnels
+20,green fig
+21,cedar wood
+22,baby powder
+23,old hospital
+24,cigarette smoke
 27,scent1
 28,scent2
 29,scent3
