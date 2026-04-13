@@ -44,7 +44,38 @@ namespace Scentient
         /// <summary>
         /// Set this property to true to get additional information in the console about communicaiton to the scentient peripheral
         /// </summary>
-        public bool verbose;
+        public bool Verbose
+        {
+            get
+            {
+                return _verbose;
+            }
+            set
+            {
+                bool changed = _verbose != value;
+                _verbose = value;
+                if (!Application.isRunning)
+                {
+                    return;                
+                }
+                if (!changed)
+                {
+                    return;
+                }
+
+                if (_verbose)
+                {
+                    AddMessageListener();                
+                }
+                else
+                {
+                    RemoveMessageListener();
+                }                
+            }
+        }
+
+
+
         public bool reconnectToLastDevice = true;
 
         /// <summary>
@@ -84,6 +115,8 @@ namespace Scentient
             "c5ea8885-17db-4f55-afe0-c028a31f3a59"
         };
 
+        readonly string IdentifyCharacteristicUUID = "f1234567-89ab-4cde-f012-3456789abcde";
+
         const int _numChannels = 6;
         Int16[] _channelScentIds = new Int16[_numChannels]; 
         string[] _channelScentNames = new string[_numChannels];
@@ -91,6 +124,8 @@ namespace Scentient
         const string LastAddressKey = "last_address";
 
         const string ComPortFilename = "port.txt";
+
+
 
 
 #if SCENTIENT_SERIAL_COMMS
@@ -186,8 +221,10 @@ namespace Scentient
             Ready,
         }
 
+        [SerializeField] [FormalySerializedAs("verbose")] bool _verbose;
         private bool _connected = false;
         private float _timeout = 0f;
+        private float _scanTimeout = 10000;
         private States _state = States.None;
         private string _deviceAddress;
         private bool _foundButtonUUID = false;
@@ -238,7 +275,7 @@ namespace Scentient
         void SetState(States newState, float timeout)
         {
             if(_state!=newState){
-                if(verbose) Debug.Log($"Changing state to {newState}");
+                if(_verbose) Debug.Log($"Changing state to {newState}");
                 _state = newState;                      
                 OnStateChangedEvent?.Invoke(_state);
             }
@@ -342,10 +379,8 @@ namespace Scentient
         // Use this for initialization
         void Start()
         {
-            if(verbose){
-                var adapter = BleManager.Instance.GetComponentInChildren<BleAdapter>();
-                adapter.OnMessageReceived += OnBLEMessageRecieved;
-                adapter.OnErrorReceived += OnBLEMessageErrorReceived;                
+            if(_verbose){
+                AddMessageListener();
             }
             if(autoConnectOnStart){
                 Connect();
@@ -354,19 +389,19 @@ namespace Scentient
 
         private void OnBLEMessageRecieved(BleObject obj)
         {
-            if(verbose) Debug.Log($"BLE Message command={obj.Command}");
+            if(_verbose) Debug.Log($"BLE Message command={obj.Command}");
         }
 
         private void OnBLEMessageErrorReceived(string errorMessage)
         {
-            if(verbose) Debug.LogWarning($"BLE Error {errorMessage}");
+            if(_verbose) Debug.LogWarning($"BLE Error {errorMessage}");
         }
 
         private void UpdateChannelScentIds(int channelIndex, Int16 scentId)
         {
             _channelScentIds[channelIndex] = scentId;            
             var scentName = _channelScentNames[channelIndex] = scentTable.GetScentNameById(scentId);
-            if(verbose) Debug.Log($"UpdateChannelScentIds channel={channelIndex} scentId={scentId} scentName={_channelScentNames[channelIndex]}");
+            if(_verbose) Debug.Log($"UpdateChannelScentIds channel={channelIndex} scentId={scentId} scentName={_channelScentNames[channelIndex]}");
             OnChannelScentsUpdatedEvent?.Invoke(channelIndex+1,scentName);
         }
 
@@ -499,7 +534,7 @@ namespace Scentient
 
                     case States.Scan:
                         StatusMessage = "Scanning...";
-                        BleManager.Instance.QueueCommand(new DiscoverDevices(OnDeviceFound,OnScanFinished, 10000));
+                        BleManager.Instance.QueueCommand(new DiscoverDevices(OnDeviceFound,OnScanFinished, _scanTimeout));
                         break;
                     case States.Connect:
                         StatusMessage = "Connecting...";
@@ -526,7 +561,7 @@ namespace Scentient
 
                             //Getting scent ids
                             BleManager.Instance.QueueCommand( new ReadFromCharacteristic(_deviceAddress,ServiceUUID,ChannelScentIdCharacterisiticUUIDs[i],(byte[] data)=>{
-                                if(verbose) Debug.Log($"Valued Received {data}");
+                                if(_verbose) Debug.Log($"Valued Received {data}");
                                 UpdateChannelScentIds( index, BitConverter.ToInt16(data,0) );
                             },customGatt:true));
                         }
@@ -598,6 +633,20 @@ namespace Scentient
             }
         }
 
+        private void AddMessageListener()
+        {
+            var adapter = BleManager.Instance.GetComponentInChildren<BleAdapter>();
+            adapter.OnMessageReceived += OnBLEMessageRecieved;
+            adapter.OnErrorReceived += OnBLEMessageErrorReceived;            
+        }
+
+        private void RemoveMessageListener()
+        {
+            var adapter = BleManager.Instance.GetComponentInChildren<BleAdapter>();
+            adapter.OnMessageReceived -= OnBLEMessageRecieved;
+            adapter.OnErrorReceived -= OnBLEMessageErrorReceived;
+        }
+
 
         private static string ToHexString(byte[] bytes)
         {
@@ -628,7 +677,12 @@ namespace Scentient
             return (uuid1.ToUpper().Equals(uuid2.ToUpper()));
         }
 
-        public void Connect()
+        public void Scan(float scanTimeout=10000)
+        {
+            _scanTimeout = scanTimeout;
+        }
+
+        public void Connect(string device)
         {
             if(!scentTable.Loaded){
                 scentTable.Load();
@@ -642,9 +696,10 @@ namespace Scentient
             
         }
 
+
         private void OnScentTableLoaded()
         {
-            if(verbose){
+            if(_verbose){
                 Debug.Log("Scent table loaded");
                 StringBuilder sb = new StringBuilder();
                 for(int i=0;i<scentTable.RowCount();i++){
@@ -781,7 +836,7 @@ namespace Scentient
                 Debug.LogWarning($"Scent \"{scentName}\" not found in scent table.");
                 return false;
             }
-            else if(verbose){
+            else if(_verbose){
                 Debug.Log($"Scent found in scent table {scentName}=={id}");
             }
 
@@ -792,7 +847,7 @@ namespace Scentient
                 Debug.LogWarning($"Scent {scentName} not found on device");
                 return false;
             }
-            else if(verbose){
+            else if(_verbose){
                 Debug.Log($"Scent channel found with scent id {scentName}=={channel}");
             }
 
@@ -816,7 +871,7 @@ namespace Scentient
         public void SendScentMessage(ScentMessage scentMessage){
             var messageBytes = scentMessage.ToBytes();
             
-            if(verbose){
+            if(_verbose){
                 Debug.Log($"ScentMessage {ToHexString(messageBytes)}");                    
             }
 
