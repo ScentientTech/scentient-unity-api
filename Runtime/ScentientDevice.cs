@@ -84,6 +84,16 @@ namespace Scentient
             }
         }
 
+        public short GetScentLevel(int index)
+        {
+            if (index<0 || index >= _numChannels)
+            {
+                if(_verbose) Debug.LogWarning("channel index out of range");
+                return 0;
+            }
+            return _channelScentLevels[index];
+        }
+
 
         public bool reconnectToLastDevice = true;
 
@@ -245,9 +255,9 @@ namespace Scentient
         private string _status;
         private short _batteryLevel = 100;
 
-        private int[] _channelScentLevels = new int[_numChannels];
+        private short[] _channelScentLevels = new short[_numChannels];
 
-        private Int16[] _channelScentIds = new Int16[_numChannels]; 
+        private short[] _channelScentIds = new short[_numChannels]; 
         private string[] _channelScentNames = new string[_numChannels];
 
 
