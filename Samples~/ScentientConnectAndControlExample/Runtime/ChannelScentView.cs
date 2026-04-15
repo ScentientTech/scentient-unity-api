@@ -44,7 +44,7 @@ public class ChannelScentView : MonoBehaviour
         if(channelIndex!=channel){
             return;
         }
-        m_scentDevice.GetChannelScentNames();
+        //m_scentDevice.GetChannelScentNames();
         var textField = m_scentButton.GetComponentInChildren<Text>();
         textField.text = name;
         m_scentButton.interactable = true;

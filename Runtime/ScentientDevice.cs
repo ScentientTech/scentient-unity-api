@@ -14,7 +14,6 @@ using Android.BLE.Commands;
 
 using UnityEngine.Events;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine.Serialization;
 
@@ -139,7 +138,7 @@ namespace Scentient
             "6a62bff7-a9c2-4e18-91e4-4fa57fdc2940"
         };
 
-        readonly string IdentifyCharacteristicUUID = "f1234567-89ab-4cde-f012-3456789abcde";
+        const string IdentifyCharacteristicUUID = "f1234567-89ab-4cde-f012-3456789abcde";
 
         const int _numChannels = 6;
 
@@ -795,14 +794,16 @@ namespace Scentient
                     idToScentName[id]=name;
                 }
             }
-
-            var names = _channelScentIds.Select<short,string>((id)=>{
+            string[] names = new string[_numChannels];
+            for(int i = 0; i < _numChannels; i++)
+            {
+                var id = _channelScentIds[i];
                 if(!idToScentName.ContainsKey(id)){
-                    return "scent not found";
+                    names[i] = "scent not found";
                 }
-                return idToScentName[id];
-            });
-            return names.ToArray();
+                names[i] = idToScentName[id];           
+            }
+            return names;
         } 
 
         public void Disconnect()
@@ -982,13 +983,18 @@ namespace Scentient
 
         public void Identify()
         {
-            if(_connected){
-                var messageBytes = BitConverter.GetBytes((char)0x01);
-                BleManager.Instance.QueueCommand(new WriteToCharacteristic(_deviceAddress,ServiceUUID,IdentifyCharacteristicUUID,messageBytes,customGatt:true));
+            if (_connected){
+                Identify(_deviceAddress);            
             }
             else {
                 Debug.LogWarning($"Cannot set channel scent, not connected to device");
             }
+        }
+
+        public static void Identify(string address)
+        {
+            var messageBytes = BitConverter.GetBytes((char)0x01);
+            BleManager.Instance.QueueCommand(new WriteToCharacteristic(address,ServiceUUID,IdentifyCharacteristicUUID,messageBytes,customGatt:true));
         }
 
 
