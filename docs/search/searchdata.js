@@ -4,8 +4,8 @@ var indexSectionsWithContent =
   1: "aepst",
   2: "s",
   3: "es",
-  4: "acipv",
-  5: "dis",
+  4: "acip",
+  5: "disv",
   6: "aesu"
 };
 

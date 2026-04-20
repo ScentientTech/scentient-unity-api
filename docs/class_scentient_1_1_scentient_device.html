@@ -92,6 +92,7 @@ $(function(){ initResizable(false); });
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#properties">Properties</a> &#124;
 <a href="#events">Events</a> &#124;
@@ -139,9 +140,15 @@ Public Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a7cc0c5791fae38b1c9bad350a425bf94" id="r_a7cc0c5791fae38b1c9bad350a425bf94"><td class="memItemLeft" align="right" valign="top"><a id="a7cc0c5791fae38b1c9bad350a425bf94" name="a7cc0c5791fae38b1c9bad350a425bf94"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Connect</b> ()</td></tr>
-<tr class="separator:a7cc0c5791fae38b1c9bad350a425bf94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39d89abd7e5b20cb221206d8d25cc020" id="r_a39d89abd7e5b20cb221206d8d25cc020"><td class="memItemLeft" align="right" valign="top"><a id="a39d89abd7e5b20cb221206d8d25cc020" name="a39d89abd7e5b20cb221206d8d25cc020"></a>
+short&#160;</td><td class="memItemRight" valign="bottom"><b>GetScentLevel</b> (int index)</td></tr>
+<tr class="separator:a39d89abd7e5b20cb221206d8d25cc020"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a091042791ed17baf8829875c31e99bda" id="r_a091042791ed17baf8829875c31e99bda"><td class="memItemLeft" align="right" valign="top"><a id="a091042791ed17baf8829875c31e99bda" name="a091042791ed17baf8829875c31e99bda"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Scan</b> (float scanTimeout=10000)</td></tr>
+<tr class="separator:a091042791ed17baf8829875c31e99bda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26b8a57be4c2265d1df8780078a7853a" id="r_a26b8a57be4c2265d1df8780078a7853a"><td class="memItemLeft" align="right" valign="top"><a id="a26b8a57be4c2265d1df8780078a7853a" name="a26b8a57be4c2265d1df8780078a7853a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Connect</b> (string device)</td></tr>
+<tr class="separator:a26b8a57be4c2265d1df8780078a7853a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a60663fbc9f42cee2065e8ec192af7c89" id="r_a60663fbc9f42cee2065e8ec192af7c89"><td class="memItemLeft" align="right" valign="top"><a id="a60663fbc9f42cee2065e8ec192af7c89" name="a60663fbc9f42cee2065e8ec192af7c89"></a>
 async Task&lt; string[]&gt;&#160;</td><td class="memItemRight" valign="bottom"><b>GetChannelScentNamesAsync</b> ()</td></tr>
 <tr class="separator:a60663fbc9f42cee2065e8ec192af7c89"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -170,6 +177,15 @@ Dictionary&lt; short, string &gt;&#160;</td><td class="memItemRight" valign="bot
 <tr class="memitem:af448a8d23775e644a2beda750e7d9372" id="r_af448a8d23775e644a2beda750e7d9372"><td class="memItemLeft" align="right" valign="top"><a id="af448a8d23775e644a2beda750e7d9372" name="af448a8d23775e644a2beda750e7d9372"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>SetChannelScent</b> (int channelToSet, short scentId)</td></tr>
 <tr class="separator:af448a8d23775e644a2beda750e7d9372"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a582fe9eeaef5044e5fe9cc3d0fa8394c" id="r_a582fe9eeaef5044e5fe9cc3d0fa8394c"><td class="memItemLeft" align="right" valign="top"><a id="a582fe9eeaef5044e5fe9cc3d0fa8394c" name="a582fe9eeaef5044e5fe9cc3d0fa8394c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Identify</b> ()</td></tr>
+<tr class="separator:a582fe9eeaef5044e5fe9cc3d0fa8394c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a2929950ec138b093f6487c17b056dcbb" id="r_a2929950ec138b093f6487c17b056dcbb"><td class="memItemLeft" align="right" valign="top"><a id="a2929950ec138b093f6487c17b056dcbb" name="a2929950ec138b093f6487c17b056dcbb"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><b>Identify</b> (string address)</td></tr>
+<tr class="separator:a2929950ec138b093f6487c17b056dcbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -179,17 +195,9 @@ UnityEvent&#160;</td><td class="memItemRight" valign="bottom"><b>OnConnectedEven
 <tr class="memitem:a1880b4af3aee8ba1217ad633ac5f46ea" id="r_a1880b4af3aee8ba1217ad633ac5f46ea"><td class="memItemLeft" align="right" valign="top"><a id="a1880b4af3aee8ba1217ad633ac5f46ea" name="a1880b4af3aee8ba1217ad633ac5f46ea"></a>
 readonly <a class="el" href="class_scentient_1_1_scent_table.html">ScentTable</a>&#160;</td><td class="memItemRight" valign="bottom"><b>scentTable</b> = new <a class="el" href="class_scentient_1_1_scent_table.html">ScentTable</a>()</td></tr>
 <tr class="separator:a1880b4af3aee8ba1217ad633ac5f46ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9fb640795a79b24357feda5b9c504a9a" id="r_a9fb640795a79b24357feda5b9c504a9a"><td class="memItemLeft" align="right" valign="top"><a id="a9fb640795a79b24357feda5b9c504a9a" name="a9fb640795a79b24357feda5b9c504a9a"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>verbose</b></td></tr>
-<tr class="memdesc:a9fb640795a79b24357feda5b9c504a9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set this property to true to get additional information in the console about communicaiton to the scentient peripheral. <br /></td></tr>
-<tr class="separator:a9fb640795a79b24357feda5b9c504a9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a95bf7ee7f34c262bb0364b117e1cbcf4" id="r_a95bf7ee7f34c262bb0364b117e1cbcf4"><td class="memItemLeft" align="right" valign="top"><a id="a95bf7ee7f34c262bb0364b117e1cbcf4" name="a95bf7ee7f34c262bb0364b117e1cbcf4"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>reconnectToLastDevice</b> = true</td></tr>
 <tr class="separator:a95bf7ee7f34c262bb0364b117e1cbcf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa30582df7869d2496f085cd2779d06ce" id="r_aa30582df7869d2496f085cd2779d06ce"><td class="memItemLeft" align="right" valign="top"><a id="aa30582df7869d2496f085cd2779d06ce" name="aa30582df7869d2496f085cd2779d06ce"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>autoConnectOnStart</b></td></tr>
-<tr class="memdesc:aa30582df7869d2496f085cd2779d06ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Automatically calls Connect as soon as possible after starting. This should also trigger runtime permission requests first, if <code>autoRequestPermissionsOnConnect</code> is enabled. <br /></td></tr>
-<tr class="separator:aa30582df7869d2496f085cd2779d06ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae9bb285bbee3a30b97dc10742f95d9f3" id="r_ae9bb285bbee3a30b97dc10742f95d9f3"><td class="memItemLeft" align="right" valign="top"><a id="ae9bb285bbee3a30b97dc10742f95d9f3" name="ae9bb285bbee3a30b97dc10742f95d9f3"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>autoRequestPermissionsOnConnect</b> = true</td></tr>
 <tr class="memdesc:ae9bb285bbee3a30b97dc10742f95d9f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">When Connect is called, the attempt to connect is defered, and the runtime permissions dialog presented to the user is neccessary. <br /></td></tr>
@@ -201,6 +209,13 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>persistenAcrossScenes
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="properties" name="properties"></a>
 Properties</h2></td></tr>
+<tr class="memitem:a0c26264ae76abe4eaab2306f2558ab11" id="r_a0c26264ae76abe4eaab2306f2558ab11"><td class="memItemLeft" align="right" valign="top"><a id="a0c26264ae76abe4eaab2306f2558ab11" name="a0c26264ae76abe4eaab2306f2558ab11"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>Verbose</b><code> [get, set]</code></td></tr>
+<tr class="memdesc:a0c26264ae76abe4eaab2306f2558ab11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set this property to true to get additional information in the console about communicaiton to the scentient peripheral. <br /></td></tr>
+<tr class="separator:a0c26264ae76abe4eaab2306f2558ab11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a991f5482ca484cd5ef60ab157f3995a4" id="r_a991f5482ca484cd5ef60ab157f3995a4"><td class="memItemLeft" align="right" valign="top"><a id="a991f5482ca484cd5ef60ab157f3995a4" name="a991f5482ca484cd5ef60ab157f3995a4"></a>
+byte&#160;</td><td class="memItemRight" valign="bottom"><b>Battery</b><code> [get]</code></td></tr>
+<tr class="separator:a991f5482ca484cd5ef60ab157f3995a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac52a847b057ee4185703c72cbda07fe4" id="r_ac52a847b057ee4185703c72cbda07fe4"><td class="memItemLeft" align="right" valign="top"><a id="ac52a847b057ee4185703c72cbda07fe4" name="ac52a847b057ee4185703c72cbda07fe4"></a>
 string&#160;</td><td class="memItemRight" valign="bottom"><b>StatusMessage</b><code> [get]</code></td></tr>
 <tr class="separator:ac52a847b057ee4185703c72cbda07fe4"><td class="memSeparator" colspan="2">&#160;</td></tr>

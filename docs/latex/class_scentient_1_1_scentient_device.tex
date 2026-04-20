@@ -42,8 +42,14 @@ enum {\bfseries States} \{ \newline
 \doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\Hypertarget{class_scentient_1_1_scentient_device_a7cc0c5791fae38b1c9bad350a425bf94}\label{class_scentient_1_1_scentient_device_a7cc0c5791fae38b1c9bad350a425bf94} 
-void {\bfseries Connect} ()
+\Hypertarget{class_scentient_1_1_scentient_device_a39d89abd7e5b20cb221206d8d25cc020}\label{class_scentient_1_1_scentient_device_a39d89abd7e5b20cb221206d8d25cc020} 
+short {\bfseries Get\+Scent\+Level} (int index)
+\item 
+\Hypertarget{class_scentient_1_1_scentient_device_a091042791ed17baf8829875c31e99bda}\label{class_scentient_1_1_scentient_device_a091042791ed17baf8829875c31e99bda} 
+void {\bfseries Scan} (float scan\+Timeout=10000)
+\item 
+\Hypertarget{class_scentient_1_1_scentient_device_a26b8a57be4c2265d1df8780078a7853a}\label{class_scentient_1_1_scentient_device_a26b8a57be4c2265d1df8780078a7853a} 
+void {\bfseries Connect} (string device)
 \item 
 \Hypertarget{class_scentient_1_1_scentient_device_a60663fbc9f42cee2065e8ec192af7c89}\label{class_scentient_1_1_scentient_device_a60663fbc9f42cee2065e8ec192af7c89} 
 async Task$<$ string\mbox{[}$\,$\mbox{]}$>$ {\bfseries Get\+Channel\+Scent\+Names\+Async} ()
@@ -70,6 +76,15 @@ Dictionary$<$ short, string $>$ {\bfseries Get\+Scent\+Dict} ()
 \item 
 \Hypertarget{class_scentient_1_1_scentient_device_af448a8d23775e644a2beda750e7d9372}\label{class_scentient_1_1_scentient_device_af448a8d23775e644a2beda750e7d9372} 
 void {\bfseries Set\+Channel\+Scent} (int channel\+To\+Set, short scent\+Id)
+\item 
+\Hypertarget{class_scentient_1_1_scentient_device_a582fe9eeaef5044e5fe9cc3d0fa8394c}\label{class_scentient_1_1_scentient_device_a582fe9eeaef5044e5fe9cc3d0fa8394c} 
+void {\bfseries Identify} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_scentient_1_1_scentient_device_a2929950ec138b093f6487c17b056dcbb}\label{class_scentient_1_1_scentient_device_a2929950ec138b093f6487c17b056dcbb} 
+static void {\bfseries Identify} (string address)
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
@@ -80,15 +95,9 @@ Unity\+Event {\bfseries On\+Connected\+Event}
 \Hypertarget{class_scentient_1_1_scentient_device_a1880b4af3aee8ba1217ad633ac5f46ea}\label{class_scentient_1_1_scentient_device_a1880b4af3aee8ba1217ad633ac5f46ea} 
 readonly \mbox{\hyperlink{class_scentient_1_1_scent_table}{Scent\+Table}} {\bfseries scent\+Table} = new \mbox{\hyperlink{class_scentient_1_1_scent_table}{Scent\+Table}}()
 \item 
-\Hypertarget{class_scentient_1_1_scentient_device_a9fb640795a79b24357feda5b9c504a9a}\label{class_scentient_1_1_scentient_device_a9fb640795a79b24357feda5b9c504a9a} 
-bool {\bfseries verbose}
-\begin{DoxyCompactList}\small\item\em Set this property to true to get additional information in the console about communicaiton to the scentient peripheral. \end{DoxyCompactList}\item 
 \Hypertarget{class_scentient_1_1_scentient_device_a95bf7ee7f34c262bb0364b117e1cbcf4}\label{class_scentient_1_1_scentient_device_a95bf7ee7f34c262bb0364b117e1cbcf4} 
 bool {\bfseries reconnect\+To\+Last\+Device} = true
 \item 
-\Hypertarget{class_scentient_1_1_scentient_device_aa30582df7869d2496f085cd2779d06ce}\label{class_scentient_1_1_scentient_device_aa30582df7869d2496f085cd2779d06ce} 
-bool {\bfseries auto\+Connect\+On\+Start}
-\begin{DoxyCompactList}\small\item\em Automatically calls Connect as soon as possible after starting. This should also trigger runtime permission requests first, if {\ttfamily auto\+Request\+Permissions\+On\+Connect} is enabled. \end{DoxyCompactList}\item 
 \Hypertarget{class_scentient_1_1_scentient_device_ae9bb285bbee3a30b97dc10742f95d9f3}\label{class_scentient_1_1_scentient_device_ae9bb285bbee3a30b97dc10742f95d9f3} 
 bool {\bfseries auto\+Request\+Permissions\+On\+Connect} = true
 \begin{DoxyCompactList}\small\item\em When Connect is called, the attempt to connect is defered, and the runtime permissions dialog presented to the user is neccessary. \end{DoxyCompactList}\item 
@@ -97,6 +106,12 @@ bool {\bfseries persisten\+Across\+Scenes} = false
 \begin{DoxyCompactList}\small\item\em If communication with the \doxylink{namespace_scentient}{Scentient} peripheral is required across scenes, enable this property. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Properties}
 \begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_scentient_1_1_scentient_device_a0c26264ae76abe4eaab2306f2558ab11}\label{class_scentient_1_1_scentient_device_a0c26264ae76abe4eaab2306f2558ab11} 
+bool {\bfseries Verbose}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Set this property to true to get additional information in the console about communicaiton to the scentient peripheral. \end{DoxyCompactList}\item 
+\Hypertarget{class_scentient_1_1_scentient_device_a991f5482ca484cd5ef60ab157f3995a4}\label{class_scentient_1_1_scentient_device_a991f5482ca484cd5ef60ab157f3995a4} 
+byte {\bfseries Battery}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
 \item 
 \Hypertarget{class_scentient_1_1_scentient_device_ac52a847b057ee4185703c72cbda07fe4}\label{class_scentient_1_1_scentient_device_ac52a847b057ee4185703c72cbda07fe4} 
 string {\bfseries Status\+Message}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
