@@ -39,6 +39,8 @@ namespace Scentient
         public event Action<int, string> OnChannelScentsUpdatedEvent;
         public event Action<int, int> OnChannelScentLevelChanged;
 
+        public event Action<string,string> OnDeviceDiscovered;
+
         public UnityEvent OnConnectedEvent;
     
         public readonly ScentTable scentTable = new ScentTable();
@@ -255,6 +257,9 @@ namespace Scentient
         private float _scanTimeout = 10;
         private States _state = States.None;
         private string _deviceAddress;
+
+        private Action m_postInit;
+
         private bool _foundButtonUUID = false;
         private bool _foundLedUUID = false;
         private string _status;
@@ -266,7 +271,7 @@ namespace Scentient
 
         private short[] _channelScentIds = new short[_numChannels]; 
         private string[] _channelScentNames = new string[_numChannels];
-
+        private bool m_initialized;
 
         public string StatusMessage
         {
@@ -333,8 +338,14 @@ namespace Scentient
             _timeout = timeout;
         }
 
-        void StartProcess()
-        {        
+        void Init()
+        {
+            if (m_initialized)
+            {
+                InvokePostInit();
+                return;
+            }
+            
 #if SCENTIENT_SERIAL_COMMS
             if(_connected){
                 return;
@@ -402,11 +413,11 @@ namespace Scentient
                     appPerm = gameObject.AddComponent<AppPermissions>();
                 }
                 else {
-                    appPerm.allPermissionsGrantedEvent.RemoveListener(StartProcess);
+                    appPerm.allPermissionsGrantedEvent.RemoveListener(Init);
                 }
                 if(!appPerm.AllPermissionsGranted){
                     // If we need to request permissions, abort connecting until permissions are granted                    
-                    appPerm.allPermissionsGrantedEvent.AddListener(StartProcess);
+                    appPerm.allPermissionsGrantedEvent.AddListener(Init);
                     appPerm.RequestPermissions();
                     return;
                 }
@@ -414,17 +425,21 @@ namespace Scentient
             }
 
             BleManager.Instance.Initialize(); 
+            m_initialized = true;
             
-            if( reconnectToLastDevice && PlayerPrefs.HasKey(LastAddressKey) ){
-                _deviceAddress = PlayerPrefs.GetString(LastAddressKey);
-                SetState(States.Connect,0.5f);
-            }
-            else {
-                SetState(States.Scan, 0.1f);
-            }
+            InvokePostInit();
+
+        }
+
+        private void InvokePostInit()
+        {
+            var postInit = m_postInit;
+            m_postInit = null;
+            postInit?.Invoke();
         }
 
         // Use this for initialization
+
         void Start()
         {
             if(_verbose){
@@ -684,9 +699,13 @@ namespace Scentient
 
         private void OnDeviceFound(string deviceAddress, string name)
         {
+            bool isEscentsDevice = !string.IsNullOrEmpty(name) && name.Contains(DeviceName);
+            Debug.Log($"OnDeviceFound {deviceAddress} {name} {isEscentsDevice}");
             if( !string.IsNullOrEmpty(name) && name.Contains(DeviceName) ){
-                _deviceAddress = deviceAddress;
-                SetState(States.Connect,0.1f);
+                //_deviceAddress = deviceAddress;
+                //SetState(States.Connect,0.1f);
+                OnDeviceDiscovered?.Invoke(deviceAddress,name);
+                Debug.Log("!!!!!!!");
             }
         }
 
@@ -744,6 +763,8 @@ namespace Scentient
 
         public void Scan()
         {
+            m_postInit = ()=>SetState(States.Scan, 0.1f);
+            Init();
         }
 
         public void Connect(string device)
@@ -752,12 +773,28 @@ namespace Scentient
                 scentTable.Load();
             }
 
-            StartProcess();
-            
+            _deviceAddress = device;
+            m_postInit = ()=>SetState(States.Connect,0.1f);
+            Init();
         }
 
-        
+        public void Reconnect()
+        {         
+            if(!scentTable.Loaded){
+                scentTable.Load();
+            }
 
+            if( reconnectToLastDevice && PlayerPrefs.HasKey(LastAddressKey) ){
+                _deviceAddress = PlayerPrefs.GetString(LastAddressKey);
+                m_postInit = ()=>{ SetState(States.Connect,0.5f); };
+                Init();
+            }
+        }
+
+        public void Forget()
+        {
+            PlayerPrefs.DeleteKey(LastAddressKey);
+        }
 
         private void OnScentTableLoaded()
         {
