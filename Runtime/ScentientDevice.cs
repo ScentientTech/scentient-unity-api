@@ -109,6 +109,10 @@ namespace Scentient
         /// </summary>
         public bool persistenAcrossScenes = false;
 
+        public bool autoreconnectOnStart = false;
+
+        public bool autoreconnectOnDisconnect = false;
+
         const string DeviceName = "Escents";
         const string ServiceUUID = "eddd4e1f-16fa-4c7c-ad7f-171edbd7eff7";
         const string ScentMessageUUID = "45335526-67ba-4d9d-8cfb-c3d97e8d8208";
@@ -278,6 +282,18 @@ namespace Scentient
             }
         }
 
+        public float ScanTimeout
+        {
+            get
+            {
+                return _scanTimeout;
+            }
+            set
+            {
+                _scanTimeout = value;
+            }
+        }
+
         public string[] ChannelScentNames {
             get {
                 return _channelScentNames;
@@ -289,7 +305,7 @@ namespace Scentient
         void Awake()
         {
             scentTable.loadSucessfulEvent += OnScentTableLoaded;
-            
+            scentTable.loadFailedEvent += OnScentTableLoadFailed;
             if(persistenAcrossScenes){
                 GameObject.DontDestroyOnLoad(this.gameObject);
             }
@@ -441,16 +457,17 @@ namespace Scentient
         }
 
 
-#if SCENTIENT_SERIAL_COMMS
         void OnDestroy()
         {
+#if SCENTIENT_SERIAL_COMMS
 
             if(m_serialPort!=null && m_serialPort.IsOpen){
                 m_serialPort.Close();
             }
-
-        }
 #endif
+            scentTable.loadSucessfulEvent -= OnScentTableLoaded;
+            scentTable.loadFailedEvent -= OnScentTableLoadFailed;
+        }
 
         private void ProcessButton(byte[] bytes)
         {
@@ -725,9 +742,8 @@ namespace Scentient
             return (uuid1.ToUpper().Equals(uuid2.ToUpper()));
         }
 
-        public void Scan(float scanTimeout=10000)
+        public void Scan()
         {
-            _scanTimeout = scanTimeout;
         }
 
         public void Connect(string device)
@@ -757,6 +773,13 @@ namespace Scentient
                 Debug.Log(sb.ToString());
             }
 
+        }
+
+        private void OnScentTableLoadFailed()
+        {
+            if (_verbose){
+                Debug.LogWarning("Unable to load scent table");
+            }
         }
 
         public async Task<string[]> GetChannelScentNamesAsync()
