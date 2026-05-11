@@ -38,7 +38,18 @@ namespace Scentient
 
         public event Action<int, string> OnChannelScentsUpdatedEvent;
 
+        /// <summary>
+        /// Invoked when a channel's pod is changed
+        /// param 1 : scent channel ( 1-6 )
+        /// param 2 : scent name
+        /// </summary>
         public event Action<byte> OnBatteryLevelChangedEvent;
+        
+        /// <summary>
+        /// Invoked when the scent level changes, from emit scent being called, or from changing the channel's pod.
+        /// param 1 : scent channel ( 1-6 )
+        /// param 2 : scent level ( 0-100 )
+        /// </summary>
         public event Action<int, int> OnChannelScentLevelChangedEvent;
 
         public event Action<string,string> OnDeviceDiscoveredEvent;
@@ -88,14 +99,14 @@ namespace Scentient
             }
         }
 
-        public short GetScentLevel(int index)
+        public short GetScentLevel(int channel)
         {
-            if (index<0 || index >= _numChannels)
+            if (channel<=0 || channel > _numChannels)
             {
                 if(_verbose) Debug.LogWarning("channel index out of range");
                 return 0;
             }
-            return _channelScentLevels[index];
+            return _channelScentLevels[channel-1];
         }
 
 
@@ -470,7 +481,7 @@ namespace Scentient
         private void UpdateChanneScentLevel(int channelIndex, Int16 level)
         {
             _channelScentLevels[channelIndex] = level;
-            OnChannelScentLevelChangedEvent.Invoke(channelIndex,level);
+            OnChannelScentLevelChangedEvent.Invoke(channelIndex+1,level);
         }
 
 
