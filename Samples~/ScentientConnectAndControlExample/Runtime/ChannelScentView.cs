@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Scentient;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,16 +15,21 @@ public class ChannelScentView : MonoBehaviour
 
     [SerializeField] Button m_scentButton;
     [SerializeField] Button m_changeScentButton;
-
+    [SerializeField] Image m_scentLevelImage;
+    [SerializeField] Text m_fillLevelText;
+    [SerializeField] Text m_scentText;
     [SerializeField] ScentListView m_scentList;
-
     [SerializeField] ScentientDevice m_scentDevice;
 
     void Awake()
     {
         Interactable = false;
         m_scentDevice.OnChannelScentsUpdatedEvent += OnChannelScentsUpdated;
+        m_scentDevice.OnChannelScentLevelChangedEvent += OnChannelScentLevelChanged;
+        
     }
+
+
 
     public void RefreshScentNames()
     {
@@ -39,15 +42,29 @@ public class ChannelScentView : MonoBehaviour
         m_scentList.Show();        
     }
 
-    void OnChannelScentsUpdated(int channelIndex, string name)
+    void OnChannelScentsUpdated(int scentChannel, int scentId, string name)
     {
-        if(channelIndex!=channel){
+        if(scentChannel!=channel){
             return;
         }
-        //m_scentDevice.GetChannelScentNames();
-        var textField = m_scentButton.GetComponentInChildren<Text>();
-        textField.text = name;
-        m_scentButton.interactable = true;
+        
+        m_scentText.text = name;
+        m_scentButton.interactable = scentId!=ScentTable.Nothing;
         m_changeScentButton.interactable = true;
     }
+
+    private void OnChannelScentLevelChanged(int scentChannel, int scentLevel)
+    {
+        if (scentChannel != channel)
+        {
+            return;
+        }
+        if (m_fillLevelText == null)
+        {
+            m_fillLevelText = m_scentLevelImage.GetComponentInChildren<Text>();
+        }
+        m_fillLevelText.text = $"{scentLevel/100f:P0}";
+        m_scentLevelImage.fillAmount = scentLevel/100f;
+    }
+    
 }
