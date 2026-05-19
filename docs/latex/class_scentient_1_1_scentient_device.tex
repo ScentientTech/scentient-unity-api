@@ -42,14 +42,17 @@ enum {\bfseries States} \{ \newline
 \doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\Hypertarget{class_scentient_1_1_scentient_device_a39d89abd7e5b20cb221206d8d25cc020}\label{class_scentient_1_1_scentient_device_a39d89abd7e5b20cb221206d8d25cc020} 
-short {\bfseries Get\+Scent\+Level} (int index)
+\Hypertarget{class_scentient_1_1_scentient_device_aee525f5875e4a9c08bd0f9d71fe0c25d}\label{class_scentient_1_1_scentient_device_aee525f5875e4a9c08bd0f9d71fe0c25d} 
+short {\bfseries Get\+Scent\+Level} (int channel)
 \item 
-\Hypertarget{class_scentient_1_1_scentient_device_a091042791ed17baf8829875c31e99bda}\label{class_scentient_1_1_scentient_device_a091042791ed17baf8829875c31e99bda} 
-void {\bfseries Scan} (float scan\+Timeout=10000)
+\Hypertarget{class_scentient_1_1_scentient_device_a74d9a132f91ab9f16578cb3cafef8090}\label{class_scentient_1_1_scentient_device_a74d9a132f91ab9f16578cb3cafef8090} 
+void {\bfseries Scan} ()
 \item 
 \Hypertarget{class_scentient_1_1_scentient_device_a26b8a57be4c2265d1df8780078a7853a}\label{class_scentient_1_1_scentient_device_a26b8a57be4c2265d1df8780078a7853a} 
 void {\bfseries Connect} (string device)
+\item 
+\Hypertarget{class_scentient_1_1_scentient_device_a06df1ec49ccb32b67726ee35fa4c879c}\label{class_scentient_1_1_scentient_device_a06df1ec49ccb32b67726ee35fa4c879c} 
+void {\bfseries Reconnect} ()
 \item 
 \Hypertarget{class_scentient_1_1_scentient_device_a60663fbc9f42cee2065e8ec192af7c89}\label{class_scentient_1_1_scentient_device_a60663fbc9f42cee2065e8ec192af7c89} 
 async Task$<$ string\mbox{[}$\,$\mbox{]}$>$ {\bfseries Get\+Channel\+Scent\+Names\+Async} ()
@@ -83,8 +86,8 @@ void {\bfseries Identify} ()
 \doxysubsubsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\Hypertarget{class_scentient_1_1_scentient_device_a2929950ec138b093f6487c17b056dcbb}\label{class_scentient_1_1_scentient_device_a2929950ec138b093f6487c17b056dcbb} 
-static void {\bfseries Identify} (string address)
+\Hypertarget{class_scentient_1_1_scentient_device_a84cde8395c6fad6f1d0021c7dd96164c}\label{class_scentient_1_1_scentient_device_a84cde8395c6fad6f1d0021c7dd96164c} 
+static void {\bfseries Forget} ()
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
@@ -94,9 +97,6 @@ Unity\+Event {\bfseries On\+Connected\+Event}
 \item 
 \Hypertarget{class_scentient_1_1_scentient_device_a1880b4af3aee8ba1217ad633ac5f46ea}\label{class_scentient_1_1_scentient_device_a1880b4af3aee8ba1217ad633ac5f46ea} 
 readonly \mbox{\hyperlink{class_scentient_1_1_scent_table}{Scent\+Table}} {\bfseries scent\+Table} = new \mbox{\hyperlink{class_scentient_1_1_scent_table}{Scent\+Table}}()
-\item 
-\Hypertarget{class_scentient_1_1_scentient_device_a95bf7ee7f34c262bb0364b117e1cbcf4}\label{class_scentient_1_1_scentient_device_a95bf7ee7f34c262bb0364b117e1cbcf4} 
-bool {\bfseries reconnect\+To\+Last\+Device} = true
 \item 
 \Hypertarget{class_scentient_1_1_scentient_device_ae9bb285bbee3a30b97dc10742f95d9f3}\label{class_scentient_1_1_scentient_device_ae9bb285bbee3a30b97dc10742f95d9f3} 
 bool {\bfseries auto\+Request\+Permissions\+On\+Connect} = true
@@ -116,11 +116,17 @@ byte {\bfseries Battery}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
 \Hypertarget{class_scentient_1_1_scentient_device_ac52a847b057ee4185703c72cbda07fe4}\label{class_scentient_1_1_scentient_device_ac52a847b057ee4185703c72cbda07fe4} 
 string {\bfseries Status\+Message}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
 \item 
+\Hypertarget{class_scentient_1_1_scentient_device_ace1d3cc794efa057caa65892617822a1}\label{class_scentient_1_1_scentient_device_ace1d3cc794efa057caa65892617822a1} 
+float {\bfseries Scan\+Timeout}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
 \Hypertarget{class_scentient_1_1_scentient_device_aa9913f6de149531e839b7780a50d7249}\label{class_scentient_1_1_scentient_device_aa9913f6de149531e839b7780a50d7249} 
 string\mbox{[}$\,$\mbox{]} {\bfseries Channel\+Scent\+Names}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
 \item 
 \Hypertarget{class_scentient_1_1_scentient_device_ade61b0c6d5481102a4ea50fb3dffdbc5}\label{class_scentient_1_1_scentient_device_ade61b0c6d5481102a4ea50fb3dffdbc5} 
 States {\bfseries State}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+\Hypertarget{class_scentient_1_1_scentient_device_a1dc5ab6bdf570ce6a4717ea715492841}\label{class_scentient_1_1_scentient_device_a1dc5ab6bdf570ce6a4717ea715492841} 
+static bool {\bfseries Has\+Saved\+Device}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Events}
 \begin{DoxyCompactItemize}
@@ -131,11 +137,20 @@ Action$<$ string $>$ {\bfseries On\+Status\+Changed\+Event}
 \Hypertarget{class_scentient_1_1_scentient_device_ac1cd3d72995809d6a5c500f2cc7f7d6f}\label{class_scentient_1_1_scentient_device_ac1cd3d72995809d6a5c500f2cc7f7d6f} 
 Action$<$ States $>$ {\bfseries On\+State\+Changed\+Event}
 \item 
-\Hypertarget{class_scentient_1_1_scentient_device_aaae707c60f541c388012cdd5f371b725}\label{class_scentient_1_1_scentient_device_aaae707c60f541c388012cdd5f371b725} 
-Action$<$ bool $>$ {\bfseries On\+Button\+Changed\+Event}
+\Hypertarget{class_scentient_1_1_scentient_device_a49d909449829af8b109b07a3c21574d5}\label{class_scentient_1_1_scentient_device_a49d909449829af8b109b07a3c21574d5} 
+Action {\bfseries On\+Button\+Pressed\+Event}
 \item 
-\Hypertarget{class_scentient_1_1_scentient_device_a75e69bd1b8d6b59d82783d65922b6a77}\label{class_scentient_1_1_scentient_device_a75e69bd1b8d6b59d82783d65922b6a77} 
-Action$<$ int, string $>$ {\bfseries On\+Channel\+Scents\+Updated\+Event}
+\Hypertarget{class_scentient_1_1_scentient_device_aa1e16c6da4bc54d9d876341f05c68f47}\label{class_scentient_1_1_scentient_device_aa1e16c6da4bc54d9d876341f05c68f47} 
+Action$<$ int, int, string $>$ {\bfseries On\+Channel\+Scents\+Updated\+Event}
+\item 
+\Hypertarget{class_scentient_1_1_scentient_device_a08a76670df450b067294d761aa7c37b9}\label{class_scentient_1_1_scentient_device_a08a76670df450b067294d761aa7c37b9} 
+Action$<$ byte $>$ {\bfseries On\+Battery\+Level\+Changed\+Event}
+\begin{DoxyCompactList}\small\item\em Invoked when a channel\textquotesingle{}s pod is changed param 1 \+: scent channel ( 1-\/6 ) param 2 \+: scent name. \end{DoxyCompactList}\item 
+\Hypertarget{class_scentient_1_1_scentient_device_add2fb5c9e7ef88fcd33b2e8322eaf220}\label{class_scentient_1_1_scentient_device_add2fb5c9e7ef88fcd33b2e8322eaf220} 
+Action$<$ int, int $>$ {\bfseries On\+Channel\+Scent\+Level\+Changed\+Event}
+\begin{DoxyCompactList}\small\item\em Invoked when the scent level changes, from emit scent being called, or from changing the channel\textquotesingle{}s pod. param 1 \+: scent channel ( 1-\/6 ) param 2 \+: scent level ( 0-\/100 ) \end{DoxyCompactList}\item 
+\Hypertarget{class_scentient_1_1_scentient_device_ae1fa13483b7492aa38135e4def9b24f2}\label{class_scentient_1_1_scentient_device_ae1fa13483b7492aa38135e4def9b24f2} 
+Action$<$ string, string $>$ {\bfseries On\+Device\+Discovered\+Event}
 \end{DoxyCompactItemize}
 
 
