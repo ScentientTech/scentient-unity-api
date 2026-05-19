@@ -37,7 +37,7 @@ namespace Scentient
         public event Action<States> OnStateChangedEvent;
         public event Action OnButtonPressedEvent;
 
-        public event Action<int, string> OnChannelScentsUpdatedEvent;
+        public event Action<int, int, string> OnChannelScentsUpdatedEvent;
 
         /// <summary>
         /// Invoked when a channel's pod is changed
@@ -82,6 +82,7 @@ namespace Scentient
                 }
 
                 BleManager.Instance.UseUnityLog = _verbose;
+                BleManager.Instance.LogAllMessages = _verbose;
 
                 if (_verbose)
                 {
@@ -112,9 +113,6 @@ namespace Scentient
             return _channelScentLevels[channel-1];
         }
 
-
-        public bool reconnectToLastDevice = true;
-
         /// <summary>
         /// When Connect is called, the attempt to connect is defered, 
         /// and the runtime permissions dialog presented to the user is neccessary
@@ -126,10 +124,6 @@ namespace Scentient
         /// 
         /// </summary>
         public bool persistenAcrossScenes = false;
-
-        public bool autoreconnectOnStart = false;
-
-        public bool autoreconnectOnDisconnect = false;
 
         const string DeviceName = "Escents";
         const string ServiceUUID = "eddd4e1f-16fa-4c7c-ad7f-171edbd7eff7";
@@ -286,7 +280,6 @@ namespace Scentient
 
         private Action m_postInit;
 
-        private bool _foundButtonUUID = false;
         private string _status;
         private byte _batteryLevel = 100;
 
@@ -361,7 +354,6 @@ namespace Scentient
             _timeout = 0f;
             _state = States.None;
             _deviceAddress = null;
-            _foundButtonUUID = false;
             _disconnectActions.Clear();
         }
 
@@ -490,7 +482,7 @@ namespace Scentient
             _channelScentIds[channelIndex] = scentId;            
             var scentName = _channelScentNames[channelIndex] = scentTable.GetScentNameById(scentId);
             if(_verbose) Debug.Log($"UpdateChannelScentIds channelIndex={channelIndex} scentId={scentId} scentName={_channelScentNames[channelIndex]}");
-            OnChannelScentsUpdatedEvent?.Invoke(channelIndex+1,scentName);
+            OnChannelScentsUpdatedEvent?.Invoke(channelIndex+1,scentId,scentName);
         }
 
         private void UpdateChanneScentLevel(int channelIndex, Int16 level)
@@ -630,10 +622,7 @@ namespace Scentient
                         break;
                     case States.Connect:
                         StatusMessage = "Connecting...";
-
-                        // set these flags
-                        _foundButtonUUID = false;
-
+                        
                         ConnectToDevice connectCmd;
                         BleManager.Instance.QueueCommand( connectCmd = new ConnectToDevice(_deviceAddress,OnConnected,OnDisconnected,OnServiceDiscovered,OnCharacteristicDiscovered) );
                         _disconnectActions.Push(connectCmd.Disconnect);
@@ -696,7 +685,6 @@ namespace Scentient
                 yield return null;
                 
             }
-            yield return null;
             bool batteryReadingComplete=false;
             
             BleManager.Instance.QueueCommand(new ReadFromCharacteristic(_deviceAddress,BatteryServiceUUID,BatteryCharacteristicUUID,(byte[] data)=>{
@@ -706,7 +694,7 @@ namespace Scentient
                 batteryReadingComplete=true;
             },customGatt:true));
 
-            yield return new WaitUntil(()=>batteryReadingComplete);
+            yield return null;
             yield return SubscribeToScentCharacteristics();
         }
 
@@ -726,14 +714,15 @@ namespace Scentient
                 bool channelScentIdSubscriptionCompleted = false;
                 subscriptionTimeout=Time.unscaledTime+3;
 
-                BleManager.Instance.QueueCommand(new SubscribeToCharacteristics(_deviceAddress,ServiceUUID,channelScentId,(byte[] data)=>{
+                BleManager.Instance.QueueCommand(new SubscribeToCharacteristic(_deviceAddress,ServiceUUID,channelScentId,(byte[] data)=>{
                     short scentId = BinaryPrimitives.ReadInt16LittleEndian(data);
                     if(_verbose) Debug.Log($"Scent ID Received {scentId}");
                     UpdateChannelScentIds( channelIndex, scentId );
                     channelScentIdSubscriptionCompleted = true;
                 },customGatt:true));
                                 
-                yield return new WaitUntil(()=>(channelScentIdSubscriptionCompleted || Time.unscaledTime>subscriptionTimeout));
+                yield return null;
+//                yield return new WaitUntil(()=>(channelScentIdSubscriptionCompleted || Time.unscaledTime>subscriptionTimeout));
                 if (Time.unscaledTime > subscriptionTimeout)
                 {
                     Debug.LogWarning("Pod ID Subscription attempt timeout");
@@ -742,33 +731,34 @@ namespace Scentient
                 bool channelScentLevelSubscriptionCompleted = false;
                 subscriptionTimeout=Time.unscaledTime+3;
 
-                BleManager.Instance.QueueCommand( new SubscribeToCharacteristics(_deviceAddress,ServiceUUID,channelScentLevel,(byte[] data)=>{
+                BleManager.Instance.QueueCommand( new SubscribeToCharacteristic(_deviceAddress,ServiceUUID,channelScentLevel,(byte[] data)=>{
                     short level = BinaryPrimitives.ReadInt16LittleEndian(data);
                     if(_verbose) Debug.Log($"Pod Level received {level}");
                     UpdateChanneScentLevel(channelIndex,level);
                     channelScentLevelSubscriptionCompleted = true;
                 },customGatt:true));
 
-                yield return new WaitUntil(()=>(channelScentLevelSubscriptionCompleted || Time.unscaledTime>subscriptionTimeout));
+               yield return null;
+                // yield return new WaitUntil(()=>(channelScentLevelSubscriptionCompleted || Time.unscaledTime>subscriptionTimeout));
                 if (Time.unscaledTime > subscriptionTimeout)
                 {
                     Debug.LogWarning("Scent level Subscription attempt timeout");
                 }
-
+            
             }
 
 
             bool batterySubscriptionCompleted = false;
             subscriptionTimeout=Time.unscaledTime+3;
-
-            BleManager.Instance.QueueCommand(new SubscribeToCharacteristics(_deviceAddress,BatteryServiceUUID,BatteryCharacteristicUUID,(byte[] data) =>{
+            
+            BleManager.Instance.QueueCommand(new SubscribeToCharacteristic(_deviceAddress,BatteryServiceUUID,BatteryCharacteristicUUID,(byte[] data) =>{
                 _batteryLevel = data[0];
                 if(_verbose) Debug.Log($"Battery Level {_batteryLevel}");
                 OnBatteryLevelChangedEvent?.Invoke(_batteryLevel);
                 batterySubscriptionCompleted = true;
             },customGatt:true));
 
-            yield return new WaitUntil(()=>(batterySubscriptionCompleted || Time.unscaledTime>subscriptionTimeout));
+//            yield return new WaitUntil(()=>(batterySubscriptionCompleted || Time.unscaledTime>subscriptionTimeout));
             if (Time.unscaledTime > subscriptionTimeout)
             {
                 Debug.LogWarning("Battery Subscription attempt timeout");
@@ -776,7 +766,7 @@ namespace Scentient
             bool buttonSubscriptionCompleted = false;
             subscriptionTimeout=Time.unscaledTime+3;
 
-            BleManager.Instance.QueueCommand(new SubscribeToCharacteristics(_deviceAddress,ServiceUUID,ButtonUUID,(byte[] data) =>
+            BleManager.Instance.QueueCommand(new SubscribeToCharacteristic(_deviceAddress,ServiceUUID,ButtonUUID,(byte[] data) =>
             {
                 if (data[0] == 0x0)
                 {
@@ -786,11 +776,13 @@ namespace Scentient
                 buttonSubscriptionCompleted = true;
             },customGatt:true));
 
-            yield return new WaitUntil(()=>(buttonSubscriptionCompleted || Time.unscaledTime>subscriptionTimeout));
+//            yield return new WaitUntil(()=>(buttonSubscriptionCompleted || Time.unscaledTime>subscriptionTimeout));
             if (Time.unscaledTime > subscriptionTimeout)
             {
                 Debug.LogWarning("Button Subscription attempt timeout");
             }
+
+            yield break;
         }
 
 
@@ -921,7 +913,7 @@ namespace Scentient
                 scentTable.Load();
             }
             
-            if( reconnectToLastDevice && PlayerPrefs.HasKey(LastAddressKey) ){
+            if( PlayerPrefs.HasKey(LastAddressKey) ){
                 
                 _deviceAddress = PlayerPrefs.GetString(LastAddressKey);
                 Debug.Log($"Reconnecting to {_deviceAddress}");
@@ -1181,7 +1173,7 @@ namespace Scentient
             if(_connected){
                 var messageBytes = BitConverter.GetBytes(scentId);
                 BleManager.Instance.QueueCommand(new WriteToCharacteristic(_deviceAddress,ServiceUUID,ChannelScentIdCharacterisiticUUIDs[channelIndex],messageBytes,customGatt:true));
-                OnChannelScentsUpdatedEvent.Invoke(channelToSet,scentName);
+                OnChannelScentsUpdatedEvent.Invoke(channelToSet,scentId,scentName);
             }
             else {
                 Debug.LogWarning($"Cannot set channel scent, not connected to device");

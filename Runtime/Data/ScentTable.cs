@@ -15,7 +15,7 @@ namespace Scentient
         public event Action loadFailedEvent;
         public readonly string name = "scent_table";
 
-        
+        public const int Nothing = 0;
 
         public bool Loaded
         {
