@@ -14,7 +14,14 @@ public class ScanButton : MonoBehaviour
     void Start()
     {
         _scentientDevice.OnStateChangedEvent += OnStateChanged;
+        _button.onClick.AddListener( OnButtonPressed );
     }
+
+    private void OnButtonPressed()
+    {
+        _scentientDevice.Scan();
+    }
+
 
     private void OnStateChanged(ScentientDevice.States state)
     {

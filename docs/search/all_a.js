@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['verbose_0',['verbose',['../class_scentient_1_1_scentient_device.html#a9fb640795a79b24357feda5b9c504a9a',1,'Scentient::ScentientDevice']]]
+  ['unity_20api_0',['Scentient Escents Unity API',['../index.html',1,'']]],
+  ['usage_1',['Usage',['../index.html#autotoc_md4',1,'']]]
 ];
