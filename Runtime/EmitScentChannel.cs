@@ -19,18 +19,6 @@ namespace Scentient
         [Range(0,1)] [SerializeField] float m_intensity = 1f;
 
         /// <summary>
-        /// The name of the scent, can include spaces, should be one of the names in the following table https://api.scentient.tech/scent-table_en.csv
-        /// </summary>
-        public int ScentName {
-            set {
-                m_scentChannel = value;
-            }
-            get {
-                return m_scentChannel;
-            }
-        }
-
-        /// <summary>
         /// Controls the intensity of the scent emitted by the device.
         /// valid range is 0 to 1
         /// </summary>
