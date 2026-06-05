@@ -1,0 +1,68 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 08.01.2016 14:45:24
+
+newmtl White
+	Ns 10.000000
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588000 0.588000 0.588000
+	Kd 0.639216 0.639216 0.639216
+	Ks 0.207000 0.207000 0.207000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\Map__75_Mix.png
+	map_Kd maps\Map__75_Mix.png
+	map_bump -bm 0.300000 maps\Map__7_Noise.png
+	map_refl maps\Mix_Mix.png
+
+newmtl wire_085028177
+	Ns 32
+	d 1
+	Tr 0
+	Tf 1 1 1
+	illum 2
+	Ka 0.333333 0.109804 0.694118
+	Kd 0.333333 0.109804 0.694118
+	Ks 0.350000 0.350000 0.350000
+
+newmtl Wood_Unfinished
+	Ns 10.000000
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588000 0.588000 0.588000
+	Kd 0.500000 0.500000 0.500000
+	Ks 0.063000 0.063000 0.063000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\BarkDecidious0207_XL.jpg
+	map_Kd maps\BarkDecidious0207_XL.jpg
+	map_bump maps\BarkDecidious_Bump.jpg
+	bump maps\BarkDecidious_Bump.jpg
+	map_refl maps\Mix_Mix.png
+
+newmtl Chips
+	Ns 10.000000
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588000 0.588000 0.588000
+	Kd 0.078431 0.031373 0.000000
+	Ks 0.216000 0.216000 0.216000
+	Ke 0.000000 0.000000 0.000000
+	map_refl maps\Mix_Mix.png
+
+newmtl wire_084016011
+	Ns 32
+	d 1
+	Tr 0
+	Tf 1 1 1
+	illum 2
+	Ka 0.329412 0.062745 0.043137
+	Kd 0.329412 0.062745 0.043137
+	Ks 0.350000 0.350000 0.350000
