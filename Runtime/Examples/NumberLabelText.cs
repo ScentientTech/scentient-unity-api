@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Scentient.Examples 
+namespace Scentient.Samples 
 {
 [RequireComponent(typeof(Text))]
 public class NumberLabelText : MonoBehaviour

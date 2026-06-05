@@ -1,0 +1,16 @@
+{
+    "name": "scentient.samples",
+    "rootNamespace": "",
+    "references": [
+        "GUID:32a484ccdaced1649bf8629e227a97a2"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
