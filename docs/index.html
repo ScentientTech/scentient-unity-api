@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.11.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Scentient Escents Unity API: Scentient Escents Unity API</title>
+<title>Scentient Escents Unity API: Scentient Unity API</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -84,49 +84,753 @@ $(function(){ initResizable(false); });
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title"><a class="el" href="namespace_scentient.html">Scentient</a> Escents Unity API </div></div>
+  <div class="headertitle"><div class="title">Scentient Unity API </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="md__r_e_a_d_m_e"></a> </p>
-<h1><a class="anchor" id="autotoc_md1"></a>
-Requirements</h1>
+<div class="textblock"><p><a class="anchor" id="md__r_e_a_d_m_e"></a> The Scentient Unity API lets your Unity app control an Escents scent device. Your app connects to the device over Bluetooth, releases scents at the right moments, and can read information such as which scents are loaded and how much battery is left.</p>
+<p>This guide covers version 0.1.7 of the package. Last updated 15 October 2026.</p>
+<p>Questions or problems? Email us at <a href="#" onclick="location.href='mai'+'lto:'+'tea'+'m@'+'sce'+'nt'+'ien'+'t.'+'tec'+'h'; return false;">team@scentient.tech</a>.</p>
+<h1><a class="anchor" id="contents"></a>
+Contents</h1>
 <ul>
-<li>Unity 2020.3 and later.</li>
-<li>This api is designed for Android devices, such as portable VR headsets and Android phones/tablets.</li>
-<li>They control the Escents Peripheral over Bluetooth Low Energy. Therefore BLE must be enabled on the target device.</li>
+<li><a class="el" href="#before-you-start">Before you start</a></li>
+<li><a class="el" href="#getting-started-with-the-vr-demo">Getting started with the VR demo</a></li>
+<li><a class="el" href="#add-scents-to-your-own-scene-without-code">Add scents to your own scene without code</a></li>
+<li><a class="el" href="#using-the-api-from-code">Using the API from code</a></li>
+<li><a class="el" href="#how-it-works">How it works</a></li>
+<li><a class="el" href="#managing-connections">Managing connections</a></li>
+<li><a class="el" href="#emitting-scents">Emitting scents</a></li>
+<li><a class="el" href="#reading-information-from-the-device">Reading information from the device</a></li>
+<li><a class="el" href="#scent-list">Scent list</a></li>
+<li><a class="el" href="#troubleshooting">Troubleshooting</a></li>
+<li><a class="el" href="#api-at-a-glance">API at a glance</a></li>
+<li><a class="el" href="#getting-help">Getting help</a></li>
 </ul>
-<h1><a class="anchor" id="autotoc_md2"></a>
-Installation</h1>
-<p>For the main menu in Unity, select Window -&gt; "Package Manager" -&gt; "+" Button in Top Left -&gt; "Add Package From Git Url"</p>
-<p>Add the following url, for the Unity Android Bluetooth Low Energy library: <code>git@github.com:paulhayes/Unity-Android-Bluetooth-Low-Energy-Package.git</code> And then repeat for this library: <code>git@github.com:ScentientTech/scentient-unity-api.git</code></p>
-<h1><a class="anchor" id="autotoc_md3"></a>
-Android Runtime Permissions</h1>
-<p>Android has undergone a lot of changes to it's Bluetooth permissions. Here is a short summary of what permissions are required, and whether they need to request permission at runtime.</p>
+<h1><a class="anchor" id="before-you-start"></a>
+Before you start</h1>
+<p>You will need:</p>
+<ul>
+<li><b>An Escents device</b>, charged and switched on, with scent pods inserted.</li>
+<li><b>A Meta Quest headset</b> to run the VR demo. We have tested with a Meta Quest 2. The API also works on Android phones and tablets, which we have tested with a OnePlus Nord.</li>
+<li><b>Unity 2021.3.18 or newer</b>, with the <b>Android Build Support</b> module installed.</li>
+<li><b>An internet connection the first time your app connects</b>, so it can download the list of scent names. After that, the app keeps a copy and works offline.</li>
+</ul>
+<blockquote class="doxtable">
+<p>&zwj;<b>Note:</b> The API only works in Android builds. You cannot connect to an Escents device from the Unity Editor, so test on your headset or Android device. </p>
+</blockquote>
+<h1><a class="anchor" id="getting-started-with-the-vr-demo"></a>
+Getting started with the VR demo</h1>
+<p>The quickest way to try Scentient is the VR demo scene that comes with the package. It shows the main features working together:</p>
+<ul>
+<li>scanning for and connecting to an Escents device</li>
+<li>releasing a scent when you pick up an object</li>
+<li>releasing a scent when you walk into an area</li>
+</ul>
+<p>You do not need to write any code. Setting up takes about 30 minutes.</p>
+<blockquote class="doxtable">
+<p>&zwj;<b>Making a phone app instead?</b> Skip step 1, then in step 4 import the <b>Scentient Connect And Control Example</b> on its own. It is a phone app for connecting to a device and testing each channel. </p>
+</blockquote>
+<h2><a class="anchor" id="step-1-set-up-a-vr-project"></a>
+Step 1: Set up a VR project</h2>
+<p>The demo scene uses the Universal Render Pipeline (URP), OpenXR and the XR Interaction Toolkit.</p>
+<ol type="1">
+<li>In Unity Hub, create a new project with the <b>3D (URP)</b> template. You can also use an existing project that already uses URP.</li>
+<li>Open <b>File &gt; Build Settings</b>, select <b>Android</b>, then select <b>Switch Platform</b>.</li>
+<li>Open <b>Edit &gt; Project Settings &gt; XR Plug-in Management</b> and select <b>Install XR Plugin Management</b> if asked.</li>
+<li>On the Android tab, tick <b>OpenXR</b>, then tick <b>Meta Quest feature group</b>.</li>
+<li>Select <b>OpenXR</b> in the left-hand list. On the Android tab, under <b>Interaction Profiles</b>, select <b>+</b> and add <b>Oculus Touch Controller Profile</b>.</li>
+<li>Open <b>Window &gt; Package Manager</b>, select <b>+</b>, then <b>Add package by name</b>. Enter the name and version below, then select <b>Add</b>. If Unity asks to enable the new Input System and restart, select <b>Yes</b>.</li>
+</ol>
+<div class="fragment"><div class="line">com.unity.xr.interaction.toolkit</div>
+<div class="line">2.6.5</div>
+</div><!-- fragment --><ol type="1">
+<li>In the Package Manager, select <b>XR Interaction Toolkit</b>, open <b>Samples</b> and select <b>Import</b> next to <b>Starter Assets</b>.</li>
+<li>If <b>XR Plug-in Management &gt; Project Validation</b> lists any issues, select <b>Fix All</b>.</li>
+</ol>
+<blockquote class="doxtable">
+<p>&zwj;<b>Note:</b> Use version 2.6.5 of the XR Interaction Toolkit. The demo scene was built with version 2, and its movement controls do not work with version 3. </p>
+</blockquote>
+<h2><a class="anchor" id="step-2-install-the-scentient-packages"></a>
+Step 2: Install the Scentient packages</h2>
+<p>The Scentient package needs a separate, open-source Bluetooth library. Install the Bluetooth library first, otherwise the Scentient package will not compile.</p>
+<ol type="1">
+<li>In the Package Manager, select <b>+</b>, then <b>Add package from git URL</b>.</li>
+<li>Paste this URL and select <b>Add</b>:</li>
+</ol>
+<div class="fragment"><div class="line">https://github.com/paulhayes/Unity-Android-Bluetooth-Low-Energy-Package.git</div>
+</div><!-- fragment --><ol type="1">
+<li>Repeat with this URL:</li>
+</ol>
+<div class="fragment"><div class="line">https://github.com/ScentientTech/scentient-unity-api.git</div>
+</div><!-- fragment --><p>When it has installed, <b>Scentient Android API</b> appears in the Package Manager list.</p>
+<blockquote class="doxtable">
+<p>&zwj;<b>Tip:</b> Unity installs the latest version of a package from a git URL. To keep everyone on your team on the same version, add <code>#</code> and a full commit hash to the end of the URL. </p>
+</blockquote>
+<h2><a class="anchor" id="step-3-add-the-android-permissions"></a>
+Step 3: Add the Android permissions</h2>
+<ol type="1">
+<li>Open <b>Edit &gt; Project Settings &gt; Player</b>. On the Android tab, expand <b>Other Settings</b> and set <b>Internet Access</b> to <b>Require</b>. This lets your app download the scent names.</li>
+<li>In <b>Publishing Settings</b>, tick <b>Custom Main Manifest</b>. Unity creates the file <code>Assets/Plugins/Android/AndroidManifest.xml</code>.</li>
+<li>Open that file and add the lines below inside the <code>&lt;manifest&gt;</code> element, just above <code>&lt;application&gt;</code>.</li>
+</ol>
+<div class="fragment"><div class="line">&lt;<span class="keywordtype">uses-permission</span> <span class="keyword">android:name</span>=<span class="stringliteral">&quot;android.permission.BLUETOOTH&quot;</span> <span class="keyword">android:maxSdkVersion</span>=<span class="stringliteral">&quot;30&quot;</span> /&gt;</div>
+<div class="line">&lt;<span class="keywordtype">uses-permission</span> <span class="keyword">android:name</span>=<span class="stringliteral">&quot;android.permission.BLUETOOTH_ADMIN&quot;</span> <span class="keyword">android:maxSdkVersion</span>=<span class="stringliteral">&quot;30&quot;</span> /&gt;</div>
+<div class="line">&lt;<span class="keywordtype">uses-permission</span> <span class="keyword">android:name</span>=<span class="stringliteral">&quot;android.permission.BLUETOOTH_SCAN&quot;</span> <span class="keyword">android:usesPermissionFlags</span>=<span class="stringliteral">&quot;neverForLocation&quot;</span> /&gt;</div>
+<div class="line">&lt;<span class="keywordtype">uses-permission</span> <span class="keyword">android:name</span>=<span class="stringliteral">&quot;android.permission.BLUETOOTH_CONNECT&quot;</span> /&gt;</div>
+</div><!-- fragment --><ol type="1">
+<li>To check your work, open <b>Window &gt; Android Bluetooth Low Energy Library</b>. This checker comes with the Bluetooth library. Each permission should have a green tick. If it asks which API level you are targeting, choose <b>API Level 31 or greater</b>.</li>
+</ol>
+<p>If your app needs to run on Android 11 or older, also follow <a class="el" href="#android-11-and-older">Android 11 and older</a>.</p>
+<h2><a class="anchor" id="step-4-import-and-open-the-demo-scene"></a>
+Step 4: Import and open the demo scene</h2>
+<ol type="1">
+<li>In the Package Manager, select <b>Scentient Android API</b> and open <b>Samples</b>.</li>
+<li>Select <b>Import</b> next to <b>Scentient Connect And Control Example</b>, then next to <b>VR Demo Scene</b>. The VR demo uses a prefab from the Connect and Control example, so you need both.</li>
+<li>Open <code>Assets/Samples/Scentient Android API/0.1.7/VR Demo Scene/ScentientDemoScene.unity</code>.</li>
+<li>In <b>File &gt; Build Settings</b>, select <b>Add Open Scenes</b>. Make sure the demo scene is at the top of the list.</li>
+</ol>
+<h2><a class="anchor" id="step-5-build-and-run-on-your-headset"></a>
+Step 5: Build and run on your headset</h2>
+<ol type="1">
+<li>Turn on developer mode for your headset in the Meta Horizon app on your phone, then connect the headset to your computer with a USB cable.</li>
+<li>Switch on your Escents device and keep it close to the headset.</li>
+<li>In <b>File &gt; Build Settings</b>, select your headset under <b>Run Device</b>, then select <b>Build And Run</b>.</li>
+</ol>
+<h2><a class="anchor" id="step-6-try-the-demo"></a>
+Step 6: Try the demo</h2>
+<ol type="1">
+<li>Put on the headset. If you are asked to allow access to nearby devices, select <b>Allow</b>.</li>
+<li>Find the floating Scentient panel and select <b>Scan</b>. When your Escents device appears in the list, select <b>Connect</b>.</li>
+<li>The panel now shows the battery level and a row for each channel, with the scent name, how much is left and a button to release it. Press a channel's button to check it works.</li>
+<li><b>Pick things up.</b> Grab the hot chocolate, the flower vase or the green fig to release chocolate, flowers or green fig. Grab the shapes on the table to release channels 1 to 3, or press the push button for channel 4.</li>
+<li><b>Walk into an area.</b> Move to the pine tree or the campfire to release pine or burning wood for 5 seconds.</li>
+</ol>
+<p>Objects that use a scent name, such as the hot chocolate, only work if a pod with that scent is in the device. The shapes and the push button use channel numbers, so they work with any pods.</p>
+<p>The next time you open the demo, select <b>Reconnect</b> to connect to the same device. <b>Forget</b> clears the saved device, and <b>Identify</b> flashes the blue light on the connected device so you can tell which one it is.</p>
+<p>Nothing happened? See <a class="el" href="#troubleshooting">Troubleshooting</a>.</p>
+<h1><a class="anchor" id="add-scents-to-your-own-scene-without-code"></a>
+Add scents to your own scene without code</h1>
+<p>Once the demo works, you can add scents to your own scene with components and the Inspector.</p>
+<h2><a class="anchor" id="add-the-device-and-the-connection-panel"></a>
+Add the device and the connection panel</h2>
+<p>The quickest way is to copy the parts you need from the demo scene.</p>
+<ol type="1">
+<li>Make sure your scene has an XR rig. If it does not, drag in the <b>XR Interaction Setup</b> prefab from <code>Assets/Samples/XR Interaction Toolkit/2.6.5/Starter Assets/Prefabs</code>.</li>
+<li>Open the demo scene. In the Hierarchy, select both <b>Scentient</b> and <b>BleCanvas</b>, then copy them (<b>Edit &gt; Copy</b>).</li>
+<li>Open your scene and paste them (<b>Edit &gt; Paste</b>). Copying both together keeps the links between them.</li>
+</ol>
+<p><b>Scentient</b> holds the ScentientDevice component, which manages the connection. <b>BleCanvas</b> is the floating panel with the Scan, Connect and Reconnect buttons.</p>
+<h2><a class="anchor" id="release-a-scent-when-an-object-is-picked-up"></a>
+Release a scent when an object is picked up</h2>
+<ol type="1">
+<li>Select your object. Make sure it has a collider, a Rigidbody and an <b>XR Grab Interactable</b> component.</li>
+<li>Add the <b>Emit Scent</b> component.</li>
+<li>Set <b>Scent Name</b> to a name from the <a class="el" href="#scent-list">scent list</a>, and set <b>Duration</b> (in seconds) and <b>Intensity</b> (0 to 1).</li>
+<li>On the XR Grab Interactable, expand <b>Interactable Events</b>. Under <b>Select Entered</b>, select <b>+</b>, drag your object into the empty field, and choose <b>EmitScent &gt; Emit</b>.</li>
+</ol>
+<p><b>Emit Scent</b> finds the ScentientDevice in your scene by itself, so you can leave its <b>Scentient Device</b> field empty.</p>
+<p>To use a channel number instead of a scent name, use the <b>Emit Scent Channel</b> component and set <b>Scent Channel</b> to a number from 1 to 6. It starts at 0, which is not a valid channel.</p>
+<blockquote class="doxtable">
+<p>&zwj;<b>Note:</b> The Add Component menu lists two components called Emit Scent Channel. Use the one under <b>Scripts &gt; Scentient</b>. The one under <b>Scripts &gt; Scentient.Samples</b> belongs to the sample UI. </p>
+</blockquote>
+<h2><a class="anchor" id="release-a-scent-when-the-player-walks-into-an-area"></a>
+Release a scent when the player walks into an area</h2>
+<ol type="1">
+<li>Create an empty GameObject where you want the scent, and add a <b>Box Collider</b>. Tick <b>Is Trigger</b> and resize it to cover the area.</li>
+<li>Add a <b>Rigidbody</b> and tick <b>Is Kinematic</b>.</li>
+<li>Add the <b>Trigger Events</b> and <b>Emit Scent</b> components. Set the scent name and a duration of a few seconds.</li>
+<li>Under <b>Trigger Enter Event</b>, add <b>EmitScent &gt; Emit</b>. Under <b>Trigger Exit Event</b>, add <b>EmitScent &gt; Stop</b>.</li>
+</ol>
+<p>Some tips for areas:</p>
+<ul>
+<li><b>Use a Box, Sphere or Capsule collider with a kinematic Rigidbody.</b> With a Mesh Collider, or without the Rigidbody, Unity may not report when the player leaves the area.</li>
+<li><b>Keep durations short.</b> Teleporting out of an area may not count as leaving it, so a short duration makes sure the scent ends by itself.</li>
+<li><b>Do not overlap areas.</b> The device releases one scent at a time, so a second area would replace the first area's scent. See <a class="el" href="#one-scent-at-a-time">One scent at a time</a>.</li>
+<li><b>Trigger Events reacts to anything entering the area.</b> Use physics layers if you only want the player to set it off.</li>
+</ul>
+<h2><a class="anchor" id="release-a-scent-from-a-button"></a>
+Release a scent from a button</h2>
+<p>Add <b>Emit Scent</b> to the button, then under the button's <b>On Click</b>, add <b>EmitScent &gt; Emit</b>.</p>
+<h1><a class="anchor" id="using-the-api-from-code"></a>
+Using the API from code</h1>
+<p>If you prefer to write code, or want more control, you can use the ScentientDevice component directly. This script connects to an Escents device and releases the scent in channel 1 for two seconds.</p>
+<ol type="1">
+<li>Create an empty GameObject called <code>Scentient</code> and add the <b>Scentient Device</b> component.</li>
+<li>Tick <b>Verbose</b> while you are setting up. It writes detailed messages to the log, which helps if something goes wrong. Untick it before you release your app.</li>
+<li>Create a script called <code>ScentQuickstart.cs</code> with the code below, and add it to the same GameObject.</li>
+<li>Drag the <b>Scentient Device</b> component into the script's <b>Device</b> field.</li>
+</ol>
+<div class="fragment"><div class="line"><span class="keyword">using </span>System.Collections;</div>
+<div class="line"><span class="keyword">using </span><a class="code hl_namespace" href="namespace_scentient.html">Scentient</a>;</div>
+<div class="line"><span class="keyword">using </span>UnityEngine;</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">public</span> <span class="keyword">class </span>ScentQuickstart : MonoBehaviour</div>
+<div class="line">{</div>
+<div class="line">    [SerializeField] <a class="code hl_class" href="class_scentient_1_1_scentient_device.html">ScentientDevice</a> device;</div>
+<div class="line"> </div>
+<div class="line">    IEnumerator Start()</div>
+<div class="line">    {</div>
+<div class="line">        <span class="comment">// Wait one frame so ScentientDevice can finish setting itself up.</span></div>
+<div class="line">        yield <span class="keywordflow">return</span> <span class="keyword">null</span>;</div>
+<div class="line"> </div>
+<div class="line">        device.OnStatusChangedEvent += status =&gt; Debug.Log($<span class="stringliteral">&quot;Scentient: {status}&quot;</span>);</div>
+<div class="line">        device.OnConnectedEvent.AddListener(OnConnected);</div>
+<div class="line"> </div>
+<div class="line">        <span class="keywordflow">if</span> (<a class="code hl_class" href="class_scentient_1_1_scentient_device.html">ScentientDevice</a>.HasSavedDevice)</div>
+<div class="line">        {</div>
+<div class="line">            <span class="comment">// Connect to the device this app used last time.</span></div>
+<div class="line">            device.Reconnect();</div>
+<div class="line">        }</div>
+<div class="line">        <span class="keywordflow">else</span></div>
+<div class="line">        {</div>
+<div class="line">            <span class="comment">// Look for devices and connect to the first one found.</span></div>
+<div class="line">            device.OnDeviceDiscoveredEvent += OnDeviceDiscovered;</div>
+<div class="line">            device.Scan();</div>
+<div class="line">        }</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordtype">void</span> OnDeviceDiscovered(<span class="keywordtype">string</span> address, <span class="keywordtype">string</span> name)</div>
+<div class="line">    {</div>
+<div class="line">        device.OnDeviceDiscoveredEvent -= OnDeviceDiscovered;</div>
+<div class="line">        device.Connect(address);</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordtype">void</span> OnConnected()</div>
+<div class="line">    {</div>
+<div class="line">        <span class="comment">// Release the scent in channel 1 at full intensity for 2 seconds.</span></div>
+<div class="line">        device.<a class="code hl_function" href="class_scentient_1_1_scentient_device.html#a2cfdfb1318da8258f7ab48a4e2800461">SendScentMessage</a>(1, 1f, 2f);</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+<div class="ttc" id="aclass_scentient_1_1_scentient_device_html"><div class="ttname"><a href="class_scentient_1_1_scentient_device.html">Scentient.ScentientDevice</a></div><div class="ttdoc">Use this component to connect to the Scentient eScents peripheral. Add to your scene,...</div><div class="ttdef"><b>Definition</b> ScentientDevice.cs:35</div></div>
+<div class="ttc" id="aclass_scentient_1_1_scentient_device_html_a2cfdfb1318da8258f7ab48a4e2800461"><div class="ttname"><a href="class_scentient_1_1_scentient_device.html#a2cfdfb1318da8258f7ab48a4e2800461">Scentient.ScentientDevice.SendScentMessage</a></div><div class="ttdeci">void SendScentMessage(byte channel, byte intensity, UInt16 duration)</div><div class="ttdoc">Emits a scent from one of the 4 scent emitters, with the provided intensity and duration.</div><div class="ttdef"><b>Definition</b> ScentientDevice.cs:1012</div></div>
+<div class="ttc" id="anamespace_scentient_html"><div class="ttname"><a href="namespace_scentient.html">Scentient</a></div><div class="ttdef"><b>Definition</b> EmitScent.cs:7</div></div>
+</div><!-- fragment --><p>Build and run on your Android device. After the permission prompt, the app connects and the device releases the scent in channel 1. The API remembers the device, so next time the app reconnects to it.</p>
+<h1><a class="anchor" id="how-it-works"></a>
+How it works</h1>
+<h2><a class="anchor" id="the-pieces"></a>
+The pieces</h2>
+<div class="fragment"><div class="line">Your app or game</div>
+<div class="line">    │   for example EmitScent(&quot;pine&quot;, 0.8f, 3f)</div>
+<div class="line">    ▼</div>
+<div class="line">ScentientDevice component         this package</div>
+<div class="line">    │</div>
+<div class="line">    ▼</div>
+<div class="line">Android Bluetooth library         installed separately</div>
+<div class="line">    │   Bluetooth Low Energy</div>
+<div class="line">    ▼</div>
+<div class="line">Escents device                    6 channels, one scent pod in each</div>
+</div><!-- fragment --><p>The ScentientDevice component does the work. You add one to your scene and call its methods, either from code or from UnityEvents in the Inspector. It manages the Bluetooth connection, sends your scent commands to the device, and tells your app when something changes, such as the battery level.</p>
+<h2><a class="anchor" id="channels-and-pods"></a>
+Channels and pods</h2>
+<p>An Escents device has <b>6 channels</b>, numbered 1 to 6. Each channel holds one scent pod. Each pod knows which scent it contains, so the device can tell your app which scent is in each channel when it connects.</p>
+<h2><a class="anchor" id="one-scent-at-a-time"></a>
+One scent at a time</h2>
+<p>The device releases <b>one scent at a time</b>. Each new command replaces the scent that is playing, even if the new command is for a different channel. See <a class="el" href="#one-scent-at-a-time">One scent at a time</a> for what this means when you design your experience.</p>
+<h2><a class="anchor" id="scent-names-and-ids"></a>
+Scent names and IDs</h2>
+<p>Every scent has a name, such as <code>pine</code>, and an ID number, such as <code>7</code>. The device stores IDs. The app turns them into names using the <a class="el" href="#scent-list">scent list</a>, which it downloads from <code><a href="https://api.scentient.tech/scent-table_en.csv">https://api.scentient.tech/scent-table_en.csv</a></code> when it connects. The app keeps a copy, so names still work offline after the first connection.</p>
+<h2><a class="anchor" id="two-ways-to-release-a-scent"></a>
+Two ways to release a scent</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
-<th class="markdownTableHeadNone">Android OS   </th><th class="markdownTableHeadNone">&lt; Android 6.0<br  />
-API level 23<br  />
-   </th><th class="markdownTableHeadNone">&gt;= Android 6.0<br  />
-API level 23<br  />
-   </th><th class="markdownTableHeadNone">&gt;= Android 12<br  />
-API Level 31    </th></tr>
+<th class="markdownTableHeadNone">Method   </th><th class="markdownTableHeadNone">Example   </th><th class="markdownTableHeadNone">Use it when    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Permission   </td><td class="markdownTableBodyNone">android.permission.BLUETOOTH android.permission.BLUETOOTH_ADMIN android.permission.ACCESS_FINE_LOCATION   </td><td class="markdownTableBodyNone">android.permission.BLUETOOTH android.permission.BLUETOOTH_ADMIN android.permission.ACCESS_FINE_LOCATION   </td><td class="markdownTableBodyNone">android.permission.BLUETOOTH_CONNECT android.permission.BLUETOOTH_SCAN    </td></tr>
+<td class="markdownTableBodyNone">By name   </td><td class="markdownTableBodyNone"><code>EmitScent("pine", 0.8f, 3f)</code>   </td><td class="markdownTableBodyNone">You want your content to work whichever channel the pod is in.    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Notes   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">Must request runtime permissions   </td><td class="markdownTableBodyNone">Permissions required for BLE changed    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Example Devices ( 01/05/24 )   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">OnePlus Nord, Meta Quest 2    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Target build api   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<td class="markdownTableBodyNone">By channel   </td><td class="markdownTableBodyNone"><code>SendScentMessage(2, 0.8f, 3f)</code>   </td><td class="markdownTableBodyNone">You know which pod is in which channel, or you are testing.   </td></tr>
 </table>
-<h1><a class="anchor" id="autotoc_md4"></a>
-Usage</h1>
-<p>Add <a class="el" href="class_scentient_1_1_scentient_device.html">ScentientDevice</a> component to a GameObject in your scene.</p>
-<p>To trigger scents via UnityEvents, or from your own scripts, try the <a class="el" href="class_scentient_1_1_emit_scent.html">EmitScent</a> helper component, which lets you serialize scent name, intensity and duration in your scene.</p>
-<h2><a class="anchor" id="autotoc_md5"></a>
-Sample Scene</h2>
-<p>A VR Sample Scene is included in the Package, visit the Package in the Package Manager, and import the VR Sample Scene.</p>
-<p>Make sure you have checked the Bluettoth setup wizard ( Window -&gt; "Android Bluetooth Low Energy Library" ), to make sure your Android Bluetooth permissions are set up correctly for the API target. This is part of the third party unity-android-bluetooth-low-energy library. </p>
+<p>Emitting by name needs the scent list and the device's channel information. Emitting by channel works as soon as you are connected.</p>
+<h2><a class="anchor" id="intensity-and-duration"></a>
+Intensity and duration</h2>
+<ul>
+<li><b>Intensity</b> goes from 0 to 1, where 1 is full strength.</li>
+<li><b>Duration</b> is in seconds, up to 60. It must be more than 0, because the device ignores commands with a duration of 0.</li>
+</ul>
+<h1><a class="anchor" id="managing-connections"></a>
+Managing connections</h1>
+<p>This section explains how the API finds, connects to and remembers an Escents device, and what to do when the connection drops. The connection panel in the VR demo does all of this for you. Read on if you are building your own.</p>
+<h2><a class="anchor" id="connection-states"></a>
+Connection states</h2>
+<p>A connection moves through these states. You can read the current state from <code>State</code>, or listen for changes with <code>OnStateChangedEvent</code>.</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">State   </th><th class="markdownTableHeadNone">What is happening    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>None</code>   </td><td class="markdownTableBodyNone">Not connected. Everything starts and ends here.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>Scan</code>   </td><td class="markdownTableBodyNone">Looking for nearby Escents devices.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>Connect</code>   </td><td class="markdownTableBodyNone">Connecting to the chosen device.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>Subscribe</code>   </td><td class="markdownTableBodyNone">Connected, and reading the device's channels, scent levels and battery.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>Ready</code>   </td><td class="markdownTableBodyNone">Connected and ready to use.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>Unsubscribe</code>   </td><td class="markdownTableBodyNone">Disconnecting, because you called <code>Disconnect()</code>.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>Disconnect</code>   </td><td class="markdownTableBodyNone">The connection has closed. Moves to <code>None</code> straight after.   </td></tr>
+</table>
+<div class="fragment"><div class="line">None ──► Scan ──► Connect ──► Subscribe ──► Ready</div>
+<div class="line"> ▲ ▲      │                                   │</div>
+<div class="line"> │ └──────┘                                   │</div>
+<div class="line"> │                                            │</div>
+<div class="line"> └────────────── Disconnect ◄─────────────────┘</div>
+</div><!-- fragment --><ul>
+<li><code>Scan()</code> looks for devices, then returns to <code>None</code> when the scan ends.</li>
+<li><code>Connect()</code> and <code>Reconnect()</code> scan first if they need to, then move to <code>Connect</code> as soon as the device is found.</li>
+<li>Whenever the connection closes, for any reason, the state returns to <code>None</code>.</li>
+</ul>
+<p>The <code>States</code> list also contains <code>ScanRSSI</code>, <code>ReadRSSI</code> and <code>RequestMTU</code>. These are not used at the moment.</p>
+<h2><a class="anchor" id="finding-devices"></a>
+Finding devices</h2>
+<p>Call <code>Scan()</code> to look for Escents devices nearby. Each time one is found, <code>OnDeviceDiscoveredEvent</code> gives you its address and name. You can use this to build a list for the user to choose from, or connect to the first device found.</p>
+<div class="fragment"><div class="line">device.OnDeviceDiscoveredEvent += (address, name) =&gt;</div>
+<div class="line">{</div>
+<div class="line">    Debug.Log($<span class="stringliteral">&quot;Found {name} at {address}&quot;</span>);</div>
+<div class="line">};</div>
+<div class="line">device.Scan();</div>
+</div><!-- fragment --><ul>
+<li>A scan lasts 10 seconds. To change this, set <code>ScanTimeout</code> (in seconds) before you call <code>Scan()</code>.</li>
+<li>Only devices whose Bluetooth name contains "Escents" are reported.</li>
+<li>If you scan more than once, the same device can be reported again, so check for duplicates if you show a list.</li>
+</ul>
+<h2><a class="anchor" id="connecting"></a>
+Connecting</h2>
+<p>Call <code>Connect(address)</code> with an address from <code>OnDeviceDiscoveredEvent</code>. If the device has not been found yet in this session, <code>Connect</code> scans for it first and connects as soon as it appears.</p>
+<p>When the connection is ready, the state changes to <code>Ready</code> and <code>OnConnectedEvent</code> fires. <code>OnConnectedEvent</code> is a UnityEvent, so you can also hook it up in the Inspector.</p>
+<blockquote class="doxtable">
+<p>&zwj;<b>Note:</b> The device sends its channel information just after <code>OnConnectedEvent</code> fires. If you want to emit a scent by name as soon as you connect, see <a class="el" href="#emitting-a-scent-as-soon-as-you-connect">Emitting a scent as soon as you connect</a>. </p>
+</blockquote>
+<h2><a class="anchor" id="remembering-a-device"></a>
+Remembering a device</h2>
+<p>When a connection succeeds, the API saves the device's address on the Android device. Next time, call <code>Reconnect()</code> to connect to it without asking the user to choose again.</p>
+<div class="fragment"><div class="line"><span class="keywordflow">if</span> (<a class="code hl_class" href="class_scentient_1_1_scentient_device.html">ScentientDevice</a>.HasSavedDevice)</div>
+<div class="line">{</div>
+<div class="line">    device.Reconnect();</div>
+<div class="line">}</div>
+</div><!-- fragment --><ul>
+<li><code>ScentientDevice.HasSavedDevice</code> tells you whether a device has been saved.</li>
+<li><code>ScentientDevice.Forget()</code> deletes the saved device, for example when the user wants to switch to a different one.</li>
+<li><code>Reconnect()</code> does nothing if no device has been saved.</li>
+</ul>
+<p>The address is stored in Unity's <code>PlayerPrefs</code>, so calling <code>PlayerPrefs.DeleteAll()</code> also forgets the device.</p>
+<h2><a class="anchor" id="disconnecting"></a>
+Disconnecting</h2>
+<p>Call <code>Disconnect()</code> to close the connection. The state moves through <code>Unsubscribe</code> and <code>Disconnect</code>, then back to <code>None</code>. The device stays saved, so you can call <code>Reconnect()</code> later.</p>
+<p><code>Disconnect()</code> only has an effect once you are connected. It does not cancel a scan or a connection attempt that is in progress.</p>
+<h2><a class="anchor" id="when-the-connection-drops"></a>
+When the connection drops</h2>
+<p>If the Escents device is switched off, runs out of battery or goes out of range, the state moves to <code>Disconnect</code> and then <code>None</code>. The API does not reconnect by itself.</p>
+<p>To reconnect automatically, listen for the <code>None</code> state and call <code>Reconnect()</code> after a short pause:</p>
+<div class="fragment"><div class="line"><span class="keyword">using </span>System.Collections;</div>
+<div class="line"><span class="keyword">using </span><a class="code hl_namespace" href="namespace_scentient.html">Scentient</a>;</div>
+<div class="line"><span class="keyword">using </span>UnityEngine;</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">public</span> <span class="keyword">class </span>StayConnected : MonoBehaviour</div>
+<div class="line">{</div>
+<div class="line">    [SerializeField] <a class="code hl_class" href="class_scentient_1_1_scentient_device.html">ScentientDevice</a> device;</div>
+<div class="line">    [SerializeField] <span class="keywordtype">float</span> retryDelaySeconds = 5f;</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// Set this to false before you call Disconnect() yourself.</span></div>
+<div class="line">    <span class="keyword">public</span> <span class="keywordtype">bool</span> keepConnected = <span class="keyword">true</span>;</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordtype">void</span> Start()</div>
+<div class="line">    {</div>
+<div class="line">        device.OnStateChangedEvent += OnStateChanged;</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordtype">void</span> OnDestroy()</div>
+<div class="line">    {</div>
+<div class="line">        device.OnStateChangedEvent -= OnStateChanged;</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordtype">void</span> OnStateChanged(<a class="code hl_class" href="class_scentient_1_1_scentient_device.html">ScentientDevice</a>.States state)</div>
+<div class="line">    {</div>
+<div class="line">        <span class="comment">// None means the connection closed, or a scan ended without finding the device.</span></div>
+<div class="line">        <span class="keywordflow">if</span> (state == <a class="code hl_class" href="class_scentient_1_1_scentient_device.html">ScentientDevice</a>.States.None &amp;&amp; keepConnected &amp;&amp; <a class="code hl_class" href="class_scentient_1_1_scentient_device.html">ScentientDevice</a>.HasSavedDevice)</div>
+<div class="line">        {</div>
+<div class="line">            StartCoroutine(ReconnectAfterDelay());</div>
+<div class="line">        }</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    IEnumerator ReconnectAfterDelay()</div>
+<div class="line">    {</div>
+<div class="line">        yield <span class="keywordflow">return</span> <span class="keyword">new</span> WaitForSeconds(retryDelaySeconds);</div>
+<div class="line"> </div>
+<div class="line">        <span class="keywordflow">if</span> (keepConnected &amp;&amp; device.State == <a class="code hl_class" href="class_scentient_1_1_scentient_device.html">ScentientDevice</a>.States.None)</div>
+<div class="line">        {</div>
+<div class="line">            device.Reconnect();</div>
+<div class="line">        }</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+</div><!-- fragment --><h2><a class="anchor" id="connection-time-limits"></a>
+Connection time limits</h2>
+<p>A connection attempt does not time out by itself. If your app shows a "Connecting" message, add your own time limit, for example 20 seconds. After that, tell the user to check the device is switched on and nearby, and offer a <b>Try again</b> button that calls <code>Reconnect()</code>.</p>
+<h2><a class="anchor" id="showing-the-status-to-users"></a>
+Showing the status to users</h2>
+<p><code>StatusMessage</code> holds a short description of what is happening, such as "Scanning...", "Connecting..." or "Device Ready". <code>OnStatusChangedEvent</code> fires whenever it changes. You can show this text in your UI.</p>
+<h2><a class="anchor" id="permissions"></a>
+Permissions</h2>
+<p>On Android 12 and newer, Android asks the user for permission to find and connect to nearby devices. The API requests this automatically the first time you call <code>Scan()</code>, <code>Connect()</code> or <code>Reconnect()</code>, and carries on once the user allows it.</p>
+<p><b>If the user denies permission, the app closes by default.</b> This behaviour comes from the Bluetooth library. To keep your app open instead:</p>
+<ol type="1">
+<li>Add an <b>App Permissions</b> component to a GameObject in your first scene.</li>
+<li>In its <b>Permissions</b> list, expand each entry and untick <b>Exit On User Denied</b>.</li>
+</ol>
+<p>ScentientDevice uses your App Permissions component instead of adding its own. You can use its <b>Some Permissions Denied Event</b> to explain to the user why your app needs Bluetooth.</p>
+<p>If you would rather request permissions yourself, untick <b>Auto Request Permissions On Connect</b> on the ScentientDevice component.</p>
+<h2><a class="anchor" id="android-11-and-older"></a>
+Android 11 and older</h2>
+<p>On Android 6 to 11, Bluetooth scanning only works when your app has location permission and Location is turned on in the device settings. The API does not request location permission for you. If your app only runs on Android 12 or newer, you can skip this section.</p>
+<ol type="1">
+<li>Add this line to your manifest, next to the Bluetooth permissions:</li>
+</ol>
+<div class="fragment"><div class="line">&lt;<span class="keywordtype">uses-permission</span> <span class="keyword">android:name</span>=<span class="stringliteral">&quot;android.permission.ACCESS_FINE_LOCATION&quot;</span> <span class="keyword">android:maxSdkVersion</span>=<span class="stringliteral">&quot;30&quot;</span> /&gt;</div>
+</div><!-- fragment --><ol type="1">
+<li>Request the permission before you call <code>Scan()</code>, <code>Connect()</code> or <code>Reconnect()</code>:</li>
+</ol>
+<div class="fragment"><div class="line"><span class="comment">// Add &quot;using UnityEngine.Android;&quot; at the top of your script.</span></div>
+<div class="line"><span class="keywordflow">if</span> (!Permission.HasUserAuthorizedPermission(Permission.FineLocation))</div>
+<div class="line">{</div>
+<div class="line">    Permission.RequestUserPermission(Permission.FineLocation);</div>
+<div class="line">}</div>
+</div><!-- fragment --><h2><a class="anchor" id="apps-with-more-than-one-scene"></a>
+Apps with more than one scene</h2>
+<p>Keep the ScentientDevice in a scene that stays loaded while your app runs, and load your other scenes additively (<code>LoadSceneMode.Additive</code>). This keeps the Bluetooth connection open when scenes change.</p>
+<h2><a class="anchor" id="good-to-know"></a>
+Good to know</h2>
+<ul>
+<li><b>Calling from <code>Start()</code>:</b> ScentientDevice sets itself up in its own <code>Start()</code>. If your script calls <code>Scan()</code>, <code>Connect()</code> or <code>Reconnect()</code> from <code>Start()</code> and happens to run first, the request can be lost. Wait one frame first, as the <code>ScentQuickstart</code> script does, or connect from a button.</li>
+<li><b>One device at a time:</b> each ScentientDevice connects to one Escents device. Connecting to several devices at once is not supported.</li>
+</ul>
+<h1><a class="anchor" id="emitting-scents"></a>
+Emitting scents</h1>
+<h2><a class="anchor" id="by-name"></a>
+By name</h2>
+<div class="fragment"><div class="line">device.<a class="code hl_function" href="class_scentient_1_1_scentient_device.html#a16fab80f60ceaa2e848c2bd8b075d092">EmitScent</a>(<span class="stringliteral">&quot;pine&quot;</span>, 0.8f, 3f);   <span class="comment">// 80% intensity for 3 seconds</span></div>
+<div class="line">device.<a class="code hl_function" href="class_scentient_1_1_scentient_device.html#a16fab80f60ceaa2e848c2bd8b075d092">EmitScent</a>(<span class="stringliteral">&quot;pine&quot;</span>, 3f);         <span class="comment">// full intensity for 3 seconds</span></div>
+<div class="ttc" id="aclass_scentient_1_1_scentient_device_html_a16fab80f60ceaa2e848c2bd8b075d092"><div class="ttname"><a href="class_scentient_1_1_scentient_device.html#a16fab80f60ceaa2e848c2bd8b075d092">Scentient.ScentientDevice.EmitScent</a></div><div class="ttdeci">bool EmitScent(string scentName, float duration)</div><div class="ttdoc">Emits a scent for a fixed period of time. Any scent being emitted can be stopped by calling this meth...</div><div class="ttdef"><b>Definition</b> ScentientDevice.cs:1054</div></div>
+</div><!-- fragment --><ul>
+<li>Use names from the <a class="el" href="#scent-list">scent list</a>. Upper and lower case both work.</li>
+<li><code>EmitScent</code> returns <code>true</code> if the command was sent. It returns <code>false</code> and logs a warning if the scent is not in the scent list, or if no channel on the device holds it.</li>
+<li>If the same scent is in more than one channel, the lowest channel number is used.</li>
+</ul>
+<h2><a class="anchor" id="by-channel"></a>
+By channel</h2>
+<div class="fragment"><div class="line">device.<a class="code hl_function" href="class_scentient_1_1_scentient_device.html#a2cfdfb1318da8258f7ab48a4e2800461">SendScentMessage</a>(2, 0.8f, 3f);   <span class="comment">// channel 2, 80% intensity, 3 seconds</span></div>
+</div><!-- fragment --><p>Use a channel number from 1 to 6. This works as soon as you are connected and does not need the scent list.</p>
+<h2><a class="anchor" id="one-scent-at-a-time-1"></a>
+One scent at a time</h2>
+<p>The device releases one scent at a time. Each new command replaces the scent that is playing, even if it is for a different channel. When you design your experience:</p>
+<ul>
+<li><b>Stopping stops whatever is playing.</b> A stop command ends the current scent, whatever started it.</li>
+<li><b>Avoid overlapping scent areas.</b> When the player leaves one area, its stop command also ends the scent of any other area they are still standing in.</li>
+</ul>
+<h2><a class="anchor" id="stopping-a-scent"></a>
+Stopping a scent</h2>
+<p>To stop the scent that is playing, send a short command with an intensity of 0:</p>
+<div class="fragment"><div class="line">device.<a class="code hl_function" href="class_scentient_1_1_scentient_device.html#a2cfdfb1318da8258f7ab48a4e2800461">SendScentMessage</a>(1, 0f, 0.1f);   <span class="comment">// intensity 0 for 0.1 seconds</span></div>
+</div><!-- fragment --><p>Because each new command replaces the one before, any channel number works. Do not use a duration of 0, because the device ignores it.</p>
+<p>The <b>Emit Scent</b> and <b>Emit Scent Channel</b> components do this for you when you call <b>Stop</b>.</p>
+<h2><a class="anchor" id="emitting-a-scent-as-soon-as-you-connect"></a>
+Emitting a scent as soon as you connect</h2>
+<p>The device sends its channel information just after you connect. <code>OnChannelScentsUpdatedEvent</code> fires once for each channel as that information arrives, and again whenever a channel's scent changes. Wait for it before you emit by name:</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> Start()</div>
+<div class="line">{</div>
+<div class="line">    device.OnChannelScentsUpdatedEvent += OnChannelScentsUpdated;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> OnChannelScentsUpdated(<span class="keywordtype">int</span> channel, <span class="keywordtype">int</span> scentId, <span class="keywordtype">string</span> scentName)</div>
+<div class="line">{</div>
+<div class="line">    <span class="keywordflow">if</span> (scentName == <span class="stringliteral">&quot;pine&quot;</span>)</div>
+<div class="line">    {</div>
+<div class="line">        device.<a class="code hl_function" href="class_scentient_1_1_scentient_device.html#a16fab80f60ceaa2e848c2bd8b075d092">EmitScent</a>(<span class="stringliteral">&quot;pine&quot;</span>, 1f, 3f);</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+</div><!-- fragment --><h2><a class="anchor" id="scents-longer-than-60-seconds"></a>
+Scents longer than 60 seconds</h2>
+<p>One command can last up to 60 seconds. For longer, send the command again before it runs out. Each new command replaces the old one, so the scent carries on without a gap:</p>
+<div class="fragment"><div class="line"><span class="keywordtype">bool</span> keepEmitting = <span class="keyword">true</span>;</div>
+<div class="line"> </div>
+<div class="line">IEnumerator EmitContinuously(<span class="keywordtype">string</span> scentName)</div>
+<div class="line">{</div>
+<div class="line">    <span class="keywordflow">while</span> (keepEmitting)</div>
+<div class="line">    {</div>
+<div class="line">        device.<a class="code hl_function" href="class_scentient_1_1_scentient_device.html#a16fab80f60ceaa2e848c2bd8b075d092">EmitScent</a>(scentName, 1f, 10f);</div>
+<div class="line">        yield <span class="keywordflow">return</span> <span class="keyword">new</span> WaitForSeconds(8f);</div>
+<div class="line">    }</div>
+<div class="line">    device.<a class="code hl_function" href="class_scentient_1_1_scentient_device.html#a2cfdfb1318da8258f7ab48a4e2800461">SendScentMessage</a>(1, 0f, 0.1f);   <span class="comment">// stop</span></div>
+<div class="line">}</div>
+</div><!-- fragment --><h2><a class="anchor" id="how-often-to-send-commands"></a>
+How often to send commands</h2>
+<p>Send a command when something changes, such as the player entering an area or picking up an object. Do not send commands every frame, for example from <code>Update()</code> or <code>OnTriggerStay()</code>. The API sends commands to the device one at a time, so they queue up and arrive late, and each one replaces the scent before it.</p>
+<h1><a class="anchor" id="reading-information-from-the-device"></a>
+Reading information from the device</h1>
+<h2><a class="anchor" id="which-scent-is-in-each-channel"></a>
+Which scent is in each channel</h2>
+<ul>
+<li><code>ChannelScentNames</code> is an array of 6 scent names. Index 0 is channel 1. The entries are empty until the device has sent its channel information.</li>
+<li><code>OnChannelScentsUpdatedEvent(channel, scentId, scentName)</code> fires when that information arrives, and again whenever it changes. <code>channel</code> is 1 to 6.</li>
+<li>A channel with scent ID 0 (<code>nothing</code>) is empty.</li>
+</ul>
+<h2><a class="anchor" id="scent-level"></a>
+Scent level</h2>
+<p>The scent level shows how much scent is left in a pod, from 0 to 100. It is designed to help you keep track of pods during live experiences and shows, so you know when to replace them.</p>
+<ul>
+<li><code>GetScentLevel(channel)</code> returns the level for a channel from 1 to 6.</li>
+<li><code>OnChannelScentLevelChangedEvent(channel, level)</code> fires when the level changes.</li>
+</ul>
+<p>The scent level tracks how much scent has been released. It does not account for scent lost in other ways. Scents are volatile, so a pod that is stored incorrectly can dry out much more quickly than its scent level shows.</p>
+<h2><a class="anchor" id="battery"></a>
+Battery</h2>
+<ul>
+<li><code>Battery</code> holds the latest battery level, from 0 to 100. It shows 100 until the first reading arrives.</li>
+<li><code>OnBatteryLevelChangedEvent(level)</code> fires when a reading arrives.</li>
+</ul>
+<h2><a class="anchor" id="the-device-button"></a>
+The device button</h2>
+<p><code>OnButtonPressedEvent</code> fires when someone presses the button on the Escents device. You can use it as an input in your app.</p>
+<h2><a class="anchor" id="identifying-a-device"></a>
+Identifying a device</h2>
+<p><code>Identify()</code> flashes the blue light on the connected device, so you can tell which physical unit you are connected to. This helps when there are several devices in the same room.</p>
+<h1><a class="anchor" id="scent-list"></a>
+Scent list</h1>
+<p>The API looks up scent names in this list: <a href="https://api.scentient.tech/scent-table_en.csv">scent-table_en.csv</a>. The online file is always the most up to date.</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">ID   </th><th class="markdownTableHeadNone">Name    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">1   </td><td class="markdownTableBodyNone">ocean waves    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">2   </td><td class="markdownTableBodyNone">lavender    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">3   </td><td class="markdownTableBodyNone">flowers    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">4   </td><td class="markdownTableBodyNone">rainforest    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">5   </td><td class="markdownTableBodyNone">waterfall    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">6   </td><td class="markdownTableBodyNone">red berries    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">7   </td><td class="markdownTableBodyNone">pine    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">8   </td><td class="markdownTableBodyNone">chocolate    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">9   </td><td class="markdownTableBodyNone">citrus    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">10   </td><td class="markdownTableBodyNone">cut grass    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">11   </td><td class="markdownTableBodyNone">burning wood    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">12   </td><td class="markdownTableBodyNone">natural gas    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">13   </td><td class="markdownTableBodyNone">petrol    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">14   </td><td class="markdownTableBodyNone">burning plastic    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">15   </td><td class="markdownTableBodyNone">body odour    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">16   </td><td class="markdownTableBodyNone">blood    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">17   </td><td class="markdownTableBodyNone">vomit    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">18   </td><td class="markdownTableBodyNone">cleaning agent    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">19   </td><td class="markdownTableBodyNone">mildew tunnels    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">20   </td><td class="markdownTableBodyNone">green fig    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">21   </td><td class="markdownTableBodyNone">cedar wood    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">22   </td><td class="markdownTableBodyNone">baby powder    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">23   </td><td class="markdownTableBodyNone">old hospital    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">24   </td><td class="markdownTableBodyNone">cigarette smoke    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">27   </td><td class="markdownTableBodyNone">scent1    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">28   </td><td class="markdownTableBodyNone">scent2    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">29   </td><td class="markdownTableBodyNone">scent3    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">30   </td><td class="markdownTableBodyNone">scent4    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">31   </td><td class="markdownTableBodyNone">scent5    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">32   </td><td class="markdownTableBodyNone">scent6   </td></tr>
+</table>
+<p>ID 0, <code>nothing</code>, means a channel is empty. IDs 27 to 32, <code>scent1</code> to <code>scent6</code>, are for custom scents. Use these names to release a custom scent by name.</p>
+<h2><a class="anchor" id="using-scent-names-offline"></a>
+Using scent names offline</h2>
+<p>Your app downloads the scent list each time it connects, and keeps a copy. If the very first connection happens without internet, there is no copy yet, so emitting by name will not work. Emitting by channel still works.</p>
+<p>To avoid this, include the list in your app:</p>
+<ol type="1">
+<li>Download <a href="https://api.scentient.tech/scent-table_en.csv">scent-table_en.csv</a>.</li>
+<li>Save it in your project as <code>Assets/Resources/scent-table_en.csv</code>.</li>
+</ol>
+<p>The API uses this file when it cannot download the list and has no saved copy.</p>
+<h1><a class="anchor" id="troubleshooting"></a>
+Troubleshooting</h1>
+<p>First, tick <b>Verbose</b> on the ScentientDevice component. Then read the log from your headset or Android device with <b>Window &gt; Analysis &gt; Android Logcat</b> in Unity, or by running <code>adb logcat -s Unity</code> in a terminal.</p>
+<h2><a class="anchor" id="the-type-or-namespace-name-android-could-not-be-found"></a>
+"The type or namespace name 'Android' could not be found"</h2>
+<p>The Bluetooth library is missing. Install it as described in <a class="el" href="#step-2-install-the-scentient-packages">step 2</a>.</p>
+<h2><a class="anchor" id="the-vr-demo-has-pink-objects-or-missing-scripts"></a>
+The VR demo has pink objects or missing scripts</h2>
+<ul>
+<li><b>Pink objects:</b> your project is not using the Universal Render Pipeline. Start from the <b>3D (URP)</b> template.</li>
+<li><b>Missing scripts:</b> import the XR Interaction Toolkit <b>Starter Assets</b>, and check you are using XR Interaction Toolkit 2.6.5. See <a class="el" href="#step-1-set-up-a-vr-project">step 1</a>.</li>
+</ul>
+<h2><a class="anchor" id="nothing-happens-in-the-unity-editor"></a>
+Nothing happens in the Unity Editor</h2>
+<p>The API only works in Android builds. Build and run on your headset or Android device.</p>
+<h2><a class="anchor" id="no-devices-are-found"></a>
+No devices are found</h2>
+<p>Check that:</p>
+<ul>
+<li>Bluetooth is turned on on the headset or Android device.</li>
+<li>The Escents device is switched on, charged and close by.</li>
+<li>The Escents device is not already connected to another headset or phone.</li>
+<li>The user allowed the permission request. On Android 11 or older, location permission must be granted and Location turned on. See <a class="el" href="#android-11-and-older">Android 11 and older</a>.</li>
+<li>The scan runs for long enough. It lasts 10 seconds by default. You can increase <code>ScanTimeout</code>.</li>
+</ul>
+<h2><a class="anchor" id="scan-connect-or-reconnect-does-nothing"></a>
+Scan(), Connect() or Reconnect() does nothing</h2>
+<ul>
+<li>If you call it from <code>Start()</code>, wait one frame first. See <a class="el" href="#good-to-know">Good to know</a>.</li>
+<li><code>Reconnect()</code> does nothing if no device has been saved. Check <code>ScentientDevice.HasSavedDevice</code> first.</li>
+</ul>
+<h2><a class="anchor" id="the-app-closes-when-the-user-denies-permission"></a>
+The app closes when the user denies permission</h2>
+<p>This is the Bluetooth library's default behaviour. See <a class="el" href="#permissions">Permissions</a> to change it.</p>
+<h2><a class="anchor" id="the-status-stays-on-connecting"></a>
+The status stays on "Connecting..."</h2>
+<p>Check the Escents device is switched on and in range, then call <code>Reconnect()</code> again. If it keeps happening, switch the Escents device off and on again. See <a class="el" href="#connection-time-limits">Connection time limits</a>.</p>
+<h2><a class="anchor" id="an-object-or-area-does-not-release-a-scent"></a>
+An object or area does not release a scent</h2>
+<ul>
+<li>If it uses a scent name, check that a pod with that scent is in the device. The channel rows on the demo's panel show which scents are loaded.</li>
+<li>Check the log for a warning from <code>EmitScent</code>, described below.</li>
+</ul>
+<h2><a class="anchor" id="emitscent-returns-false"></a>
+EmitScent returns false</h2>
+<p>The log tells you why:</p>
+<ul>
+<li><b>Not found in scent table:</b> check the spelling against the <a class="el" href="#scent-list">scent list</a>.</li>
+<li><b>Not found on device:</b> no channel holds that scent, or the channel information has not arrived yet. See <a class="el" href="#emitting-a-scent-as-soon-as-you-connect">Emitting a scent as soon as you connect</a>.</li>
+<li><b>ScentTable has not been loaded:</b> the app could not download the scent list and has no copy. See <a class="el" href="#using-scent-names-offline">Using scent names offline</a>.</li>
+</ul>
+<h2><a class="anchor" id="a-scent-stops-sooner-than-expected"></a>
+A scent stops sooner than expected</h2>
+<ul>
+<li>Another command replaced it. The device releases one scent at a time. See <a class="el" href="#one-scent-at-a-time">One scent at a time</a>.</li>
+<li>One command lasts up to 60 seconds. See <a class="el" href="#scents-longer-than-60-seconds">Scents longer than 60 seconds</a>.</li>
+</ul>
+<h2><a class="anchor" id="a-scent-does-not-stop"></a>
+A scent does not stop</h2>
+<ul>
+<li>Stop with an intensity of 0 and a duration above 0. See <a class="el" href="#stopping-a-scent">Stopping a scent</a>.</li>
+<li>If it should stop when the player leaves an area, check the area uses a Box, Sphere or Capsule collider with a kinematic Rigidbody, and keep its duration short. See <a class="el" href="#release-a-scent-when-the-player-walks-into-an-area">Release a scent when the player walks into an area</a>.</li>
+</ul>
+<h1><a class="anchor" id="api-at-a-glance"></a>
+API at a glance</h1>
+<p>This is a summary of the parts you are most likely to use. For full details, see the <a href="https://api.scentient.tech/class_scentient_1_1_scentient_device.html">ScentientDevice reference</a>. Add <code>using Scentient;</code> to scripts that use the API.</p>
+<h2><a class="anchor" id="methods"></a>
+Methods</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Method   </th><th class="markdownTableHeadNone">What it does    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>Scan()</code>   </td><td class="markdownTableBodyNone">Looks for nearby Escents devices.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>Connect(string address)</code>   </td><td class="markdownTableBodyNone">Connects to a device. Scans for it first if needed.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>Reconnect()</code>   </td><td class="markdownTableBodyNone">Connects to the last device you connected to.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>Disconnect()</code>   </td><td class="markdownTableBodyNone">Closes the connection.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>ScentientDevice.Forget()</code>   </td><td class="markdownTableBodyNone">Deletes the saved device.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>EmitScent(string scentName, float duration)</code>   </td><td class="markdownTableBodyNone">Releases a scent by name at full intensity. Returns <code>false</code> if it could not.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>EmitScent(string scentName, float intensity, float duration)</code>   </td><td class="markdownTableBodyNone">Releases a scent by name at the intensity you choose.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>SendScentMessage(int channel, float intensity, float duration)</code>   </td><td class="markdownTableBodyNone">Releases the scent in a channel (1 to 6).    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>GetScentLevel(int channel)</code>   </td><td class="markdownTableBodyNone">Returns how much scent is left in a channel, from 0 to 100.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>GetScentDict()</code>   </td><td class="markdownTableBodyNone">Returns every ID and name in the scent list.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>Identify()</code>   </td><td class="markdownTableBodyNone">Flashes the blue light on the device, so you can tell which unit it is.   </td></tr>
+</table>
+<h2><a class="anchor" id="properties"></a>
+Properties</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Property   </th><th class="markdownTableHeadNone">What it holds    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>State</code>   </td><td class="markdownTableBodyNone">The current connection state.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>StatusMessage</code>   </td><td class="markdownTableBodyNone">A short description of the current status.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>ChannelScentNames</code>   </td><td class="markdownTableBodyNone">The names of the scents in channels 1 to 6.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>Battery</code>   </td><td class="markdownTableBodyNone">The battery level, from 0 to 100.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>ScanTimeout</code>   </td><td class="markdownTableBodyNone">How long a scan lasts, in seconds. 10 by default.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>Verbose</code>   </td><td class="markdownTableBodyNone">Writes detailed messages to the log when <code>true</code>.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>ScentientDevice.HasSavedDevice</code>   </td><td class="markdownTableBodyNone"><code>true</code> if a device has been saved.   </td></tr>
+</table>
+<h2><a class="anchor" id="events"></a>
+Events</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Event   </th><th class="markdownTableHeadNone">When it fires    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>OnStateChangedEvent(States state)</code>   </td><td class="markdownTableBodyNone">The connection state changes.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>OnStatusChangedEvent(string status)</code>   </td><td class="markdownTableBodyNone">The status message changes.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>OnDeviceDiscoveredEvent(string address, string name)</code>   </td><td class="markdownTableBodyNone">A scan finds an Escents device.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>OnConnectedEvent</code>   </td><td class="markdownTableBodyNone">The connection is ready.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>OnChannelScentsUpdatedEvent(int channel, int scentId, string scentName)</code>   </td><td class="markdownTableBodyNone">Channel information arrives or changes.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>OnChannelScentLevelChangedEvent(int channel, int level)</code>   </td><td class="markdownTableBodyNone">A scent level changes.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>OnBatteryLevelChangedEvent(byte level)</code>   </td><td class="markdownTableBodyNone">A battery reading arrives.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>OnButtonPressedEvent()</code>   </td><td class="markdownTableBodyNone">The button on the device is pressed.   </td></tr>
+</table>
+<p><code>OnConnectedEvent</code> is a UnityEvent, so you can set it up in the Inspector. The others are C# events: subscribe with <code>+=</code> in code, and unsubscribe with <code>-=</code> when your object is destroyed. All events run on Unity's main thread, so you can update your UI from them directly.</p>
+<h2><a class="anchor" id="components"></a>
+Components</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Component   </th><th class="markdownTableHeadNone">What it does    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a href="https://api.scentient.tech/class_scentient_1_1_scentient_device.html">ScentientDevice</a>   </td><td class="markdownTableBodyNone">Connects to the Escents device and controls it. You need one in your scene.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><a href="https://api.scentient.tech/class_scentient_1_1_emit_scent.html">EmitScent</a>   </td><td class="markdownTableBodyNone">Releases a scent by name when you call <code>Emit()</code>, and stops it when you call <code>Stop()</code>.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a href="https://api.scentient.tech/class_scentient_1_1_emit_scent_channel.html">EmitScentChannel</a>   </td><td class="markdownTableBodyNone">Releases the scent in a channel when you call <code>Emit()</code>, and stops it when you call <code>Stop()</code>.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><a href="https://api.scentient.tech/class_scentient_1_1_trigger_events.html">TriggerEvents</a>   </td><td class="markdownTableBodyNone">Runs UnityEvents when something enters or leaves a trigger collider.   </td></tr>
+</table>
+<h1><a class="anchor" id="getting-help"></a>
+Getting help</h1>
+<p>Email us at <a href="#" onclick="location.href='mai'+'lto:'+'tea'+'m@'+'sce'+'nt'+'ien'+'t.'+'tec'+'h'; return false;">team@scentient.tech</a>. To help us answer quickly, please include:</p>
+<ul>
+<li>your Unity version</li>
+<li>the version of the Scentient package, shown in the Package Manager</li>
+<li>your headset or Android device, and its Android version</li>
+<li>what you expected to happen, and what happened instead</li>
+<li>the log from your device, with <b>Verbose</b> turned on </li>
+</ul>
 </div></div><!-- PageDoc -->
 <a href="doxygen_crawl.html"/>
 </div><!-- contents -->

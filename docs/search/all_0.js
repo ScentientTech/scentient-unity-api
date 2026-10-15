@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['abstractcsvdata_0',['AbstractCsvData',['../class_abstract_csv_data.html',1,'']]],
-  ['android_20runtime_20permissions_1',['Android Runtime Permissions',['../index.html#autotoc_md3',1,'']]],
-  ['api_2',['Scentient Escents Unity API',['../index.html',1,'']]],
-  ['autorequestpermissionsonconnect_3',['autoRequestPermissionsOnConnect',['../class_scentient_1_1_scentient_device.html#ae9bb285bbee3a30b97dc10742f95d9f3',1,'Scentient::ScentientDevice']]]
+  ['11_20and_20older_0',['Android 11 and older',['../index.html#android-11-and-older',1,'']]],
+  ['1_3a_20set_20up_20a_20vr_20project_1',['Step 1: Set up a VR project',['../index.html#step-1-set-up-a-vr-project',1,'']]]
 ];

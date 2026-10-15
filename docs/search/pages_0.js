@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['api_0',['Scentient Escents Unity API',['../index.html',1,'']]]
+  ['api_0',['Scentient Unity API',['../index.html',1,'']]]
 ];

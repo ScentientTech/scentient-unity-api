@@ -1,13 +1,19 @@
 var searchData=
 [
-  ['sample_20scene_0',['Sample Scene',['../index.html#autotoc_md5',1,'']]],
-  ['scene_1',['Sample Scene',['../index.html#autotoc_md5',1,'']]],
-  ['scentient_2',['Scentient',['../namespace_scentient.html',1,'']]],
-  ['scentient_20escents_20unity_20api_3',['Scentient Escents Unity API',['../index.html',1,'']]],
-  ['scentientdevice_4',['ScentientDevice',['../class_scentient_1_1_scentient_device.html',1,'Scentient']]],
-  ['scentmessage_5',['ScentMessage',['../class_scentient_1_1_scentient_device_1_1_scent_message.html',1,'Scentient::ScentientDevice']]],
-  ['scentmessagestruct_6',['ScentMessageStruct',['../struct_scentient_1_1_scentient_device_1_1_scent_message_struct.html',1,'Scentient::ScentientDevice']]],
-  ['scentname_7',['ScentName',['../class_scentient_1_1_emit_scent.html#a4cd7794b394586b2a6705d717bb26d5f',1,'Scentient.EmitScent.ScentName'],['../class_scentient_1_1_emit_scent_channel.html#a0676f3efeb548f578d76d204c8f16563',1,'Scentient.EmitScentChannel.ScentName']]],
-  ['scenttable_8',['ScentTable',['../class_scentient_1_1_scent_table.html',1,'Scentient']]],
-  ['sendscentmessage_9',['SendScentMessage',['../class_scentient_1_1_scentient_device.html#a2cfdfb1318da8258f7ab48a4e2800461',1,'Scentient.ScentientDevice.SendScentMessage(byte channel, byte intensity, UInt16 duration)'],['../class_scentient_1_1_scentient_device.html#a9d8d182e49ddee537348ba1dd315de00',1,'Scentient.ScentientDevice.SendScentMessage(int channel, float intensity, float duration)']]]
+  ['channel_0',['channel',['../index.html#by-channel',1,'By channel'],['../class_scentient_1_1_scentient_device_1_1_scent_message.html#a15e35fedbaa6aafd93cd07e591e314bd',1,'Scentient.ScentientDevice.ScentMessage.channel'],['../index.html#which-scent-is-in-each-channel',1,'Which scent is in each channel']]],
+  ['channels_20and_20pods_1',['Channels and pods',['../index.html#channels-and-pods',1,'']]],
+  ['closes_20when_20the_20user_20denies_20permission_2',['The app closes when the user denies permission',['../index.html#the-app-closes-when-the-user-denies-permission',1,'']]],
+  ['code_3',['code',['../index.html#add-scents-to-your-own-scene-without-code',1,'Add scents to your own scene without code'],['../index.html#using-the-api-from-code',1,'Using the API from code']]],
+  ['commands_4',['How often to send commands',['../index.html#how-often-to-send-commands',1,'']]],
+  ['components_5',['Components',['../index.html#components',1,'']]],
+  ['connect_6',['Emitting a scent as soon as you connect',['../index.html#emitting-a-scent-as-soon-as-you-connect',1,'']]],
+  ['connect_20or_20reconnect_20does_20nothing_7',['Scan(), Connect() or Reconnect() does nothing',['../index.html#scan-connect-or-reconnect-does-nothing',1,'']]],
+  ['connecting_8',['Connecting',['../index.html#connecting',1,'Connecting'],['../index.html#the-status-stays-on-connecting',1,'The status stays on &quot;Connecting...&quot;']]],
+  ['connection_20drops_9',['When the connection drops',['../index.html#when-the-connection-drops',1,'']]],
+  ['connection_20panel_10',['Add the device and the connection panel',['../index.html#add-the-device-and-the-connection-panel',1,'']]],
+  ['connection_20states_11',['Connection states',['../index.html#connection-states',1,'']]],
+  ['connection_20time_20limits_12',['Connection time limits',['../index.html#connection-time-limits',1,'']]],
+  ['connections_13',['Managing connections',['../index.html#managing-connections',1,'']]],
+  ['contents_14',['Contents',['../index.html#contents',1,'']]],
+  ['could_20not_20be_20found_15',['&quot;The type or namespace name &apos;Android&apos; could not be found&quot;',['../index.html#the-type-or-namespace-name-android-could-not-be-found',1,'']]]
 ];

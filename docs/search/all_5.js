@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['onbatterylevelchangedevent_0',['OnBatteryLevelChangedEvent',['../class_scentient_1_1_scentient_device.html#a08a76670df450b067294d761aa7c37b9',1,'Scentient::ScentientDevice']]],
-  ['onchannelscentlevelchangedevent_1',['OnChannelScentLevelChangedEvent',['../class_scentient_1_1_scentient_device.html#add2fb5c9e7ef88fcd33b2e8322eaf220',1,'Scentient::ScentientDevice']]]
+  ['60_20seconds_0',['Scents longer than 60 seconds',['../index.html#scents-longer-than-60-seconds',1,'']]],
+  ['6_3a_20try_20the_20demo_1',['Step 6: Try the demo',['../index.html#step-6-try-the-demo',1,'']]]
 ];
